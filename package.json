@@ -1,0 +1,27 @@
+{
+  "name": "zv-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "^19.2.4",
+    "@types/node": "^7.0.31",
+    "@types/react": "^15.0.28",
+    "@types/react-dom": "^15.5.0",
+    "bulma": "^0.4.2",
+    "react": "^15.6.0",
+    "react-dom": "^15.6.0"
+  },
+  "devDependencies": {
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.0.2",
+    "react-scripts-ts": "^2.2.0"
+  },
+  "scripts": {
+    "start": "npm-run-all -p watch-css start-server",
+    "build": "npm run build-css && react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-server": "react-scripts-ts start"
+  }
+}
