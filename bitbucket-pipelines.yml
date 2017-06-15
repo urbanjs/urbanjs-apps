@@ -1,0 +1,31 @@
+options:
+  docker: true
+
+image: node:8
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script:
+          - yarn install
+          - yarn run build
+          - yarn run test
+  custom:
+    release:dev:
+      - step:
+          script:
+            - export DOCKER_IMAGE_NAME=$DOCKER_REPOSITORY_NAME:$BITBUCKET_COMMIT
+
+            - yarn global add docker-image-exists
+            - if docker-image-exists -q -r $DOCKER_IMAGE_NAME -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD; then export DOCKER_IMAGE_EXISTS=1; fi
+
+            - if [[ $DOCKER_IMAGE_EXISTS -ne 1 ]]; then docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD; fi
+            - if [[ $DOCKER_IMAGE_EXISTS -ne 1 ]]; then docker build -t $DOCKER_IMAGE_NAME . ; fi
+            - if [[ $DOCKER_IMAGE_EXISTS -ne 1 ]]; then docker push $DOCKER_IMAGE_NAME; fi
+
+            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD;
+            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker pull $DOCKER_IMAGE_NAME;
+            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker rm -f $HOST_DOCKER_CONTAINER_NAME_DEV
+            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker run -itd --rm --name $HOST_DOCKER_CONTAINER_NAME_DEV -p 80:3000 $DOCKER_IMAGE_NAME
