@@ -5,7 +5,7 @@ import {Link, Route, withRouter, RouteComponentProps} from 'react-router-dom';
 import messages from './messages';
 import './app.css';
 import {RootState} from '../../reducers';
-import {setLocale} from '../../actions';
+import {setLocale, ping} from '../../actions';
 
 const logo = require('./logo.svg');
 
@@ -16,21 +16,25 @@ type OwnProps = {
 interface StateProps {
   currentLocale: string;
   locales: string[];
+  isPinging: boolean;
 }
 
 interface DispatchProps {
   setLocale: ActionCreator<object>;
+  sendPing: ActionCreator<object>;
 }
 
 export type AppProps = StateProps & DispatchProps & OwnProps;
 
 const mapStateToProps = (state: RootState): StateProps => ({
   currentLocale: state.i18n.locale,
-  locales: state.i18n.availableLocales
+  locales: state.i18n.availableLocales,
+  isPinging: state.ping.isPinging
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootState>): DispatchProps => ({
-  setLocale: (locale: string) => dispatch(setLocale({locale}))
+  setLocale: (locale: string) => dispatch(setLocale({locale})),
+  sendPing: () => dispatch(ping())
 });
 
 class App extends React.Component<AppProps, {}> {
@@ -60,11 +64,12 @@ class App extends React.Component<AppProps, {}> {
             </select>
           </span>
 
-        <hr/>
-        <FormattedMessage
-          id={messages.welcome}
-          values={{name: <b>{this.props.name || 'Guest'}</b>, unreadCount, gender: 'male'}}
-        />
+        <div>
+          <FormattedMessage
+            id={messages.welcome}
+            values={{name: <b>{this.props.name || 'Guest'}</b>, unreadCount, gender: 'male'}}
+          />
+        </div>
 
         <hr/>
         Navigate to:
@@ -77,6 +82,14 @@ class App extends React.Component<AppProps, {}> {
         This is the content of&nbsp;
         <Route exact={true} path="/" render={() => <span>home</span>}/>
         <Route exact={true} path="/page" render={() => <span>page</span>}/>
+
+        <hr/>
+        Let's ping:
+
+        <div>
+          <a className="button" disabled={this.props.isPinging} onClick={this.props.sendPing}>ping</a>
+          <a className="button" disabled={!this.props.isPinging}>pong</a>
+        </div>
       </div>
     );
   }

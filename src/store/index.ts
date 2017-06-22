@@ -1,6 +1,7 @@
 import {createStore as createReduxStore, applyMiddleware, compose} from 'redux';
 import {root as rootReducer} from '../reducers';
-import {createLoggerMiddleware} from './middlewares';
+import {root as rootEpic} from '../epics';
+import {createLoggerMiddleware, createEpicMiddleware} from './middlewares';
 import {History} from 'history';
 
 export type StoreConfig = {
@@ -15,6 +16,7 @@ export function createStore(initialState: object = {}, config: StoreConfig) {
   if (config.env === 'dev') {
     const enhancers = [];
     const middlewares = [
+      createEpicMiddleware(rootEpic),
       createLoggerMiddleware()
     ];
 

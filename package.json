@@ -21,7 +21,9 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-observable": "^0.14.1",
+    "rxjs": "^5.4.1"
   },
   "devDependencies": {
     "node-sass-chokidar": "^0.0.3",
