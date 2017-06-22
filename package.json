@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^4.0.4",
     "@types/redux": "^3.6.0",
     "@types/redux-logger": "^3.0.0",
+    "@types/storybook__react": "^3.0.0",
     "bulma": "^0.4.2",
     "history": "^4.6.3",
     "react": "^15.6.0",
@@ -26,6 +27,7 @@
     "rxjs": "^5.4.1"
   },
   "devDependencies": {
+    "@storybook/react": "^3.1.5",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
     "react-scripts-ts": "^2.2.0"
@@ -36,6 +38,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-server": "react-scripts-ts start"
+    "start-server": "react-scripts-ts start",
+    "storybook": "start-storybook -p 6006"
   }
 }

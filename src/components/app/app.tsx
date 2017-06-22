@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootState>): DispatchProps => ({
   sendPing: () => dispatch(ping())
 });
 
-class App extends React.Component<AppProps, {}> {
+export class App extends React.Component<AppProps, {}> {
   props: AppProps;
 
   render() {
