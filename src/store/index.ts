@@ -2,12 +2,10 @@ import {createStore as createReduxStore, applyMiddleware, compose} from 'redux';
 import {root as rootReducer} from '../reducers';
 import {root as rootEpic} from '../epics';
 import {createLoggerMiddleware, createEpicMiddleware} from './middlewares';
-import {History} from 'history';
 
 export type StoreConfig = {
   platform: 'browser' | 'node',
-  env: 'dev' | 'prod',
-  routerHistory: History
+  env: 'dev' | 'prod'
 };
 
 export function createStore(initialState: object = {}, config: StoreConfig) {

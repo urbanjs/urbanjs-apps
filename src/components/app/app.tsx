@@ -2,6 +2,7 @@ import * as React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {ActionCreator, connect, Dispatch} from 'react-redux';
 import {Link, Route, withRouter, RouteComponentProps} from 'react-router-dom';
+import {gql, graphql, QueryProps as ApolloQueryProps} from 'react-apollo';
 import messages from './messages';
 import './app.css';
 import {RootState} from '../../reducers';
@@ -11,6 +12,7 @@ const logo = require('./logo.svg');
 
 type OwnProps = {
   name?: string;
+  data: ApolloQueryProps & { todos?: { id: string, description: string }[] }
 } & RouteComponentProps<any>; // tslint:disable-line no-any
 
 interface StateProps {
@@ -25,17 +27,6 @@ interface DispatchProps {
 }
 
 export type AppProps = StateProps & DispatchProps & OwnProps;
-
-const mapStateToProps = (state: RootState): StateProps => ({
-  currentLocale: state.i18n.locale,
-  locales: state.i18n.availableLocales,
-  isPinging: state.ping.isPinging
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<RootState>): DispatchProps => ({
-  setLocale: (locale: string) => dispatch(setLocale({locale})),
-  sendPing: () => dispatch(ping())
-});
 
 export class App extends React.Component<AppProps, {}> {
   props: AppProps;
@@ -90,10 +81,51 @@ export class App extends React.Component<AppProps, {}> {
           <a className="button" disabled={this.props.isPinging} onClick={this.props.sendPing}>ping</a>
           <a className="button" disabled={!this.props.isPinging}>pong</a>
         </div>
+
+        <hr/>
+        Your todo list:
+
+        <div>
+          {
+            this.props.data.loading
+              ? <a className={this.props.data.loading ? 'button is-loading' : 'button'}> Refresh </a>
+              : ''
+          }
+
+          <ul>
+            {
+              this.props.data.todos
+                ? this.props.data.todos.map((todo) => <li key={todo.id}>{todo.description}</li>)
+                : ''
+            }
+          </ul>
+        </div>
       </div>
     );
   }
 }
 
-const withStore = connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps);
-export const AppWithStore = withRouter(withStore(App));
+export const TODOS_QUERY = gql`
+query Query {
+  todos {
+    id,
+    description
+  }
+}
+`;
+
+export const withTodos = graphql(TODOS_QUERY, {});
+
+const withState = connect<StateProps, DispatchProps, OwnProps>(
+  (state: RootState): StateProps => ({
+    currentLocale: state.i18n.locale,
+    locales: state.i18n.availableLocales,
+    isPinging: state.ping.isPinging
+  }),
+  (dispatch: Dispatch<RootState>): DispatchProps => ({
+    setLocale: (locale: string) => dispatch(setLocale({locale})),
+    sendPing: () => dispatch(ping())
+  })
+);
+
+export const AppWithStore = withTodos(withRouter(withState(App)));

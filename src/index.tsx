@@ -5,19 +5,25 @@ import {createStore} from './store';
 import {ContextProvider} from './containers';
 import {App} from './components';
 import {translations} from './i18n';
+import {createApolloClient} from './graphql';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 const history = createBrowserHistory();
+
 const store = createStore({}, {
   env: 'dev',
-  platform: 'browser',
-  routerHistory: history
+  platform: 'browser'
+});
+
+const apolloClient = createApolloClient({
+  uri: 'http://localhost:3001/graphql'
 });
 
 render(
   <ContextProvider
     store={store}
+    apolloClient={apolloClient}
     routerHistory={history}
     translations={translations}
   >
