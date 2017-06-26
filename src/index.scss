@@ -1,17 +1,13 @@
 @import "../node_modules/bulma/sass/utilities/initial-variables";
+@import "./components/variables.scss";
+@import "./components/global.scss";
 
-$blue: #72d0eb;
-$pink: #ffb3b3;
-$pink-invert: #fff;
-$family-serif: "Merriweather", "Georgia", serif;
-
-$primary: $pink;
-$primary-invert: $pink-invert;
-$danger: $orange;
-$family-primary: $family-serif;
+$primary: $zv-primary;
 
 @import "../node_modules/bulma/bulma";
 
+$fa-font-path: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/";
+@import "../node_modules/font-awesome/scss/font-awesome.scss";
 
 body {
   margin: 0;
