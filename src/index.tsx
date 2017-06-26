@@ -1,11 +1,34 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import App from './app';
+import {render} from 'react-dom';
+import {createBrowserHistory} from 'history';
+import {createStore} from './store';
+import {ContextProvider} from './containers';
+import {App} from './components';
+import {translations} from './i18n';
+import {createApolloClient} from './graphql';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-ReactDOM.render(
-  <App />,
+const history = createBrowserHistory();
+
+const store = createStore({}, {
+  env: 'dev',
+  platform: 'browser'
+});
+
+const apolloClient = createApolloClient({
+  uri: 'http://localhost:3001/graphql'
+});
+
+render(
+  <ContextProvider
+    store={store}
+    apolloClient={apolloClient}
+    routerHistory={history}
+    translations={translations}
+  >
+    <App/>
+  </ContextProvider>,
   document.getElementById('root') as HTMLElement
 );
 
