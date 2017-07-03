@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {createBrowserHistory} from 'history';
 import {createStore} from './store';
 import {ContextProvider} from './containers';
-import {App} from './components';
+import {App} from './containers';
 import {translations} from './i18n';
 import {createApolloClient} from './graphql';
 import registerServiceWorker from './registerServiceWorker';

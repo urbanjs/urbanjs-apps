@@ -24,6 +24,6 @@ export const addMissingMessagesFrom = (translation: Messages, ...fallbackTransla
   ));
 
 export const translations = {
-  en: enTranslationMessages,
-  hu: addMissingMessagesFrom(huTranslationMessages, enTranslationMessages)
+  hu: huTranslationMessages,
+  en: addMissingMessagesFrom(enTranslationMessages, huTranslationMessages)
 };

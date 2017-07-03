@@ -1,0 +1,13 @@
+@import "../variables.scss";
+
+.zv-footer {
+  margin-left: $zv_sidebar_width;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+
+  .footer {
+    padding: 3rem 1.5rem;
+  }
+}

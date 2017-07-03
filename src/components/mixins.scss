@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+@mixin menu-item {
+  box-shadow: none !important;
+  text-decoration: none !important;
+  height: 4.4rem;
+  width: 4.4rem;
+
+  &:hover {
+    background-color: white !important;
+    color: $zv-primary !important;
+  }
+
+  &.is-active {
+    color: $zv-primary !important;
+  }
+}
+
+@mixin truncate() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
