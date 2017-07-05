@@ -28,23 +28,31 @@ export class App extends React.Component<AppProps, State> {
 
   render() {
     return (
-      <div className="zv-app">
-        <Navbar
-          searchValue={this.state.searchValue}
-          onSearchValueChange={(value: string) => this.setState({searchValue: value})}
-          notifications={Array(100)}
-          onLogout={() => {
-            console.info('logged out');// tslint:disable-line
-          }}
-        />
+      <div className="zv-app h-100">
+        <aside className="zv-sidebar fixed-top h-100">
+          <Sidebar/>
+        </aside>
 
-        <Sidebar/>
+        <div className="zv-content-wrapper">
+          <Navbar
+            searchValue={this.state.searchValue}
+            onSearchValueChange={(value: string) => this.setState({searchValue: value})}
+            notifications={Array(100)}
+            onLogout={() => {
+              console.info('logged out');// tslint:disable-line
+            }}
+          />
 
-        <Footer
-          currentLocale={this.props.currentLocale}
-          locales={this.props.locales}
-          onLocaleChange={(locale: string) => this.props.setLocale(locale)}
-        />
+          <div>Content goes here</div>
+        </div>
+
+        <footer className="zv-footer-wrapper">
+          <Footer
+            currentLocale={this.props.currentLocale}
+            locales={this.props.locales}
+            onLocaleChange={(locale: string) => this.props.setLocale(locale)}
+          />
+        </footer>
       </div>
     );
   }

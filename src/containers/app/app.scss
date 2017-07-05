@@ -1,2 +1,26 @@
 .zv-app {
+  $sidebar_width: 8em;
+  $footer_height: 13em;
+
+  .zv-sidebar {
+    width: $sidebar_width;
+  }
+
+  .zv-content-wrapper {
+    margin-left: $sidebar_width;
+    margin-bottom: -$footer_height;
+    min-height: 100%;
+
+    &:after {
+      content: "";
+      display: block;
+      height: $footer_height;
+    }
+  }
+
+  .zv-footer-wrapper {
+    margin-left: $sidebar_width;
+    height: $footer_height;
+    overflow: hidden;
+  }
 }

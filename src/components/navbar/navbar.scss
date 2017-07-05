@@ -1,79 +1,11 @@
-@import "../variables.scss";
-@import "../mixins.scss";
-
 .zv-navbar {
-  margin-left: $zv_sidebar_width;
-
-  .level {
+  .btn-link {
     position: relative;
 
-    .level-left, .level-left .level-item, .level-left .level-item .field {
-      flex-grow: 1;
-    }
-
-    .level-left {
-      margin: 0.4rem;
-
-      .control {
-        .icon, .input::placeholder {
-          color: #b5b5b5;
-          text-transform: lowercase;
-          font-weight: lighter;
-        }
-
-        .input {
-          @include truncate();
-
-          max-width: 30rem;
-          font-weight: lighter;
-        }
-      }
-    }
-
-    .level-right {
-      display: flex;
-
-      .level-item:not(:last-child) {
-        margin-left: 1.75rem;
-        margin-right: 1.75rem;
-      }
-
-      .sign-out {
-        @include menu-item();
-      }
-
-      .notification {
-        padding: 1rem;
-        text-decoration: none !important;
-
-        .tag {
-          @include truncate();
-
-          width: 2rem;
-          position: absolute;
-          top: -10px;
-          right: 2px;
-        }
-      }
-    }
-
-    .card.profile-card {
+    .badge {
       position: absolute;
-      right: 0;
-      top: 100%;
-      width: 300px;
-      display: none;
-      z-index: 1;
-
-      &.active {
-        display: block;
-      }
-
-      .button.is-link {
-        padding: 0;
-        height: auto;
-        margin-right: 1rem;
-      }
+      top: 0;
+      right: 2px;
     }
   }
 }

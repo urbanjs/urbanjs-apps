@@ -1,24 +1,6 @@
-@import "../../../node_modules/bulma/sass/utilities/variables.sass";
-@import "../variables.scss";
 @import "../mixins.scss";
 
 .zv-sidebar {
-  position: fixed !important;
-  top: 0;
-  height: 100%;
-  width: $zv_sidebar_width;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 0.5rem !important;
-
-  & > .button {
-    @include menu-item();
-
-    display: flex;
-    margin: 0.7rem 0;
-
-    .image {
-      margin: 0 auto;
-    }
-  }
 }

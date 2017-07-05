@@ -1,23 +1,26 @@
-@import "./variables.scss";
-
-@mixin menu-item {
-  box-shadow: none !important;
-  text-decoration: none !important;
-  height: 4.4rem;
-  width: 4.4rem;
-
-  &:hover {
-    background-color: white !important;
-    color: $zv-primary !important;
+@mixin zv-logo-link {
+  i {
+    background-image: url("/logo.svg");
+    background-repeat: no-repeat;
+    background-size: auto 400%;
+    background-position-y: 33.33%;
+    width: 1em;
+    height: 1em;
   }
 
-  &.is-active {
-    color: $zv-primary !important;
+  &:hover i {
+    background-position-y: 0;
+  }
+
+  &.active i {
+    background-position-y: 100%;
+  }
+
+  &.active:focus i, &.active:hover i {
+    background-position-y: 66.66%;
   }
 }
 
-@mixin truncate() {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.zv-logo-link {
+  @include zv-logo-link;
 }
