@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {ActionCreator, connect, Dispatch} from 'react-redux';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
+import {Route, withRouter, RouteComponentProps} from 'react-router-dom';
 import './app.css';
 import {RootState} from '../../reducers';
 import {setLocale} from '../../actions';
 import {Sidebar, Navbar, Footer} from '../../components';
+import {ProfilePage} from '../profile-page';
 
 type OwnProps = {
   name?: string;
-} & RouteComponentProps<any>; // tslint:disable-line no-any
+};
 
 interface StateProps {
   currentLocale: string;
@@ -19,7 +20,7 @@ interface DispatchProps {
   setLocale: ActionCreator<object>;
 }
 
-export type AppProps = StateProps & DispatchProps & OwnProps;
+export type AppProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
 export type State = { searchValue: string };
 
 export class App extends React.Component<AppProps, State> {
@@ -43,7 +44,12 @@ export class App extends React.Component<AppProps, State> {
             }}
           />
 
-          <div>Content goes here</div>
+          <Route
+            path="/user/:id"
+            render={(routeProps: RouteComponentProps<null>) =>
+              <ProfilePage rootUrl={routeProps.match.url}/>
+            }
+          />
         </div>
 
         <footer className="zv-footer-wrapper">
@@ -58,7 +64,7 @@ export class App extends React.Component<AppProps, State> {
   }
 }
 
-const withState = connect<StateProps, DispatchProps, OwnProps>(
+const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
   (state: RootState): StateProps => ({
     currentLocale: state.i18n.locale,
     locales: state.i18n.availableLocales
@@ -68,4 +74,4 @@ const withState = connect<StateProps, DispatchProps, OwnProps>(
   })
 );
 
-export const AppWithStore = withRouter(withState(App));
+export const AppWithStore = withRouter<OwnProps>(withState(App));

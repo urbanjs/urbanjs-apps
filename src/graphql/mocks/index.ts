@@ -3,6 +3,7 @@ export const mocks = {
     user: () => ({
       id: '123123',
       personalInformation: {
+        gender: 'female',
         firstName: 'John',
         lastName: 'Doe',
         email: 'john.doe@gmail.com',
@@ -23,11 +24,11 @@ export const mocks = {
       facebookRegistration: {
         id: '123123123',
         permissions: [
-          {permission: 'PUBLIC_PROFILE', isAllowed: true},
-          {permission: 'USER_PHOTOS', isAllowed: true},
-          {permission: 'USER_MANAGED_GROUPS', isAllowed: true},
-          {permission: 'PAGES_MESSAGING', isAllowed: true},
-          {permission: 'PAGES_MESSAGING_SUBSCRIPTIONS', isAllowed: true}
+          'PUBLIC_PROFILE',
+          'USER_PHOTOS',
+          'USER_MANAGED_GROUPS',
+          'PAGES_MESSAGING',
+          'PAGES_MESSAGING_SUBSCRIPTIONS'
         ]
       },
       subscription: {
@@ -95,7 +96,7 @@ export const mocks = {
             id: '123123'
           },
           createdAt: new Date().toISOString(),
-          status: 'open',
+          status: 'open', // draft
           dueDate: new Date().toISOString(),
           labels: ['promotion'],
           title: 'Siófok promóció',

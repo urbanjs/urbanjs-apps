@@ -1,0 +1,11 @@
+.zv-gallery {
+  display: flex;
+  flex-flow: row wrap;
+
+  .zv-gallery-item {
+    flex: auto;
+    width: 25em;
+    height: 25em;
+    background-size: cover;
+  }
+}

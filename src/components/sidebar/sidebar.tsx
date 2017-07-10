@@ -12,8 +12,8 @@ export class Sidebar extends React.Component<SidebarProps, {}> {
   render() {
     const itemClasses = 'btn btn-link text-muted d-block mx-auto mt-4 mb-4';
     const items = [
-      {icon: 'user-o', path: '/portfolio'},
-      {icon: 'tasks', path: '/projects'},
+      {icon: 'user-o', path: '/user/1'},
+      {icon: 'tasks', path: '/jobs'},
       {icon: 'comments', path: '/messages'},
       {icon: 'calendar-check-o', path: '/calendar'}
     ];

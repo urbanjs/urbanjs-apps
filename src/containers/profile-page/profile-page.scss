@@ -1,0 +1,38 @@
+.zv-profile-page {
+  .zv-profile-information {
+    position: relative;
+    padding-bottom: 0 !important;
+
+    .zv-profile-top {
+      background-image: url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 10.5em;
+      width: 100%;
+    }
+
+    .zv-avatar-container {
+      position: relative;
+      width: 15em;
+      height: 15em;
+      overflow: hidden;
+      border: .5em solid white;
+      margin: 0 auto;
+    }
+
+    h1 {
+      letter-spacing: -1px;
+      font-size: 2em;
+      font-weight: normal;
+    }
+  }
+
+  .zv-profile-nav .nav-item {
+    width: 6em;
+
+    .nav-link.active {
+      background-color: white;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+.zv-user-information {
+  table {
+    tr.zv-group td {
+      border-top-color: #47d2d0;
+    }
+
+    td {
+      border-top-style: dashed;
+
+      .zv-help {
+        font-size: 1.25em;
+        vertical-align: bottom;
+        position: relative;
+        cursor: pointer;
+
+        .popover {
+          width: 15em;
+
+          &.popover-bottom {
+            top: 1.4em;
+          }
+
+          &.popover-top {
+            top: auto;
+            bottom: 2.4em;
+          }
+
+          &.popover-top, &.popover.popover-bottom {
+            left: -.7em;
+
+            &::before, &::after {
+              left: 1.2em;
+            }
+          }
+        }
+      }
+    }
+  }
+}
