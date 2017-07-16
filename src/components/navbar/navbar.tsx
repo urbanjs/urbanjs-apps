@@ -6,8 +6,7 @@ import {messages} from './messages';
 
 type OwnProps = {
   notifications: string[];
-  searchValue: string;
-  onSearchValueChange: (value: string) => void;
+  onCollapse: () => void;
   onLogout: () => void;
 };
 
@@ -26,9 +25,16 @@ export class Navbar extends React.Component<NavbarProps, State> {
 
     return (
       <div
-        className={`zv-navbar p-4 d-flex justify-content-end bg-faded dropdown ${
+        className={`zv-navbar p-4 d-flex justify-content-end bg-faded dropdown align-items-center ${
           this.state.profileCardIsOpen ? 'show' : ''}`}
       >
+        <a
+          className="btn btn-link text-muted mr-auto"
+          onClick={this.props.onCollapse}
+        >
+          <i className="fa fa-2x fa-bars"/>
+        </a>
+
         <Link
           to="/notifications"
           className={`btn btn-link text-muted ${

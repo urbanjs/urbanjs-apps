@@ -21,24 +21,23 @@ interface DispatchProps {
 }
 
 export type AppProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
-export type State = { searchValue: string };
+export type State = { isSidebarCollapsed: boolean };
 
 export class App extends React.Component<AppProps, State> {
   props: AppProps;
-  state: State = {searchValue: ''};
+  state: State = {isSidebarCollapsed: false};
 
   render() {
     return (
-      <div className="zv-app h-100">
+      <div className={`zv-app h-100 ${this.state.isSidebarCollapsed ? 'zv-sidebar-hidden' : ''}`}>
         <aside className="zv-sidebar fixed-top h-100">
           <Sidebar/>
         </aside>
 
         <div className="zv-content-wrapper">
           <Navbar
-            searchValue={this.state.searchValue}
-            onSearchValueChange={(value: string) => this.setState({searchValue: value})}
             notifications={Array(100)}
+            onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
             onLogout={() => {
               console.info('logged out');// tslint:disable-line
             }}
