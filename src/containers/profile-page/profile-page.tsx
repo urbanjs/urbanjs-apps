@@ -1,10 +1,42 @@
 import * as React from 'react';
 import {Switch, Route, Redirect, Link, withRouter, RouteComponentProps} from 'react-router-dom';
-import {Gallery, UserInformation} from '../../components';
+import {Gallery, UserCard, UserInformation, UserInformationEdit} from '../../components';
 import './profile-page.css';
 
 const PATH_GALLERY = 'gallery';
 const PATH_ABOUT = 'about';
+const SEARCH_ABOUT_EDIT = '?edit';
+
+const tempUser = {
+  firstName: 'Emily',
+  lastName: 'Ratajkowski',
+  age: 26,
+  city: 'Budapest',
+  height: 168,
+  chest: 90,
+  waist: 60,
+  hip: 90,
+  foot: 25,
+  eye: 'BROWN',
+  hair: 'BLACK',
+  hasDrivingLicense: true,
+  isStudent: true,
+  highestQualificationLevel: 'UNIVERSITY',
+  languages: [
+    {
+      language: 'ENGLISH',
+      level: 'INTERMEDIATE'
+    },
+    {
+      language: 'HUNGARIAN',
+      level: 'NATIVE'
+    },
+    {
+      language: 'GERMAN',
+      level: 'BASIC'
+    }
+  ]
+};
 
 export type OwnProps = {
   rootUrl: string;
@@ -20,23 +52,8 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
   render() {
     return (
       <div className="zv-profile-page">
-        <div className="zv-profile-information m-2 mb-4 p-5 text-center">
-          <div className="zv-profile-top bg-primary"/>
-
-          <div className="zv-avatar-container rounded-circle">
-            <img
-              className="img-fluid"
-              src="/emily/1.jpg"
-              alt="Profile image"
-            />
-          </div>
-
-          <h1 className="mt-3">Emily Ratajkowski</h1>
-          <p className="text-gray-dark m-0">
-            Budapest, Magyarország
-            <br/>
-            26 éves
-          </p>
+        <div className="m-2">
+          <UserCard user={tempUser} avatar="/emily/1.jpg"/>
         </div>
 
         <ul className="zv-profile-nav nav justify-content-center m-2 bg-faded hidden-lg-up">
@@ -75,7 +92,23 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
             render={() =>
               <div className="row no-gutters">
                 <div className="hidden-md-down col-lg-4">
-                  <UserInformation/>
+                  {
+                    this.props.location.search === SEARCH_ABOUT_EDIT ?
+                      <UserInformationEdit
+                        user={tempUser}
+                        onSave={({user}) => {
+                          Object.assign(tempUser, user);
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_ABOUT}`);
+                        }}
+                        onCancel={() =>
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_GALLERY}`)}
+                      /> :
+                      <UserInformation
+                        user={tempUser}
+                        onEdit={() =>
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_ABOUT}${SEARCH_ABOUT_EDIT}`)}
+                      />
+                  }
                 </div>
                 <div className="col-xs-12 col-lg-8">
                   <Gallery
@@ -94,9 +127,25 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
             exact={true}
             path={`${this.props.rootUrl}/${PATH_ABOUT}`}
             render={() =>
-              <div className="row no-gutters">
+              <div className="row no-gutters m-2">
                 <div className="col-xs-12 col-lg-4">
-                  <UserInformation/>
+                  {
+                    this.props.location.search === SEARCH_ABOUT_EDIT ?
+                      <UserInformationEdit
+                        user={tempUser}
+                        onSave={({user}) => {
+                          Object.assign(tempUser, user);
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_ABOUT}`);
+                        }}
+                        onCancel={() =>
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_ABOUT}`)}
+                      /> :
+                      <UserInformation
+                        user={tempUser}
+                        onEdit={() =>
+                          this.props.history.push(`${this.props.rootUrl}/${PATH_ABOUT}${SEARCH_ABOUT_EDIT}`)}
+                      />
+                  }
                 </div>
                 <div className="hidden-md-down col-lg-8">
                   <Gallery

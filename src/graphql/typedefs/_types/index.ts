@@ -8,6 +8,7 @@ import language from './language';
 import languageLevel from './language-level';
 import lengthUnit from './length-unit';
 import locale from './locale';
+import qualificationLevel from './qualification-level';
 
 export default `
 ${address}
@@ -20,4 +21,5 @@ ${languageLevel}
 ${lengthUnit}
 ${locale}
 ${applicationFeature}
+${qualificationLevel}
 `;

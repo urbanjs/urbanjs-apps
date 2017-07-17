@@ -18,6 +18,7 @@ type UserPortfolio {
   hasDrivingLicense: Boolean
   isStudent: Boolean
   languages: [UserPortfolioLanguageExperience]
+  highestQualificationLevel: QualificationLevel
   jobInterests: [JobCategory]
 }
 `;
