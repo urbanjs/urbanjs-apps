@@ -1,0 +1,18 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+
+.zv-user-information-edit {
+  table {
+    tr.zv-group td {
+      border-top-color: $zv-color-primary;
+    }
+
+    td {
+      border-top-style: dashed;
+
+      .zv-help {
+        @include zv-help;
+      }
+    }
+  }
+}

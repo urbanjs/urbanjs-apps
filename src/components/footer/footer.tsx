@@ -15,32 +15,30 @@ export class Footer extends React.Component<OwnProps, {}> {
 
   render() {
     return (
-      <div className="zv-footer ">
-        <footer className="footer">
-          <div className="container content has-text-centered">
-            <p>
-              <Link className="icon" to="/">
-                  <span className="image is-32x32" href="/">
-                    <img src="/logo.svg" alt="logo"/>
-                  </span>
-              </Link>
-              <br/>
-              <FormattedMessage id={messages.copyright}/> © {new Date().getFullYear()} <strong>Zingvo</strong>
-            </p>
-            <div className="field has-addons has-addons-centered">
-              <p className="control">
-                <span className="select">
-                  <select
-                    value={this.props.currentLocale}
-                    onChange={(e) => this.props.onLocaleChange(e.target.value)}
-                  >
-                    {...this.props.locales.map((locale, index) => <option key={index}>{locale}</option>)}
-                  </select>
-                </span>
-              </p>
-            </div>
-          </div>
-        </footer>
+      <div className="zv-footer bg-faded text-primary text-center p-4">
+        <Link
+          className="zv-logo-link btn btn-link active"
+          to="/"
+        >
+          <i className="fa fa-3x"/>
+        </Link>
+
+        <br/>
+
+        <FormattedMessage id={messages.copyright}/>
+        &nbsp;©
+        &nbsp;{new Date().getFullYear()}
+        &nbsp;<strong>Zingvo</strong>
+
+        <br/>
+
+        <select
+          className="custom-select mb-2 mr-sm-2 mb-sm-0 mt-3"
+          value={this.props.currentLocale}
+          onChange={(e) => this.props.onLocaleChange(e.target.value)}
+        >
+          {...this.props.locales.map((locale, index) => <option key={index}>{locale}</option>)}
+        </select>
       </div>
     );
   }

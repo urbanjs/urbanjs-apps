@@ -1,13 +1,7 @@
-@import "../variables.scss";
+@import "../mixins.scss";
 
 .zv-footer {
-  margin-left: $zv_sidebar_width;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  overflow: hidden;
-
-  .footer {
-    padding: 3rem 1.5rem;
+  .zv-logo-link {
+    @include zv-logo-link;
   }
 }

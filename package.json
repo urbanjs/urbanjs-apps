@@ -14,8 +14,9 @@
     "@types/redux": "^3.6.0",
     "@types/redux-logger": "^3.0.0",
     "@types/storybook__react": "^3.0.0",
-    "bulma": "^0.4.2",
+    "bootstrap": "4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
+    "graphql-custom-types": "^1.1.0",
     "history": "^4.6.3",
     "react": "^15.6.0",
     "react-apollo": "^1.4.2",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@storybook/react": "^3.1.5",
     "@types/body-parser": "^1.16.4",
+    "@types/cors": "^2.8.1",
     "@types/express": "^4.0.36",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
@@ -39,7 +41,8 @@
     "graphql-tools": "^1.0.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
-    "react-scripts-ts": "^2.2.0"
+    "react-scripts-ts": "^2.2.0",
+    "ts-node": "^3.2.0"
   },
   "scripts": {
     "start": "npm-run-all -p watch-css start-graphql start-app",
@@ -48,7 +51,7 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-app": "react-scripts-ts start",
-    "start-graphql": "node src/graphql/server.js",
+    "start-graphql": "ts-node src/graphql/server.ts",
     "storybook": "start-storybook -p 6006"
   }
 }
