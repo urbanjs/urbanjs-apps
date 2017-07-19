@@ -5,9 +5,10 @@
 
 # runtime
 /coverage
-/build
+/build*
 /src/**/*.css
 *.log
+jest*
 
 # IDE
 .idea

@@ -5,19 +5,21 @@ import {createStore} from './store';
 import {ContextProvider} from './containers';
 import {App} from './containers';
 import {translations} from './i18n';
-import {createApolloClient} from './graphql';
-import registerServiceWorker from './registerServiceWorker';
+import {createApolloClient} from './graphql/client';
+import registerServiceWorker from './register-service-worker';
 import './index.css';
 
 const history = createBrowserHistory();
 
 const store = createStore({}, {
-  env: 'dev',
+  env: process.env.NODE_ENV,
   platform: 'browser'
 });
 
 const apolloClient = createApolloClient({
-  uri: 'http://localhost:3001/graphql'
+  uri: process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:3001/graphql'
+    : '/graphql'
 });
 
 render(

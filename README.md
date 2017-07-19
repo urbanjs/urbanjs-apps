@@ -1,1 +1,1 @@
-# React boilerplate with typescript
+# Zingvo

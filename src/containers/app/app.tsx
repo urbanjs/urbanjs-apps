@@ -11,14 +11,14 @@ type OwnProps = {
   name?: string;
 };
 
-interface StateProps {
+type StateProps = {
   currentLocale: string;
   locales: string[];
-}
+};
 
-interface DispatchProps {
+type DispatchProps = {
   setLocale: ActionCreator<object>;
-}
+};
 
 export type AppProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
 export type State = { isSidebarCollapsed: boolean };

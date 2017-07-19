@@ -1,6 +1,6 @@
-FROM node:8
+FROM node:8-alpine
 
-ENV PORT 3000
+ENV PORT 3001
 ENV CI true
 
 EXPOSE $PORT
@@ -12,7 +12,10 @@ WORKDIR /app
 RUN yarn install && \
     yarn run build && \
     yarn run test && \
-    ls -1 | grep -vx build | xargs -I {} rm -rf {} && \
-    yarn global add serve
 
-CMD serve -s build -p $PORT
+    rm -rf node_modules && \
+    yarn install --production --ignore-scripts --pure-lockfile --offline && \
+    ls -1a | grep -vx 'build' | grep -vx 'build-server' | grep -vx 'node_modules' | grep -vx '.' | grep -vx '..' | xargs -I {} rm -rf {} && \
+    yarn cache clean
+
+CMD node build-server/server/index.js

@@ -5,13 +5,13 @@ import {createLoggerMiddleware, createEpicMiddleware} from './middlewares';
 
 export type StoreConfig = {
   platform: 'browser' | 'node',
-  env: 'dev' | 'prod'
+  env: 'development' | 'production'
 };
 
 export function createStore(initialState: object = {}, config: StoreConfig) {
   let enhancer;
 
-  if (config.env === 'dev') {
+  if (config.env !== 'production') {
     const enhancers = [];
     const middlewares = [
       createEpicMiddleware(rootEpic),

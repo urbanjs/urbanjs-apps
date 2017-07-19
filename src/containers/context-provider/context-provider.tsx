@@ -6,20 +6,19 @@ import {Router} from 'react-router-dom';
 import {History} from 'history';
 import {RootState} from '../../reducers';
 
-interface OwnProps {
+type OwnProps = {
   store: Store<object>;
   apolloClient: ApolloClient;
   routerHistory: History;
   children: React.ReactChild;
   translations: { [key: string]: { [key: string]: string } };
-}
+};
 
-interface StateProps {
+type StateProps = {
   locale: string;
-}
+};
 
-interface DispatchProps {
-}
+type DispatchProps = {};
 
 export type ContextProviderProps = StateProps & DispatchProps & OwnProps;
 
