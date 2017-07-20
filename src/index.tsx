@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 import {createBrowserHistory} from 'history';
+import {DEV_MODE} from './constants';
 import {createStore} from './store';
-import {ContextProvider} from './containers';
-import {App} from './containers';
+import {ContextProvider, App} from './containers';
 import {translations} from './i18n';
 import {createApolloClient} from './graphql/client';
 import registerServiceWorker from './register-service-worker';
@@ -12,14 +12,15 @@ import './index.css';
 const history = createBrowserHistory();
 
 const store = createStore({}, {
-  env: process.env.NODE_ENV,
+  devMode: DEV_MODE,
   platform: 'browser'
 });
 
 const apolloClient = createApolloClient({
-  uri: process.env.NODE_ENV !== 'production'
+  uri: DEV_MODE
     ? 'http://localhost:3001/graphql'
-    : '/graphql'
+    : '/graphql',
+  devMode: DEV_MODE
 });
 
 render(

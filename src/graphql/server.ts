@@ -1,22 +1,22 @@
 import {graphqlExpress, graphiqlExpress} from 'graphql-server-express';
 import * as bodyParser from 'body-parser';
-import {NextFunction, Request, Response, Application} from 'express';
+import {NextFunction, Request, Response, Router} from 'express';
+import {schema} from './schema';
 
-export function addGraphqlMiddleware(app: Application) {
-  app.use('/graphql', bodyParser.json(), (req: Request, res: Response, next: NextFunction) => {
-    if (process.env.NODE_ENV !== 'production') {
-      Object.keys(require.cache).forEach(absPath => {
-        if (absPath.startsWith(__dirname)) {
-          delete require.cache[absPath];
-        }
-      });
-    }
+export type ApolloRouterConfig = {
+  devMode: boolean;
+};
 
-    const schema = require('./schema');
+export function createApolloRouter({devMode}: ApolloRouterConfig) {
+  const router = Router();
+
+  router.post('/graphql', bodyParser.json(), (req: Request, res: Response, next: NextFunction) => {
     graphqlExpress({schema})(req, res, next);
   });
 
-  if (process.env.NODE_ENV !== 'production') {
-    app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
+  if (devMode) {
+    router.get('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
   }
+
+  return router;
 }

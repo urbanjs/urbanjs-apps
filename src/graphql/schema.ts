@@ -3,12 +3,12 @@ import {GraphQLEmail, GraphQLDateTime} from 'graphql-custom-types';
 import {mocks} from './mocks';
 import {typeDefs} from './typedefs';
 
-const resolvers = {
+export const resolvers = {
   Email: GraphQLEmail,
   Date: GraphQLDateTime
 };
 
-const schema = makeExecutableSchema({
+export const schema = makeExecutableSchema({
   typeDefs,
   resolvers
 });
@@ -17,5 +17,3 @@ addMockFunctionsToSchema({
   schema,
   mocks
 });
-
-module.exports = schema;

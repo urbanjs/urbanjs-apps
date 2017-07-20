@@ -1,9 +1,15 @@
 import {ApolloClient, createNetworkInterface} from 'react-apollo';
 
-export function createApolloClient({uri}: { uri: string }) {
+export type ApolloClientConfig = {
+  uri: string;
+  devMode: boolean;
+};
+
+export function createApolloClient({uri, devMode}: ApolloClientConfig) {
   const networkInterface = createNetworkInterface({uri});
 
   return new ApolloClient({
-    networkInterface: networkInterface
+    networkInterface: networkInterface,
+    connectToDevTools: devMode
   });
 }

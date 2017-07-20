@@ -100,7 +100,10 @@ export const mocks = {
           dueDate: new Date().toISOString(),
           labels: ['promotion'],
           title: 'Siófok promóció',
-          teaser: 'Sziasztok, Szombaton 17:00-24:00 óráig keresek Siófokra 4 lányt promóciós munkára. Jelentkezni privát üzenetben tudtok. NEM Balaton Sound :) Köszi',
+          teaser: `Sziasztok, 
+Szombaton 17:00-24:00 óráig keresek Siófokra 4 lányt promóciós munkára. 
+Jelentkezni privát üzenetben tudtok. NEM Balaton Sound :)
+Köszi`,
           options: [
             {
               id: '123',

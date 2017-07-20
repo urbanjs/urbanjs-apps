@@ -1,3 +1,5 @@
+export const DEV_MODE: boolean = process.env.NODE_ENV !== 'production';
+
 export const DEFAULT_LOCALE = 'hu';
 
 export const ACTION_SET_RUNTIME_VARIABLE = 'ACTION_SET_RUNTIME_VARIABLE';

@@ -31,6 +31,7 @@
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "history": "^4.6.3",
+    "lodash.debounce": "^4.0.8",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
     "react": "^15.6.0",
@@ -53,9 +54,10 @@
     "urbanjs-tools": "2.0.0"
   },
   "scripts": {
-    "start": "npm-run-all -p watch-css start-server start-app",
+    "start": "npm-run-all -p watch-css watch-server start-app",
     "start-app": "react-scripts-ts start",
     "start-server": "ts-node src/server/index.ts",
+    "watch-server": "gulp start-server:watch",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "build": "npm run build-css && react-scripts-ts build && gulp dist",
     "build-css": "node-sass-chokidar src/ -o src/",
