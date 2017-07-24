@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {render} from 'react-dom';
+import {ApolloClient, createNetworkInterface} from 'react-apollo';
 import {createBrowserHistory} from 'history';
-import {DEV_MODE} from './constants';
+import {DEV_MODE, SERVER_PORT} from './constants';
 import {createStore} from './store';
 import {ContextProvider, App} from './containers';
 import {translations} from './i18n';
-import {createApolloClient} from './graphql/client';
 import registerServiceWorker from './register-service-worker';
 import './index.css';
 
@@ -16,11 +16,13 @@ const store = createStore({}, {
   platform: 'browser'
 });
 
-const apolloClient = createApolloClient({
-  uri: DEV_MODE
-    ? 'http://localhost:3001/graphql'
-    : '/graphql',
-  devMode: DEV_MODE
+const apolloClient = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: DEV_MODE
+      ? `http://localhost:${SERVER_PORT}/graphql`
+      : '/graphql'
+  }),
+  connectToDevTools: DEV_MODE
 });
 
 render(
