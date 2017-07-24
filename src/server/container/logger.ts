@@ -1,5 +1,6 @@
-import {ContainerModule} from 'inversify';
-import {ConsoleLoggerService, TraceService} from 'urbanjs-tools-core';
+import { ContainerModule } from 'inversify';
+import { ConsoleLoggerService } from 'urbanjs-tools-core/dist/services/console-logger-service';
+import { TraceService } from 'urbanjs-tools-core/dist/services/trace-service';
 import {
   ITraceService,
   TYPE_SERVICE_TRACE,

@@ -1,7 +1,7 @@
-import {createStore as createReduxStore, applyMiddleware, compose} from 'redux';
-import {root as rootReducer} from '../reducers';
-import {root as rootEpic} from '../epics';
-import {createLoggerMiddleware, createEpicMiddleware} from './middlewares';
+import { createStore as createReduxStore, applyMiddleware, compose } from 'redux';
+import { root as rootReducer } from '../reducers';
+import { root as rootEpic } from '../epics';
+import { createLoggerMiddleware, createEpicMiddleware } from './middlewares';
 
 export type StoreConfig = {
   platform: 'browser' | 'node',

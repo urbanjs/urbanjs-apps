@@ -1,5 +1,5 @@
-import {join} from 'path';
-import {ExpressRouterFactory, ExpressRequest, ExpressResponse} from '../../../types';
+import { join } from 'path';
+import { ExpressRouterFactory, ExpressRequest, ExpressResponse } from '../../../types';
 
 export type AppRouterConfig = {
   absoluteStaticPath: string;

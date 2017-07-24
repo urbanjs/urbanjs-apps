@@ -1,4 +1,4 @@
-import {injectable, inject, track} from '../../decorators';
+import { injectable, inject, track } from '../../decorators';
 import {
   IHttpServer,
   TYPE_DRIVER_EXPRESS_APPLICATION_FACTORY,

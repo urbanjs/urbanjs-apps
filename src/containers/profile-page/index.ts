@@ -1,1 +1,1 @@
-export {ProfilePageWithState as ProfilePage} from './profile-page';
+export { ProfilePageWithState as ProfilePage } from './profile-page';

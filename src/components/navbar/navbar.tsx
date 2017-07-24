@@ -1,8 +1,8 @@
 import * as React from 'react';
 import './navbar.css';
-import {injectIntl, InjectedIntlProps, FormattedMessage} from 'react-intl';
-import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
-import {messages} from './messages';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { messages } from './messages';
 
 type OwnProps = {
   notifications: string[];

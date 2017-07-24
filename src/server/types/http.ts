@@ -1,5 +1,5 @@
-import {Express, Router, Response, Request, RequestHandler} from 'express';
-import {GraphQLSchema} from 'graphql';
+import { Express, Router, Response, Request, RequestHandler } from 'express';
+import { GraphQLSchema } from 'graphql';
 
 export const TYPE_DRIVER_EXPRESS_APPLICATION_FACTORY = 'TYPE_DRIVER_EXPRESS_APPLICATION_FACTORY';
 export const TYPE_DRIVER_EXPRESS_ROUTER_FACTORY = 'TYPE_DRIVER_EXPRESS_ROUTER_FACTORY';
@@ -19,7 +19,7 @@ export type GraphiqlExpressMiddlewareFactory = (options: { endpointURL: string }
 export type ExpressResponse = Response;
 export type ExpressRequest = Request;
 
-export {GraphQLSchema} from 'graphql';
+export { GraphQLSchema } from 'graphql';
 
 export type HttpServerConfig = {
   port: number;

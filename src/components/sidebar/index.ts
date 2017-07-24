@@ -1,1 +1,1 @@
-export {SidebarWithRouter as Sidebar} from './sidebar';
+export { SidebarWithRouter as Sidebar } from './sidebar';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import './gallery.css';
 
 export type OwnProps = {

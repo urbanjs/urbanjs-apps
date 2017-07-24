@@ -1,2 +1,2 @@
-export {ContextProvider} from './context-provider';
-export {App} from './app';
+export { ContextProvider } from './context-provider';
+export { App } from './app';

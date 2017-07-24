@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {ActionCreator, connect, Dispatch} from 'react-redux';
-import {Route, withRouter, RouteComponentProps} from 'react-router-dom';
+import { ActionCreator, connect, Dispatch } from 'react-redux';
+import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import './app.css';
-import {RootState} from '../../reducers';
-import {setLocale} from '../../actions';
-import {Sidebar, Navbar, Footer} from '../../components';
-import {ProfilePage} from '../profile-page';
+import { RootState } from '../../reducers';
+import { setLocale } from '../../actions';
+import { Sidebar, Navbar, Footer } from '../../components';
+import { ProfilePage } from '../profile-page';
 
 type OwnProps = {
   name?: string;

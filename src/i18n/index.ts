@@ -1,4 +1,4 @@
-import {addLocaleData} from 'react-intl';
+import { addLocaleData } from 'react-intl';
 import * as enLocaleData from 'react-intl/locale-data/en';
 import * as huLocaleData from 'react-intl/locale-data/hu';
 import enTranslationMessages from './en';

@@ -1,2 +1,2 @@
-export {createLoggerMiddleware} from './logger';
-export {createEpicMiddleware} from './epic';
+export { createLoggerMiddleware } from './logger';
+export { createEpicMiddleware } from './epic';

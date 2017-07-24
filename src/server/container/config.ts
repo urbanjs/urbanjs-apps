@@ -1,7 +1,7 @@
-import {ContainerModule} from 'inversify';
-import {join} from 'path';
-import {DEV_MODE, SERVER_PORT} from '../../constants';
-import {schema} from '../../graphql';
+import { ContainerModule } from 'inversify';
+import { join } from 'path';
+import { DEV_MODE, SERVER_PORT } from '../../constants';
+import { schema } from '../../graphql';
 import {
   LoggerConfig,
   TYPE_CONFIG_LOGGER,

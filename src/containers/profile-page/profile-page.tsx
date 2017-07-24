@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Switch, Route, Redirect, Link, withRouter, RouteComponentProps} from 'react-router-dom';
-import {Gallery, UserCard, UserInformation, UserInformationEdit} from '../../components';
+import { Switch, Route, Redirect, Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Gallery, UserCard, UserInformation, UserInformationEdit } from '../../components';
 import './profile-page.css';
 
 const PATH_GALLERY = 'gallery';

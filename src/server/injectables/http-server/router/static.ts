@@ -1,4 +1,4 @@
-import {StaticExpressMiddlewareFactory} from '../../../types';
+import { StaticExpressMiddlewareFactory } from '../../../types';
 
 export type StaticRouterConfig = {
   relativeStaticPath: string;

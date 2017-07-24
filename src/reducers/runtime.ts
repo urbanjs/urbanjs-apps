@@ -1,4 +1,4 @@
-import {ACTION_SET_RUNTIME_VARIABLE} from '../constants';
+import { ACTION_SET_RUNTIME_VARIABLE } from '../constants';
 
 export type RuntimeState = {
   [key: string]: string;

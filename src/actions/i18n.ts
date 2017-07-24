@@ -1,4 +1,4 @@
-import {ACTION_SET_LOCALE} from '../constants';
+import { ACTION_SET_LOCALE } from '../constants';
 
 export function setLocale({locale}: { locale: string }) {
   return {

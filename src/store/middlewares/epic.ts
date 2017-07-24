@@ -1,1 +1,1 @@
-export {createEpicMiddleware} from 'redux-observable';
+export { createEpicMiddleware } from 'redux-observable';

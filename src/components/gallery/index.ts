@@ -1,1 +1,1 @@
-export {GalleryWithRouter as Gallery} from './gallery';
+export { GalleryWithRouter as Gallery } from './gallery';

@@ -1,9 +1,9 @@
-import {ContainerModule} from 'inversify';
+import { ContainerModule } from 'inversify';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import {Router} from 'express';
-import {graphqlExpress, graphiqlExpress} from 'graphql-server-express';
+import { Router } from 'express';
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import {
   TYPE_DRIVER_EXPRESS_APPLICATION_FACTORY,
   ExpressApplicationFactory,

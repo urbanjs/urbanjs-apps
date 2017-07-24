@@ -1,4 +1,4 @@
-import {ACTION_PING, ACTION_PONG} from '../constants';
+import { ACTION_PING, ACTION_PONG } from '../constants';
 
 export type PingState = {
   isPinging: boolean;
