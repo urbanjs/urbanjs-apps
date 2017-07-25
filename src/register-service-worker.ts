@@ -1,4 +1,4 @@
-import { DEV_MODE } from './constants';
+import { config } from './config';
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -10,7 +10,7 @@ import { DEV_MODE } from './constants';
 // This link also includes instructions on opting out of this behavior.
 
 export default function register() {
-  if (!DEV_MODE && 'serviceWorker' in navigator) {
+  if (!config.devMode && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
       navigator.serviceWorker

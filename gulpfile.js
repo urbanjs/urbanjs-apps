@@ -20,7 +20,9 @@ tools.initialize(gulp, {
     paramCase: ['!src/**/*test.ts'].concat(defaults.paramCase),
     dotCase: ['src/**/*test.ts']
   }),
-  mocha: true,
+  mocha: {
+    collectCoverage: false
+  },
   tslint: {
     configFile: './tslint.json'
   }

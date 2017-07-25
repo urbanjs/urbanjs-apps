@@ -63,7 +63,9 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "build": "npm run build-css && react-scripts-ts build && gulp dist",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "test": "react-scripts-ts test --env=jsdom",
+    "test": "CI=true react-scripts-ts test --env=jsdom && gulp test",
+    "watch-test-app": "react-scripts-ts test --env=jsdom",
+    "watch-test-server": "gulp test:watch",
     "storybook": "start-storybook -p 6006"
   }
 }
