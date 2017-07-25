@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { ApolloClient, createNetworkInterface } from 'react-apollo';
 import { createBrowserHistory } from 'history';
-import { DEV_MODE, SERVER_PORT } from './constants';
+import { config } from './config';
 import { createStore } from './store';
 import { ContextProvider, App } from './view';
 import { translations } from './i18n';
@@ -12,17 +12,17 @@ import './index.css';
 const history = createBrowserHistory();
 
 const store = createStore({}, {
-  devMode: DEV_MODE,
+  devMode: config.devMode,
   platform: 'browser'
 });
 
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: DEV_MODE
-      ? `http://localhost:${SERVER_PORT}/graphql`
+    uri: config.devMode
+      ? `http://localhost:${config.port}/graphql`
       : '/graphql'
   }),
-  connectToDevTools: DEV_MODE
+  connectToDevTools: config.devMode
 });
 
 render(

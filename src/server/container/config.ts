@@ -1,6 +1,6 @@
 import { ContainerModule } from 'inversify';
 import { join } from 'path';
-import { DEV_MODE, SERVER_PORT } from '../../constants';
+import { config } from '../../config';
 import { schema } from '../../graphql';
 import {
   LoggerConfig,
@@ -11,15 +11,15 @@ import {
 
 export const configModule = new ContainerModule((bind) => {
   bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
-    debug: DEV_MODE,
+    debug: config.devMode,
     info: true,
     error: true,
     warning: true
   });
 
   bind<HttpServerConfig>(TYPE_CONFIG_HTTP).toConstantValue({
-    port: SERVER_PORT,
-    enableGraphQLEditor: DEV_MODE,
+    port: config.port,
+    enableGraphQLEditor: config.devMode,
     absolutePublicPath: join(__dirname, '../../../build'),
     relativePublicPath: 'build',
     graphQLSchema: schema
