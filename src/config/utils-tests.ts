@@ -5,25 +5,25 @@ describe('CM proxy lambda', () => {
   describe('.applyEnvironmentVariables()', () => {
     describe('when no environment variable is set', () => {
       it('returns the original config', () => {
-        const config = {value: 'string'};
+        const config = {defaultValue: 'defaultValue'};
         expect.deepEqual(applyEnvironmentVariables(config), config);
       });
     });
 
     describe('when an option is overridden by environment variables', () => {
       beforeEach(() => {
-        process.env.XI_CM_PROXY_LAMBDA__VALUE = 'string2';
+        process.env.ZV_APP__STRING_VALUE = 'string2';
       });
 
       it('the environment variable is used', () => {
-        const config = {value: 'string'};
-        expect.deepEqual(applyEnvironmentVariables(config), {value: 'string2'});
+        const config = {stringValue: 'string'};
+        expect.deepEqual(applyEnvironmentVariables(config), {stringValue: 'string2'});
       });
 
       describe('and the original value is number', () => {
         beforeEach(() => {
-          process.env.XI_CM_PROXY_LAMBDA__NUMBER = '2';
-          process.env.XI_CM_PROXY_LAMBDA__NUMBER_NAN = 'asd';
+          process.env.ZV_APP__NUMBER = '2';
+          process.env.ZV_APP__NUMBER_NAN = 'asd';
         });
 
         it('the converted environment variable is used', () => {
@@ -40,11 +40,11 @@ describe('CM proxy lambda', () => {
 
       describe('and the original value is boolean', () => {
         beforeEach(() => {
-          process.env.XI_CM_PROXY_LAMBDA__BOOLEAN_TRUE = 'true';
-          process.env.XI_CM_PROXY_LAMBDA__BOOLEAN_TRUE_UPPERCASE = 'TRUE';
-          process.env.XI_CM_PROXY_LAMBDA__BOOLEAN_FALSE = 'false';
-          process.env.XI_CM_PROXY_LAMBDA__BOOLEAN_FALSE_UPPERCASE = 'false';
-          process.env.XI_CM_PROXY_LAMBDA__BOOLEAN_UNKNOWN = 'unknown';
+          process.env.ZV_APP__BOOLEAN_TRUE = 'true';
+          process.env.ZV_APP__BOOLEAN_TRUE_UPPERCASE = 'TRUE';
+          process.env.ZV_APP__BOOLEAN_FALSE = 'false';
+          process.env.ZV_APP__BOOLEAN_FALSE_UPPERCASE = 'false';
+          process.env.ZV_APP__BOOLEAN_UNKNOWN = 'unknown';
         });
 
         it('the converted environment variable is used', () => {
@@ -69,7 +69,7 @@ describe('CM proxy lambda', () => {
 
     describe('when nested data is given', () => {
       beforeEach(() => {
-        process.env.XI_CM_PROXY_LAMBDA__NESTED__VALUE = 'string2';
+        process.env.ZV_APP__NESTED__VALUE = 'string2';
       });
 
       it('supports environment variable overrides', () => {

@@ -6,9 +6,9 @@ import {
   TYPE_SERVICE_TRACE,
   ILoggerService,
   TYPE_SERVICE_LOGGER
-} from '../types';
+} from './types';
 
-export const loggerModule = new ContainerModule((bind) => {
+export const logModule = new ContainerModule((bind) => {
   bind<ILoggerService>(TYPE_SERVICE_LOGGER).to(ConsoleLoggerService);
   bind<ITraceService>(TYPE_SERVICE_TRACE).to(TraceService);
 });

@@ -1,4 +1,4 @@
-import { createStore as createReduxStore, applyMiddleware, compose } from 'redux';
+import { createStore as createReduxStore, applyMiddleware, compose, Middleware } from 'redux';
 import { root as rootReducer } from '../reducers';
 import { root as rootEpic } from '../epics';
 import { createLoggerMiddleware, createEpicMiddleware } from './middlewares';
@@ -9,26 +9,24 @@ export type StoreConfig = {
 };
 
 export function createStore(initialState: object = {}, config: StoreConfig) {
-  let enhancer;
+  const middlewares: Middleware[] = [createEpicMiddleware(rootEpic)];
 
   if (config.devMode) {
-    const enhancers = [];
-    const middlewares = [
-      createEpicMiddleware(rootEpic),
-      createLoggerMiddleware()
-    ];
+    middlewares.push(createLoggerMiddleware());
+  }
 
-    enhancers.push(applyMiddleware(...middlewares));
-
+  let composeEnhancer = compose;
+  if (config.devMode) {
     // https://github.com/zalmoxisus/redux-devtools-extension#redux-devtools-extension
-    let composeEnhancer = compose;
     const devToolsExtensionKey = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
     if (config.platform === 'browser' && window && window.hasOwnProperty(devToolsExtensionKey)) {
       composeEnhancer = window[devToolsExtensionKey];
     }
-
-    enhancer = composeEnhancer.apply(null, enhancers);
   }
 
-  return createReduxStore(rootReducer, initialState, enhancer);
+  return createReduxStore(
+    rootReducer,
+    initialState,
+    composeEnhancer(applyMiddleware(...middlewares))
+  );
 }

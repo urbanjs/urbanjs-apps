@@ -2,6 +2,7 @@ FROM node:8-alpine
 
 ENV PORT 3001
 ENV CI true
+ENV NODE_ENV production
 
 EXPOSE $PORT
 
@@ -10,7 +11,7 @@ ADD . /app
 WORKDIR /app
 
 RUN apk add --update python build-base && \
-    yarn install && \
+    yarn install --production=false && \
     yarn global add pm2@^2 && \
     yarn run build && \
     yarn run test && \
@@ -21,4 +22,4 @@ RUN apk add --update python build-base && \
     yarn cache clean && \
     apk del python build-base
 
-CMD NODE_ENV=production pm2-docker start build-server/server/index.js
+CMD pm2-docker start build-server/server/index.js

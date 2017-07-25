@@ -24,5 +24,5 @@ export function applyEnvironmentVariables<T extends object>(config: object): T {
       }
     });
     return configuredData;
-  }(config, 'XI_CM_PROXY_LAMBDA'));
+  }(config, 'ZV_APP'));
 }
