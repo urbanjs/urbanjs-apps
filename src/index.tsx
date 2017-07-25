@@ -4,7 +4,7 @@ import { ApolloClient, createNetworkInterface } from 'react-apollo';
 import { createBrowserHistory } from 'history';
 import { DEV_MODE, SERVER_PORT } from './constants';
 import { createStore } from './store';
-import { ContextProvider, App } from './containers';
+import { ContextProvider, App } from './view';
 import { translations } from './i18n';
 import registerServiceWorker from './register-service-worker';
 import './index.css';
