@@ -1,10 +1,7 @@
-import { HttpError } from './errors';
-
 export const TYPE_HTTP_APPLICATION_FACTORY = 'TYPE_HTTP_APPLICATION_FACTORY';
 export const TYPE_HTTP_SERVER = 'TYPE_HTTP_SERVER';
 export const TYPE_HTTP_CONFIG = 'TYPE_HTTP_CONFIG';
 export const TYPE_HTTP_CONTROLLER = 'TYPE_HTTP_CONTROLLER';
-export const TYPE_ERROR_SERVICE = 'TYPE_ERROR_SERVICE';
 
 export interface IHttpApplication {
   listen(port: number, cb: (err?: Error) => void): void;
@@ -47,8 +44,4 @@ export type HttpControllerResponse = {
 };
 
 export interface IHttpController {
-}
-
-export interface IErrorService {
-  createHttpError(error: Error): HttpError;
 }

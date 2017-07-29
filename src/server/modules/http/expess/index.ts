@@ -1,7 +1,8 @@
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';
-import { HttpServerConfig, IHttpController, IErrorService } from '../types';
+import { IErrorService } from '../../error/types';
+import { HttpServerConfig, IHttpController } from '../types';
 import { createApp, AppConfig } from './app';
 import { createPassport, PassportConfig, Passport } from './passport';
 import { createErrorHandler, ErrorHandlerConfig } from './error';

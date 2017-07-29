@@ -1,6 +1,7 @@
 import { interfaces  as inversify } from 'inversify';
 import { IUserService, TYPE_USER_SERVICE } from '../user/types';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../log/types';
+import { IErrorService, TYPE_ERROR_SERVICE } from '../error/types';
 import {
   TYPE_GRAPHQL_RESOLVERS_FACTORY,
   GraphqlResolversFactory,
@@ -11,9 +12,7 @@ import {
   TYPE_HTTP_CONTROLLER,
   IHttpController,
   HttpApplicationFactory,
-  HttpServerConfig,
-  TYPE_ERROR_SERVICE,
-  IErrorService
+  HttpServerConfig
 } from './types';
 import { createExpressApplication } from './expess';
 

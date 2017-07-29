@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ILoggerService } from '../../log/types';
-import { IErrorService } from '../types';
+import { IErrorService } from '../../error/types';
 
 export type ErrorHandlerConfig = {
   loggerService: ILoggerService;
