@@ -5,9 +5,7 @@ export function applyEnvironmentVariables<T extends object>(config: object): T {
       const processEnvKey = `${envVariablePrefix}__${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`;
       const value = data[key];
 
-      if (typeof value === 'object') {
-        configuredData[key] = next(value, processEnvKey);
-      } else if (typeof value === 'string') {
+      if (typeof value === 'string') {
         configuredData[key] = process.env.hasOwnProperty(processEnvKey)
           ? process.env[processEnvKey]
           : value;
@@ -19,6 +17,8 @@ export function applyEnvironmentVariables<T extends object>(config: object): T {
         configuredData[key] = process.env.hasOwnProperty(processEnvKey)
           ? /true/i.test(`${process.env[processEnvKey]}`)
           : value;
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
+        configuredData[key] = next(value, processEnvKey);
       } else {
         throw new Error('Invalid config');
       }

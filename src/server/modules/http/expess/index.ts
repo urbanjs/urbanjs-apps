@@ -25,7 +25,7 @@ export type ExpressApplicationConfig = HttpServerConfig & {
 export function createExpressApplication(config: ExpressApplicationConfig) {
   const app = createApp(config as AppConfig);
   const passport = createPassport(Object.assign({}, config, {
-    facebookCallbackURL: `http://${config.host}:${config.port}/auth/facebook/callback`
+    facebookCallbackURL: `${config.hostOrigin}/auth/facebook/callback`
   }) as PassportConfig);
 
   app.use(passport.initialize());

@@ -4,8 +4,8 @@ import { applyEnvironmentVariables } from './utils';
 
 export type Configuration = {
   port: number;
-  host: string;
-  corsAllowedOrigins: string[];
+  hostOrigin: string;
+  corsAllowedOrigins: string;
   devMode: boolean;
   absolutePublicPath: string;
   defaultLocale: string;
@@ -14,10 +14,12 @@ export type Configuration = {
   sessionSecret: string;
 };
 
+const port = 3001;
+
 export const config = applyEnvironmentVariables<Configuration>({
-  port: 3001,
-  host: 'localhost',
-  corsAllowedOrigins: ['http://localhost', 'http://localhost:3000'],
+  port: port,
+  hostOrigin: `http://localhost:${port}`,
+  corsAllowedOrigins: `http://localhost:${port}, http://localhost:3000`,
   devMode: process.env.NODE_ENV !== 'production',
   absolutePublicPath: join(__dirname, '../../build'),
   defaultLocale: 'hu',

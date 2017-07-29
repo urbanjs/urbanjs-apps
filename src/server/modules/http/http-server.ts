@@ -41,7 +41,8 @@ export class HttpServer implements IHttpServer {
           return;
         }
 
-        this.loggerService.info(`Server is now running on http://${this.config.host}:${this.config.port}`);
+        this.loggerService.info(`Server is now running on http://localhost:${this.config.port}`);
+        this.loggerService.info(`Server can be accessed on ${this.config.hostOrigin}`);
       });
     });
   }

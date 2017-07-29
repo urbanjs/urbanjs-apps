@@ -20,7 +20,7 @@ export const configModule = new ContainerModule((bind) => {
 
   bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
     port: config.port,
-    host: config.host,
+    hostOrigin: config.hostOrigin,
     corsAllowedOrigins: config.corsAllowedOrigins,
     devMode: config.devMode,
     enableGraphQLEditor: config.devMode,

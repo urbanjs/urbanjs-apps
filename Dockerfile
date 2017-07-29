@@ -1,10 +1,10 @@
 FROM node:8-alpine
 
-ENV PORT 3001
+ENV ZV_APP__PORT 3001
 ENV CI true
 ENV NODE_ENV production
 
-EXPOSE $PORT
+EXPOSE $ZV_APP__PORT
 
 ADD . /app
 

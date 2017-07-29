@@ -9,8 +9,8 @@ export interface IHttpApplication {
 
 export type HttpServerConfig = {
   port: number;
-  host: string;
-  corsAllowedOrigins: string[];
+  hostOrigin: string;
+  corsAllowedOrigins: string;
   devMode: boolean;
   enableGraphQLEditor: boolean;
   absolutePublicPath: string;

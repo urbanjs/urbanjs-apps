@@ -6,14 +6,14 @@ import * as express from 'express';
 
 export type AppConfig = {
   sessionSecret: string;
-  corsAllowedOrigins: string[];
+  corsAllowedOrigins: string;
 };
 
 export function createApp({sessionSecret, corsAllowedOrigins}: AppConfig) {
   const app = express();
 
   app.use(cors({
-    origin: corsAllowedOrigins,
+    origin: corsAllowedOrigins.split(', '),
     credentials: true
   }));
   app.use(cookieParser());
