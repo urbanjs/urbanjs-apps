@@ -1,5 +1,4 @@
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -16,11 +15,17 @@ export function createApp({sessionSecret, corsAllowedOrigins}: AppConfig) {
     origin: corsAllowedOrigins.split(', '),
     credentials: true
   }));
-  app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
   app.use(session({
     secret: sessionSecret,
+    name: 'zvapp.sid',
+    cookie: {
+      httpOnly: true,
+      sameSite: 'strict',
+      // secure: true, // TODO: https would be required
+    },
+    // store: 'MemoryStore', // TODO: use redis in production
     resave: true,
     saveUninitialized: true
   }));

@@ -44,10 +44,10 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
   }) as GraphqlRouterConfig));
 
   const authRouterPrefix = '/auth';
-  app.use(authRouterPrefix, createAuthRouter({
+  app.use(authRouterPrefix, createAuthRouter(Object.assign({}, config, {
     routerPrefix: authRouterPrefix,
     passport: passport as Passport
-  }));
+  })));
 
   app.use(createStaticRouter(config as StaticRouterConfig));
 
