@@ -1,9 +1,10 @@
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';
-import { HttpServerConfig, IHttpController } from '../types';
+import { HttpServerConfig, IHttpController, IErrorService } from '../types';
 import { createApp, AppConfig } from './app';
 import { createPassport, PassportConfig, Passport } from './passport';
+import { createErrorHandler, ErrorHandlerConfig } from './error';
 import {
   createApiRouter,
   ApiRouterConfig,
@@ -21,6 +22,7 @@ export type ExpressApplicationConfig = HttpServerConfig & {
   graphqlTypeDefs: GraphqlTypeDefs,
   apiControllers: IHttpController[],
   loggerService: ILoggerService,
+  errorService: IErrorService,
   userService: IUserService
 };
 
@@ -49,6 +51,8 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
   app.use(createStaticRouter(config as StaticRouterConfig));
 
   app.use(createAppRouter(config as AppRouterConfig));
+
+  app.use(createErrorHandler(config as ErrorHandlerConfig));
 
   return app;
 }

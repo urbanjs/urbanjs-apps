@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Router, Response, Request } from 'express';
+import { Router, Response, Request, NextFunction } from 'express';
 import { METADATA_KEY_HTTP_ROUTE, HttpRouteOptions } from '../../../../decorators/http-route';
 import { ILoggerService } from '../../../log/types';
 import {
@@ -34,7 +34,7 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
 
         router[httpRouteOptions.method.toLowerCase()](
           httpRouteOptions.path,
-          async (req: Request, res: Response) => {
+          async (req: Request, res: Response, next: NextFunction) => {
             loggerService.debug(`executing ${debugPrefix}...`);
 
             try {
@@ -50,14 +50,10 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
               loggerService.debug(`execution of ${debugPrefix} returned with`, httpResponse);
 
               res.status(httpResponse.statusCode);
-              res.send(httpResponse.payload);
+              res.json(httpResponse.payload);
             } catch (e) {
               loggerService.error(`execution of ${debugPrefix} failed`, e);
-
-              res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
+              next(e);
             }
           }
         );

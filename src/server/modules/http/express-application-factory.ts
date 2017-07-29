@@ -11,7 +11,9 @@ import {
   TYPE_HTTP_CONTROLLER,
   IHttpController,
   HttpApplicationFactory,
-  HttpServerConfig
+  HttpServerConfig,
+  TYPE_ERROR_SERVICE,
+  IErrorService
 } from './types';
 import { createExpressApplication } from './expess';
 
@@ -23,5 +25,6 @@ export const expressApplicationFactory: inversify.FactoryCreator<HttpApplication
         graphqlTypeDefs: context.container.get<GraphqlTypeDefs>(TYPE_GRAPHQL_TYPE_DEFS),
         apiControllers: context.container.getAll<IHttpController>(TYPE_HTTP_CONTROLLER),
         loggerService: context.container.get<ILoggerService>(TYPE_SERVICE_LOGGER),
+        errorService: context.container.get<IErrorService>(TYPE_ERROR_SERVICE),
         userService: context.container.get<IUserService>(TYPE_USER_SERVICE)
       }));
