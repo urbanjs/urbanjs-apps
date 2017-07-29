@@ -1,6 +1,12 @@
 import { interfaces  as inversify } from 'inversify';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../log/types';
 import {
+  TYPE_GRAPHQL_RESOLVERS_FACTORY,
+  GraphqlResolversFactory,
+  TYPE_GRAPHQL_TYPE_DEFS,
+  GraphqlTypeDefs
+} from '../graphql/types';
+import {
   TYPE_HTTP_CONTROLLER,
   IHttpController,
   HttpApplicationFactory,
@@ -12,6 +18,8 @@ export const expressApplicationFactory: inversify.FactoryCreator<HttpApplication
   (context: inversify.Context) =>
     (config: HttpServerConfig) =>
       createExpressApplication(Object.assign({}, config, {
+        graphqlResolvers: context.container.get<GraphqlResolversFactory>(TYPE_GRAPHQL_RESOLVERS_FACTORY)(),
+        graphqlTypeDefs: context.container.get<GraphqlTypeDefs>(TYPE_GRAPHQL_TYPE_DEFS),
         apiControllers: context.container.getAll<IHttpController>(TYPE_HTTP_CONTROLLER),
         loggerService: context.container.get<ILoggerService>(TYPE_SERVICE_LOGGER)
       }));

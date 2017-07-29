@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { STRATEGY_FACEBOOK, Passport } from '../passport';
 
 export type AuthRouterConfig = {
-  passport: Passport
+  passport: Passport;
+  routerPrefix: string;
 };
 
 export function createAuthRouter({passport}: AuthRouterConfig) {

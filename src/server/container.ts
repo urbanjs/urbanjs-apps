@@ -3,7 +3,8 @@ import { configModule } from './config';
 import {
   logModule,
   monitorModule,
-  httpModule
+  httpModule,
+  graphqlModule
 } from './modules';
 
 export const container = new Container({defaultScope: 'Singleton'});
@@ -12,5 +13,6 @@ container.load(
   configModule,
   monitorModule,
   logModule,
-  httpModule
+  httpModule,
+  graphqlModule
 );

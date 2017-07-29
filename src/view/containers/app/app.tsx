@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
+import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
 import './app.css';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
@@ -9,6 +10,7 @@ import { ProfilePage } from '../profile-page';
 
 type OwnProps = {
   name?: string;
+  data: ApolloQueryProps & { user?: { id: string } }
 };
 
 type StateProps = {
@@ -43,6 +45,10 @@ export class App extends React.Component<AppProps, State> {
             }}
           />
 
+          <pre>
+            {JSON.stringify(this.props.data.user, null, '  ')}
+          </pre>
+
           <Route
             path="/user/:id"
             render={(routeProps: RouteComponentProps<null>) =>
@@ -73,4 +79,15 @@ const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentPr
   })
 );
 
-export const AppWithStore = withRouter<OwnProps>(withState(App));
+const withQuery = graphql(
+  gql`
+    query {
+      user {
+        id
+      }
+    }
+  `,
+  {}
+);
+
+export const AppWithStore = withQuery(withRouter<OwnProps>(withState(App)));

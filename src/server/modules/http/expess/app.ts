@@ -1,16 +1,22 @@
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as cors from 'cors';
 import * as express from 'express';
 
 export type AppConfig = {
   sessionSecret: string;
+  corsAllowedOrigins: string[];
 };
 
-export function createApp({sessionSecret}: AppConfig) {
+export function createApp({sessionSecret, corsAllowedOrigins}: AppConfig) {
   const app = express();
 
-  app.use(cors());
+  app.use(cors({
+    origin: corsAllowedOrigins,
+    credentials: true
+  }));
+  app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
   app.use(session({

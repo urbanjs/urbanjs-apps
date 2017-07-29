@@ -19,9 +19,11 @@ export const configModule = new ContainerModule((bind) => {
   });
 
   bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
-    enableGraphQLEditor: config.devMode,
     port: config.port,
     host: config.host,
+    corsAllowedOrigins: config.corsAllowedOrigins,
+    devMode: config.devMode,
+    enableGraphQLEditor: config.devMode,
     sessionSecret: config.sessionSecret,
     facebookAppId: config.facebookAppId,
     facebookAppSecret: config.facebookAppSecret,

@@ -19,7 +19,7 @@ export function createPassport(config: PassportConfig) {
     {
       clientID: config.facebookAppId,
       clientSecret: config.facebookAppSecret,
-      callbackURL: config.facebookAppSecret,
+      callbackURL: config.facebookCallbackURL,
       enableProof: true,
       profileFields: [
         'id',

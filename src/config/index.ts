@@ -5,6 +5,7 @@ import { applyEnvironmentVariables } from './utils';
 export type Configuration = {
   port: number;
   host: string;
+  corsAllowedOrigins: string[];
   devMode: boolean;
   absolutePublicPath: string;
   defaultLocale: string;
@@ -16,6 +17,7 @@ export type Configuration = {
 export const config = applyEnvironmentVariables<Configuration>({
   port: 3001,
   host: 'localhost',
+  corsAllowedOrigins: ['http://localhost', 'http://localhost:3000'],
   devMode: process.env.NODE_ENV !== 'production',
   absolutePublicPath: join(__dirname, '../../build'),
   defaultLocale: 'hu',

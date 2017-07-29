@@ -20,7 +20,10 @@ const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: config.devMode
       ? `http://localhost:${config.port}/graphql`
-      : '/graphql'
+      : '/graphql',
+    opts: {
+      credentials: 'include'
+    }
   }),
   connectToDevTools: config.devMode
 });
