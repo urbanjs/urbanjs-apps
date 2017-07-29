@@ -19,7 +19,8 @@ export class UserResolver implements IGraphqlResolver<User> {
     }
 
     return {
-      id: context.user.id
+      id: context.user.id,
+      displayName: context.user.displayName
     };
   }
 }

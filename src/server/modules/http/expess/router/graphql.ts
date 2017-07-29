@@ -39,8 +39,8 @@ export function createGraphqlRouter({
     context: {
       user: req.user || null
     } as GraphqlResolverContext,
-    debug: devMode,
-    logFunction: message => loggerService.debug(message)
+    debug: devMode
+    // logFunction: message => loggerService.debug(message)
   })));
 
   if (enableGraphQLEditor) {

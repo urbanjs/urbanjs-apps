@@ -19,7 +19,7 @@ const store = createStore({}, {
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: config.devMode
-      ? `http://localhost:${config.port}/graphql`
+      ? `${config.hostOrigin}/graphql`
       : '/graphql',
     opts: {
       credentials: 'include'

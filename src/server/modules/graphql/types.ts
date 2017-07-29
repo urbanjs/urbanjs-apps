@@ -1,4 +1,5 @@
 import { IResolvers } from 'graphql-tools/dist/Interfaces';
+import { User } from '../user/types';
 
 export const TYPE_GRAPHQL_TYPE_DEFS = 'TYPE_GRAPHQL_TYPE_DEFS';
 export const TYPE_GRAPHQL_RESOLVER = 'TYPE_GRAPHQL_RESOLVER';
@@ -8,9 +9,7 @@ export type GraphqlTypeDefs = string;
 export type GraphqlResolvers = IResolvers;
 export type GraphqlResolversFactory = () => IResolvers;
 export type GraphqlResolverContext = {
-  user: null | {
-    id: string;
-  }
+  user: null | User
 };
 
 export interface IGraphqlResolver<T> {

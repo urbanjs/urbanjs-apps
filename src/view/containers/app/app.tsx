@@ -84,6 +84,7 @@ const withQuery = graphql(
     query {
       user {
         id
+        displayName
       }
     }
   `,

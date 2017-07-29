@@ -1,6 +1,7 @@
 export default `
 type User {
   id: ID!
+  displayName: String!
   facebookRegistration: UserFacebookRegistration!
   personalInformation: UserPersonalInformation
   metadata: UserMetadata

@@ -64,10 +64,10 @@
     "urbanjs-tools": "2.0.0"
   },
   "scripts": {
-    "start": "npm-run-all -p watch-css watch-server start-app",
-    "start-app": "react-scripts-ts start",
+    "start": "npm-run-all -p watch-css watch-server watch-app",
     "start-server": "ts-node src/server/index.ts",
     "watch-server": "gulp start-server:watch",
+    "watch-app": "react-scripts-ts start",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "build": "npm run build-css && react-scripts-ts build && gulp dist",
     "build-css": "node-sass-chokidar src/ -o src/",

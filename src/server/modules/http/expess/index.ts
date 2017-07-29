@@ -1,3 +1,4 @@
+import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';
 import { HttpServerConfig, IHttpController } from '../types';
@@ -19,7 +20,8 @@ export type ExpressApplicationConfig = HttpServerConfig & {
   graphqlResolvers: GraphqlResolvers,
   graphqlTypeDefs: GraphqlTypeDefs,
   apiControllers: IHttpController[],
-  loggerService: ILoggerService
+  loggerService: ILoggerService,
+  userService: IUserService
 };
 
 export function createExpressApplication(config: ExpressApplicationConfig) {
