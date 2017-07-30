@@ -1,14 +1,14 @@
 import { ContainerModule } from 'inversify';
 import { relative } from 'path';
-import { config } from '../config';
+import { config } from '../../config';
 import {
   LoggerConfig,
   TYPE_CONFIG_LOGGER
-} from './modules/log/types';
+} from '../modules/log/types';
 import {
   HttpServerConfig,
   TYPE_HTTP_CONFIG
-} from './modules/http/types';
+} from '../modules/http/types';
 
 export const configModule = new ContainerModule((bind) => {
   bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({

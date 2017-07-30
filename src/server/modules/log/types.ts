@@ -6,3 +6,7 @@ export {
   ITraceService,
   TYPE_SERVICE_TRACE
 } from 'urbanjs-tools-core/dist/types';
+
+export {
+  TYPE_DRIVER_CHALK
+} from 'urbanjs-tools-core/dist/services/console-logger-service';

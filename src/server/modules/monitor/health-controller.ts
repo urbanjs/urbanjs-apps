@@ -1,12 +1,8 @@
-import { inject, injectable, httpRoute, track } from '../../decorators';
-import { ITraceService, TYPE_SERVICE_TRACE } from '../log/types';
+import { injectable, httpRoute, track } from '../../decorators';
 import { HttpControllerResponse, IHttpController } from '../http/types';
 
 @injectable()
 export class HealthController implements IHttpController {
-  constructor(@inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
-    traceService.track(this);
-  }
 
   @track()
   @httpRoute({

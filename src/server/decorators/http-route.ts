@@ -7,7 +7,7 @@ export type HttpRouteOptions = {
   path: string;
 };
 
-export function httpRoute(options: HttpRouteOptions) {
+export function httpRoute(options: HttpRouteOptions): MethodDecorator {
   return (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
     if (typeof target[propertyKey] !== 'function') {
       throw new Error('@httpRoute() decorator can be used for methods only');

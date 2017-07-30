@@ -17,7 +17,7 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
   const router = Router();
 
   apiControllers.forEach((controller) => {
-    Object.keys(controller).forEach((methodName) => {
+    Object.keys(controller.constructor.prototype).forEach((methodName) => {
       if (typeof controller[methodName] !== 'function') {
         return;
       }

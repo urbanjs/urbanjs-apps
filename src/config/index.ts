@@ -1,5 +1,4 @@
 import { join } from 'path';
-
 import { applyEnvironmentVariables } from './utils';
 
 export type Configuration = {
@@ -16,14 +15,17 @@ export type Configuration = {
 
 const port = 3001;
 
-export const config = applyEnvironmentVariables<Configuration>({
-  port: port,
-  hostOrigin: `http://localhost:${port}`,
-  corsAllowedOrigins: `http://localhost:${port}, http://localhost:3000`,
-  devMode: process.env.NODE_ENV !== 'production',
-  absolutePublicPath: join(__dirname, '../../build'),
-  defaultLocale: 'hu',
-  facebookAppId: '369058166771856',
-  facebookAppSecret: '',
-  sessionSecret: 'awesome_secret'
-});
+export const config = applyEnvironmentVariables<Configuration>(
+  {
+    port: port,
+    hostOrigin: `http://localhost:${port}`,
+    corsAllowedOrigins: `http://localhost:${port}, http://localhost:3000`,
+    devMode: process.env.NODE_ENV !== 'production',
+    absolutePublicPath: join(__dirname, '../../build'),
+    defaultLocale: 'hu',
+    facebookAppId: '369058166771856',
+    facebookAppSecret: '',
+    sessionSecret: 'awesome_secret'
+  },
+  'ZV_APP'
+);

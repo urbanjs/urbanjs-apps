@@ -1,13 +1,11 @@
 import { injectable, inject, track } from '../../decorators';
-import { ITraceService, TYPE_SERVICE_TRACE, ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
+import { ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
 import { HttpError } from './errors';
 import { IErrorService } from './types';
 
 @injectable()
 export class ErrorService implements IErrorService {
-  constructor(@inject(TYPE_SERVICE_TRACE) traceService: ITraceService,
-              @inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
-    traceService.track(this);
+  constructor(@inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
   }
 
   @track()

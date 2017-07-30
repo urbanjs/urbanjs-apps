@@ -9,9 +9,7 @@ import {
 } from './types';
 import {
   TYPE_SERVICE_LOGGER,
-  ILoggerService,
-  TYPE_SERVICE_TRACE,
-  ITraceService,
+  ILoggerService
 } from '../log/types';
 
 @injectable()
@@ -20,14 +18,10 @@ export class HttpServer implements IHttpServer {
 
   constructor(@inject(TYPE_HTTP_APPLICATION_FACTORY)
                 createApplication: HttpApplicationFactory,
-              @inject(TYPE_SERVICE_TRACE)
-                traceService: ITraceService,
               @inject(TYPE_HTTP_CONFIG)
               private config: HttpServerConfig,
               @inject(TYPE_SERVICE_LOGGER)
               private loggerService: ILoggerService) {
-    traceService.track(this);
-
     this.app = createApplication(config);
   }
 

@@ -1,23 +1,22 @@
 import { inherits } from 'util';
 
+export type ErrorResponse = {
+  message: string;
+  innerError?: {
+    message: string;
+    stack: string
+  }
+};
+
 export class HttpError {
-  public message: string;
-  public statusCode: number;
-  public headers: Object;
+  public headers: Object = {};
   public innerError: Error;
 
-  constructor(message: string, code: number) {
-    this.message = message || 'No message';
-    this.statusCode = code;
-
-    this.headers = {};
-    this.innerError = new Error(message);
+  constructor(public message: string, public statusCode: number) {
   }
 
-  public toResponse(includeInnerError: boolean = false): { message: string, innerError?: object } {
-    const error = {
-      message: this.message
-    };
+  public toResponse(includeInnerError: boolean = false): ErrorResponse {
+    const error = {message: this.message};
 
     if (includeInnerError === true && this.innerError) {
       Object.assign(error, {

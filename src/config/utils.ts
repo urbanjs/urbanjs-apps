@@ -1,8 +1,15 @@
-export function applyEnvironmentVariables<T extends object>(config: object): T {
+export function toConstantCase(value: string) {
+  return value
+    .replace(/([a-z])([A-Z])/g, '$1_$2')
+    .replace(/([A-Z]{2,})([a-z])/g, '$1_$2')
+    .toUpperCase();
+}
+
+export function applyEnvironmentVariables<T extends object>(config: object, envVariableRootPrefix: string = ''): T {
   return (function next(data: object, envVariablePrefix: string) {
     const configuredData = {} as T;
     Object.keys(data).forEach((key) => {
-      const processEnvKey = `${envVariablePrefix}__${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`;
+      const processEnvKey = `${envVariablePrefix ? `${envVariablePrefix}__` : ''}${toConstantCase(key)}`;
       const value = data[key];
 
       if (typeof value === 'string') {
@@ -24,5 +31,5 @@ export function applyEnvironmentVariables<T extends object>(config: object): T {
       }
     });
     return configuredData;
-  }(config, 'ZV_APP'));
+  }(config, envVariableRootPrefix));
 }

@@ -1,5 +1,4 @@
-import { injectable, inject, track } from '../../../decorators';
-import { TYPE_SERVICE_TRACE, ITraceService } from '../../log/types';
+import { injectable, track } from '../../../decorators';
 import { GraphqlResolverContext, IGraphqlResolver } from '../types';
 
 export type User = null | {
@@ -8,9 +7,6 @@ export type User = null | {
 
 @injectable()
 export class UserResolver implements IGraphqlResolver<User> {
-  constructor(@inject(TYPE_SERVICE_TRACE) traceService: ITraceService) {
-    traceService.track(this);
-  }
 
   @track()
   resolve(obj: object, args: object, context: GraphqlResolverContext) {
