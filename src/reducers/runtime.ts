@@ -1,23 +1,39 @@
-import { ACTION_SET_RUNTIME_VARIABLE } from '../constants';
+import {
+  ACTION_SET_RUNTIME_VARIABLE,
+  ACTION_SET_RUNTIME_ERROR
+} from '../constants';
+import {
+  SetRuntimeErrorPayload,
+  SetRuntimeVariablePayload
+} from '../actions';
 
 export type RuntimeState = {
-  [key: string]: string;
+  variables: {
+    [key: string]: string;
+  },
+  error?: SetRuntimeErrorPayload
 };
 
 export type RuntimeAction = {
   type: string;
-  payload: {
-    name: string,
-    value: string
-  }
+  payload: object;
 };
 
-export function runtime(state: RuntimeState = {}, action: RuntimeAction) {
+export function runtime(state: RuntimeState = {variables: {}}, action: RuntimeAction) {
   switch (action.type) {
     case ACTION_SET_RUNTIME_VARIABLE:
+      const payload = <SetRuntimeVariablePayload> action.payload;
       return {
         ...state,
-        [action.payload.name]: action.payload.value,
+        variables: {
+          ...state.variables,
+          [payload.name]: payload.value
+        }
+      };
+    case ACTION_SET_RUNTIME_ERROR:
+      return {
+        ...state,
+        error: <SetRuntimeErrorPayload> action.payload
       };
     default:
       return state;

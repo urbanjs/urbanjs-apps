@@ -39,8 +39,8 @@ export type HttpControllerRequestParams = {
 };
 
 export type HttpControllerResponse = {
-  statusCode: number;
-  payload: object;
+  statusCode?: number;
+  payload?: object;
 };
 
 export interface IHttpController {

@@ -1,6 +1,5 @@
 import { Container } from 'inversify';
 import { config } from '../../config';
-import { ITraceService, TYPE_SERVICE_TRACE } from '../modules/log/types';
 import {
   logModule,
   monitorModule,
@@ -14,6 +13,15 @@ import { configModule } from './config';
 
 export const container = new Container({defaultScope: 'Singleton'});
 
+const middlewares = [];
+
+if (config.devMode) {
+  middlewares.push(createLoggerMiddleware());
+  middlewares.push(createTraceMiddleware({container}));
+}
+
+container.applyMiddleware(...middlewares);
+
 container.load(
   configModule,
   monitorModule,
@@ -23,14 +31,3 @@ container.load(
   userModule,
   errorModule
 );
-
-const middlewares = [];
-
-if (config.devMode) {
-  middlewares.push(createLoggerMiddleware());
-  middlewares.push(createTraceMiddleware({
-    traceService: container.get<ITraceService>(TYPE_SERVICE_TRACE)
-  }));
-}
-
-container.applyMiddleware(...middlewares);

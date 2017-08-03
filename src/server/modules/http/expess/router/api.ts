@@ -46,11 +46,20 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
                 remoteAddress: req.ip
               };
 
-              const httpResponse: HttpControllerResponse = await controller[methodName](requestParams);
+              let httpResponse: HttpControllerResponse = await controller[methodName](requestParams);
               loggerService.debug(`execution of ${debugPrefix} returned with`, httpResponse);
 
-              res.status(httpResponse.statusCode);
-              res.json(httpResponse.payload);
+              httpResponse = httpResponse || {};
+
+              if (typeof httpResponse.statusCode === 'number') {
+                res.status(httpResponse.statusCode);
+              }
+
+              if (typeof httpResponse.payload !== 'undefined') {
+                res.json(httpResponse.payload);
+              } else {
+                res.send();
+              }
             } catch (e) {
               loggerService.error(`execution of ${debugPrefix} failed`, e);
               next(e);

@@ -3,8 +3,9 @@ import { render } from 'react-dom';
 import { ApolloClient, createNetworkInterface } from 'react-apollo';
 import { createBrowserHistory } from 'history';
 import { config } from './config';
+import { setRuntimeVariable } from './actions';
 import { createStore } from './store';
-import { ContextProvider, App } from './view';
+import { ContextProvider, App, ErrorBoundary } from './view';
 import { translations } from './i18n';
 import registerServiceWorker from './register-service-worker';
 import './index.css';
@@ -15,6 +16,16 @@ const store = createStore({}, {
   devMode: config.devMode,
   platform: 'browser'
 });
+
+store.dispatch(setRuntimeVariable({
+  name: 'devMode',
+  value: config.devMode
+}));
+
+store.dispatch(setRuntimeVariable({
+  name: 'hostOrigin',
+  value: config.hostOrigin
+}));
 
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
@@ -35,7 +46,9 @@ render(
     routerHistory={history}
     translations={translations}
   >
-    <App/>
+    <ErrorBoundary>
+      <App/>
+    </ErrorBoundary>
   </ContextProvider>,
   document.getElementById('root') as HTMLElement
 );

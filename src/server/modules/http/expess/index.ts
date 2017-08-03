@@ -36,7 +36,7 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use('/api/v1', createApiRouter(config as ApiRouterConfig));
+  app.use('/api', createApiRouter(config as ApiRouterConfig));
 
   const graphqlRouterPrefix = '/graphql';
   app.use(graphqlRouterPrefix, createGraphqlRouter(Object.assign({}, config, {

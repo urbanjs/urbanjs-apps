@@ -1,3 +1,3 @@
-export { setLocale } from './i18n';
-export { setRuntimeVariable } from './runtime';
-export { ping, pong } from './ping';
+export * from './i18n';
+export * from './runtime';
+export * from './ping';

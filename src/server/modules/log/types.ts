@@ -10,3 +10,11 @@ export {
 export {
   TYPE_DRIVER_CHALK
 } from 'urbanjs-tools-core/dist/services/console-logger-service';
+
+export const TYPE_LOG_SERVICE = 'TYPE_LOG_SERVICE';
+
+export type Log = string;
+
+export interface ILogService {
+  createLog(log: Log): Promise<void>;
+}
