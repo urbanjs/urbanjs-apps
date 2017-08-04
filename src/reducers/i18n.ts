@@ -1,6 +1,5 @@
 import { translations } from '../i18n';
-import { config } from '../config';
-import { ACTION_SET_LOCALE } from '../constants';
+import { ACTION_SET_LOCALE, DEFAULT_LOCALE } from '../constants';
 
 export type SetLocaleAction = {
   type: string;
@@ -16,7 +15,7 @@ export type I18NState = {
 
 export function i18n(state: I18NState = {
                        availableLocales: Object.keys(translations),
-                       locale: config.defaultLocale
+                       locale: DEFAULT_LOCALE
                      },
                      action: SetLocaleAction) {
   switch (action.type) {

@@ -1,5 +1,4 @@
-export const ACTION_SET_RUNTIME_VARIABLE = 'ACTION_SET_RUNTIME_VARIABLE';
-export const ACTION_SET_RUNTIME_ERROR = 'ACTION_SET_RUNTIME_ERROR';
-export const ACTION_SET_LOCALE = 'ACTION_SET_LOCALE';
-export const ACTION_PING = 'ACTION_PING';
-export const ACTION_PONG = 'ACTION_PONG';
+export * from './actions';
+export * from './paths';
+
+export const DEFAULT_LOCALE = 'hu';

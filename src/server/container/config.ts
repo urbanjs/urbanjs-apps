@@ -1,6 +1,6 @@
 import { ContainerModule } from 'inversify';
 import { relative } from 'path';
-import { config } from '../../config';
+import { config } from '../config';
 import {
   LoggerConfig,
   TYPE_CONFIG_LOGGER

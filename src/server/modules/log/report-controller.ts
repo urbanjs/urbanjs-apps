@@ -1,4 +1,5 @@
 import { inject, injectable, httpRoute, track } from '../../decorators';
+import { PATH_API_REPORT_ERROR } from '../../../constants';
 import {
   HttpControllerRequestParams,
   IHttpController
@@ -16,7 +17,7 @@ export class ReportController implements IHttpController {
   @track()
   @httpRoute({
     method: 'POST',
-    path: '/v1/report/error'
+    path: PATH_API_REPORT_ERROR
   })
   async handler(params: HttpControllerRequestParams) {
     await this.logService.createLog(JSON.stringify(params.payload));

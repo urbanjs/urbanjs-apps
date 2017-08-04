@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { PATH_AUTH_FACEBOOK_CALLBACK, PATH_AUTH_FACEBOOK } from '../../../../../constants';
 import { STRATEGY_FACEBOOK, Passport } from '../passport';
 import { ILoggerService } from '../../../log/types';
 
@@ -18,11 +19,18 @@ export function createAuthRouter({passport, loggerService}: AuthRouterConfig) {
     res.redirect('/');
   });
 
-  router.get('/facebook', passport.authenticate(STRATEGY_FACEBOOK));
-  router.get('/facebook/callback', passport.authenticate(STRATEGY_FACEBOOK, {
-    successRedirect: '/',
-    failureRedirect: '/'
-  }));
+  router.get(
+    PATH_AUTH_FACEBOOK,
+    passport.authenticate(STRATEGY_FACEBOOK)
+  );
+
+  router.get(
+    `${PATH_AUTH_FACEBOOK}${PATH_AUTH_FACEBOOK_CALLBACK}`,
+    passport.authenticate(STRATEGY_FACEBOOK, {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
 
   return router;
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { ApolloClient, createNetworkInterface } from 'react-apollo';
 import { createBrowserHistory } from 'history';
+import { PATH_GRAPHQL } from './constants';
 import { config } from './config';
 import { setRuntimeVariable } from './actions';
 import { createStore } from './store';
@@ -29,9 +30,7 @@ store.dispatch(setRuntimeVariable({
 
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: config.devMode
-      ? `${config.hostOrigin}/graphql`
-      : '/graphql',
+    uri: `${config.hostOrigin}${PATH_GRAPHQL}`,
     opts: {
       credentials: 'include'
     }

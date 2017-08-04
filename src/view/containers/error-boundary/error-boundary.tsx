@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect, Dispatch, ActionCreator } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../../../reducers';
 import { setRuntimeError, SetRuntimeErrorPayload } from '../../../actions';
 import './error-boundary.css';
@@ -16,7 +17,7 @@ type DispatchProps = {
   setRuntimeError: ActionCreator<object>;
 };
 
-export type ErrorBoundaryProps = StateProps & DispatchProps & OwnProps;
+export type ErrorBoundaryProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
   props: ErrorBoundaryProps;
@@ -48,7 +49,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
   }
 }
 
-const withStore = connect<StateProps, DispatchProps, OwnProps>(
+const withStore = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
   (state: RootState): StateProps => ({
     hasError: !!state.runtime.error
   }),
@@ -57,4 +58,4 @@ const withStore = connect<StateProps, DispatchProps, OwnProps>(
   })
 );
 
-export const ErrorBoundaryWithStore = withStore(ErrorBoundary);
+export const ErrorBoundaryWithStore = withRouter<OwnProps>(withStore(ErrorBoundary));

@@ -33,3 +33,36 @@ export function applyEnvironmentVariables<T extends object>(config: object, envV
     return configuredData;
   }(config, envVariableRootPrefix));
 }
+
+export type StringResolver = (value: string, context: object) => string;
+
+export function resolveReferences<T extends object>(config: T, resolver: StringResolver) {
+  return (function next<T1>(data: T1): T1 {
+    let hasResolved = false;
+    const resolvedConfig = {} as T1;
+
+    Object.keys(data).forEach((key) => {
+      let value = data[key];
+
+      if (typeof value === 'string') {
+        const afterValue = resolver(value, config);
+        if (typeof afterValue !== 'string') {
+          throw new Error('Resolver must return a string');
+        }
+
+        if (afterValue !== value) {
+          hasResolved = true;
+        }
+        value = afterValue;
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
+        value = next(value);
+      }
+
+      resolvedConfig[key] = value;
+    });
+
+    return hasResolved
+      ? next(resolvedConfig)
+      : resolvedConfig;
+  }<T>(config));
+}

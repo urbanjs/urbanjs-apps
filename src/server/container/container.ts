@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { config } from '../../config';
+import { config } from '../config';
 import {
   logModule,
   monitorModule,

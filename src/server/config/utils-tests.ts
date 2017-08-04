@@ -1,5 +1,6 @@
+import es6TemplateResolver = require('es6-template-strings');
 import * as expect from 'assert';
-import { applyEnvironmentVariables, toConstantCase } from './utils';
+import { applyEnvironmentVariables, toConstantCase, resolveReferences } from './utils';
 
 describe('src/config/utils', () => {
   describe('.toConstantCase()', () => {
@@ -106,5 +107,55 @@ describe('src/config/utils', () => {
         expect.deepEqual(applyEnvironmentVariables(config, 'PREFIX'), {stringValue: 'string2'});
       });
     });
+  });
+
+  describe('.resolveReferences()', () => {
+    // tslint:disable no-invalid-template-strings
+
+    it('resolves references', () => {
+      const config = {
+        a: '1',
+        b: '${a}'
+      };
+
+      expect.deepEqual(resolveReferences(config, es6TemplateResolver), {a: '1', b: '1'});
+    });
+
+    it('resolves nested references', () => {
+      const config = {
+        a: {
+          c: '1'
+        },
+        b: '${a.c}'
+      };
+
+      expect.deepEqual(resolveReferences(config, es6TemplateResolver), {a: {c: '1'}, b: '1'});
+    });
+
+    it('only string values are supported as references', () => {
+      const a = {
+        c: 1,
+        d: [1, 2],
+        e: true
+      };
+
+      const config = {
+        a,
+        b: '${a}',
+        c: '${a.c}',
+        d: '${a.d}',
+        e: '${a.e}',
+      };
+
+      expect.deepEqual(resolveReferences(config, es6TemplateResolver), {
+        a,
+        b: '[object Object]',
+        c: '1',
+        d: '1,2',
+        e: 'true'
+      });
+    });
+
+    // tslint:enable no-invalid-template-strings
   });
 });
