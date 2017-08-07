@@ -4,3 +4,4 @@ export * from './log';
 export * from './monitor';
 export * from './user';
 export * from './error';
+export * from './uuid';

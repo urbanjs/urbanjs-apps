@@ -6,7 +6,8 @@ import {
   httpModule,
   graphqlModule,
   userModule,
-  errorModule
+  errorModule,
+  uuidModule
 } from '../modules';
 import { createLoggerMiddleware, createTraceMiddleware } from './middlewares';
 import { configModule } from './config';
@@ -16,7 +17,7 @@ export const container = new Container({defaultScope: 'Singleton'});
 const middlewares = [];
 
 if (config.devMode) {
-  middlewares.push(createLoggerMiddleware());
+  middlewares.push(createLoggerMiddleware(  ));
   middlewares.push(createTraceMiddleware({container}));
 }
 
@@ -29,5 +30,6 @@ container.load(
   httpModule,
   graphqlModule,
   userModule,
-  errorModule
+  errorModule,
+  uuidModule
 );

@@ -1,4 +1,5 @@
 import { interfaces as inversify } from 'inversify';
+import { GraphQLEmail, GraphQLDateTime } from 'graphql-custom-types';
 import { IGraphqlResolver, TYPE_GRAPHQL_RESOLVER } from '../types';
 import { User } from './user';
 
@@ -10,6 +11,8 @@ export function resolversFactory(context: inversify.Context) {
   return () => ({
     Query: {
       user: userResolver.resolve.bind(userResolver)
-    }
+    },
+    Email: GraphQLEmail,
+    Date: GraphQLDateTime
   });
 }

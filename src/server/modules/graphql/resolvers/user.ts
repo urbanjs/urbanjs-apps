@@ -16,7 +16,11 @@ export class UserResolver implements IGraphqlResolver<User> {
 
     return {
       id: context.user.id,
-      displayName: context.user.displayName
+      displayName: context.user.displayName,
+      facebookRegistration: {
+        id: context.user.facebookId
+      },
+      subscription: context.user.subscription
     };
   }
 }

@@ -333,6 +333,16 @@
     "@types/node" "*"
     "@types/react" "*"
 
+"@types/uuid-validate@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid-validate/-/uuid-validate-0.0.0.tgz#636ed8b85b318abfccee5dab91b28e93f5e318cf"
+
+"@types/uuid@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.0.tgz#91639516fbb892ed3737a2bdc1b030d02b4a09c1"
+  dependencies:
+    "@types/node" "*"
+
 "@types/yargs@^6.6.0":
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-6.6.0.tgz#91f8e2580a8083049f78311c059aa57d6949df6b"
@@ -8916,6 +8926,10 @@ utila@~0.4:
 utils-merge@1.0.0, utils-merge@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
+
+uuid-validate@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/uuid-validate/-/uuid-validate-0.0.2.tgz#ed883d26cf0d1819763abfa315e9626ddb67c8e8"
 
 uuid@^2.0.1, uuid@^2.0.2:
   version "2.0.3"
