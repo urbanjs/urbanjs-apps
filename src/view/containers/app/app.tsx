@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
+import { track } from '../../../decorators';
 import './app.css';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
@@ -29,6 +30,7 @@ export class App extends React.Component<AppProps, State> {
   props: AppProps;
   state: State = {isSidebarCollapsed: false};
 
+  @track()
   render() {
     return (
       <div className={`zv-app h-100 ${this.state.isSidebarCollapsed ? 'zv-sidebar-hidden' : ''}`}>

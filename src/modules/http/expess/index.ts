@@ -4,7 +4,7 @@ import {
   PATH_AUTH_FACEBOOK,
   PATH_AUTH_FACEBOOK_CALLBACK,
   PATH_GRAPHQL
-} from '../../../../constants';
+} from '../../../constants';
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';

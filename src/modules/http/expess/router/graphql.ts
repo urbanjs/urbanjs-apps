@@ -2,7 +2,7 @@ import { Router, Request } from 'express';
 import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addErrorLoggingToSchema } from 'graphql-tools';
 import { join } from 'path';
-import { PATH_GRAPHQL_PLAYGROUND } from '../../../../../constants';
+import { PATH_GRAPHQL_PLAYGROUND } from '../../../../constants';
 import { GraphqlTypeDefs, GraphqlResolvers, GraphqlResolverContext } from '../../../graphql/types';
 import { ILoggerService } from '../../../log/types';
 

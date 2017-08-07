@@ -4348,6 +4348,10 @@ invariant@2.x.x, invariant@^2.0.0, invariant@^2.1.1, invariant@^2.2.0, invariant
   dependencies:
     loose-envify "^1.0.0"
 
+inversify-inject-decorators@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/inversify-inject-decorators/-/inversify-inject-decorators-3.0.1.tgz#de46df46ba72642eacac79451ec5c101e4dbcb00"
+
 inversify-logger-middleware@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/inversify-logger-middleware/-/inversify-logger-middleware-3.0.0.tgz#ded2c8c6055828255cd599dfec68faf1eb999ec3"

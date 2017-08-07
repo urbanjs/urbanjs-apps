@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { PATH_AUTH_FACEBOOK_CALLBACK, PATH_AUTH_FACEBOOK } from '../../../../../constants';
+import { PATH_AUTH_FACEBOOK_CALLBACK, PATH_AUTH_FACEBOOK } from '../../../../constants';
 import { STRATEGY_FACEBOOK, Passport } from '../passport';
 import { ILoggerService } from '../../../log/types';
 

@@ -1,5 +1,5 @@
 import { inject, injectable, httpRoute, track } from '../../decorators';
-import { PATH_API_REPORT_ERROR } from '../../../constants';
+import { PATH_API_REPORT_ERROR } from '../../constants';
 import {
   HttpControllerRequestParams,
   IHttpController
