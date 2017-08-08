@@ -6,5 +6,5 @@ export {
 export {
   injectable,
   inject,
-  reinitializeInjectDecorators
+  supportLazyInject
 } from './inject';

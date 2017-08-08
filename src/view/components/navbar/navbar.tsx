@@ -1,10 +1,22 @@
 import * as React from 'react';
-import './navbar.css';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { inject } from '../../../decorators';
+import {
+  ACTIVITY_VIEW_NOTIFICATIONS,
+  PATH_APP,
+  PATH_APP_NOTIFICATIONS
+} from '../../../constants';
+import {
+  TYPE_AUTHORIZATION_SERVICE,
+  IAuthorizationService,
+  Feature
+} from '../../../modules/authorization/types';
 import { messages } from './messages';
+import './navbar.css';
 
 type OwnProps = {
+  allowedFeatures: Feature[];
   notifications: string[];
   onCollapse: () => void;
   onLogout: () => void;
@@ -20,8 +32,30 @@ export class Navbar extends React.Component<NavbarProps, State> {
   props: NavbarProps;
   state: State = {profileCardIsOpen: false};
 
+  @inject(TYPE_AUTHORIZATION_SERVICE)
+  private authorizationService: IAuthorizationService;
+
   render() {
-    const notifications = this.props.notifications;
+    let notificationLink;
+    if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {
+      const notifications = this.props.notifications;
+
+      notificationLink = (
+        <Link
+          to={PATH_APP_NOTIFICATIONS}
+          className={`btn btn-link text-muted ${
+            this.props.location.pathname === PATH_APP_NOTIFICATIONS ? 'text-primary' : ''}`}
+        >
+          <i className="fa fa-3x fa-bell"/>
+          {
+            notifications.length
+              ? <span className="badge badge-primary">
+                  {notifications.length > 99 ? '99+' : notifications.length}</span>
+              : ''
+          }
+        </Link>
+      );
+    }
 
     return (
       <div
@@ -35,19 +69,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
           <i className="fa fa-2x fa-bars"/>
         </a>
 
-        <Link
-          to="/notifications"
-          className={`btn btn-link text-muted ${
-            this.props.location.pathname === '/notifications' ? 'text-primary' : ''}`}
-        >
-          <i className="fa fa-3x fa-bell"/>
-          {
-            notifications.length
-              ? <span className="badge badge-primary">
-                  {notifications.length > 99 ? '99+' : notifications.length}</span>
-              : ''
-          }
-        </Link>
+        {notificationLink}
 
         <a
           className="btn btn-link text-muted"
@@ -71,7 +93,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
               </h4>
 
               <Link
-                to="/"
+                to={PATH_APP}
                 className="btn btn-link p-0"
               >
                 <FormattedMessage id={messages['button.logout']}/>
@@ -85,4 +107,4 @@ export class Navbar extends React.Component<NavbarProps, State> {
   }
 }
 
-export const NavbarWithIntl = injectIntl<OwnProps>(withRouter(Navbar));
+export const NavbarWithIntl = injectIntl<OwnProps>(withRouter<OwnProps & InjectedIntlProps>(Navbar));

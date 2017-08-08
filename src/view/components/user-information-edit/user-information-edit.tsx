@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { PATH_APP } from '../../../constants';
 import { messages } from './messages';
 import './user-information-edit.css';
 
@@ -33,7 +34,7 @@ export type State = {
   changes: User;
 };
 
-export type UserInformationEditProps = OwnProps;
+export type UserInformationEditProps = OwnProps & InjectedIntlProps;
 
 export class UserInformationEdit extends React.Component<UserInformationEditProps, State> {
   props: UserInformationEditProps;
@@ -116,7 +117,7 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
                 <td className="text-muted p-4" colSpan={2}>
                   <Link
                     className="btn btn-link"
-                    to="/"
+                    to={PATH_APP}
                   >
                     <FormattedMessage id={messages.editPersonalInformation}/>
                   </Link>
@@ -185,7 +186,9 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
                     {
                       Object.keys(messages.qualificationLevel).map((qualificationLevelKey: string) =>
                         <option value={qualificationLevelKey} key={qualificationLevelKey}>
-                          <FormattedMessage id={messages.qualificationLevel[qualificationLevelKey]}/>
+                          {this.props.intl.formatMessage({
+                            id: messages.qualificationLevel[qualificationLevelKey]
+                          })}
                         </option>
                       )
                     }
@@ -238,7 +241,9 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
                         {
                           Object.keys(messages.languageLevel).map((languageLevelKey: string) =>
                             <option value={languageLevelKey} key={languageLevelKey}>
-                              <FormattedMessage id={messages.languageLevel[languageLevelKey]}/>
+                              {this.props.intl.formatMessage({
+                                id: messages.languageLevel[languageLevelKey]
+                              })}
                             </option>
                           )
                         }
@@ -322,3 +327,5 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
     this.setState({changes});
   }
 }
+
+export const UserInformationEditWithIntl = injectIntl<OwnProps>(UserInformationEdit);

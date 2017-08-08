@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { PATH_APP_PROFILE_GALLERY } from '../../../constants';
 import './gallery.css';
 
 export type OwnProps = {
@@ -17,7 +18,7 @@ export class Gallery extends React.Component<GalleryProps, {}> {
         {this.props.images.map((imageUrl, index) =>
           <Link
             key={`zv-gallery-item-${index}`}
-            to={`/portfolio/image/?url=${imageUrl}`}
+            to={`${PATH_APP_PROFILE_GALLERY}?url=${imageUrl}`}
             className="zv-gallery-item bg-faded m-2"
             style={{backgroundImage: `url(${imageUrl})`}}
           />

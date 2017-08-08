@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { PATH_APP } from '../../../constants';
 import { messages } from './messages';
 import './footer.css';
 
@@ -18,7 +19,7 @@ export class Footer extends React.Component<OwnProps, {}> {
       <div className="zv-footer bg-faded text-primary text-center p-4">
         <Link
           className="zv-logo-link btn btn-link active"
-          to="/"
+          to={PATH_APP}
         >
           <i className="fa fa-3x"/>
         </Link>

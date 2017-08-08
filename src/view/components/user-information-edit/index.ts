@@ -1,1 +1,1 @@
-export { UserInformationEdit } from './user-information-edit';
+export { UserInformationEditWithIntl as UserInformationEdit } from './user-information-edit';

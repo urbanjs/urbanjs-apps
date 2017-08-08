@@ -1,14 +1,12 @@
 import { Router, Request } from 'express';
 import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addErrorLoggingToSchema } from 'graphql-tools';
-import { join } from 'path';
-import { PATH_GRAPHQL_PLAYGROUND } from '../../../../constants';
+import { PATH_GRAPHQL, PATH_GRAPHQL_PLAYGROUND } from '../../../../constants';
 import { GraphqlTypeDefs, GraphqlResolvers, GraphqlResolverContext } from '../../../graphql/types';
 import { ILoggerService } from '../../../log/types';
 
 export type GraphqlRouterConfig = {
   devMode: boolean;
-  routerPrefix: string;
   enableGraphQLEditor: boolean;
   graphqlResolvers: GraphqlResolvers;
   graphqlTypeDefs: GraphqlTypeDefs;
@@ -20,7 +18,6 @@ export function createGraphqlRouter({
                                       graphqlTypeDefs,
                                       graphqlResolvers,
                                       enableGraphQLEditor,
-                                      routerPrefix,
                                       loggerService
                                     }: GraphqlRouterConfig) {
   const router = Router();
@@ -34,7 +31,7 @@ export function createGraphqlRouter({
     {log: (e: Error) => loggerService.error(e.stack)}
   );
 
-  router.post('/', graphqlExpress((req: Request & { user?: object }) => ({
+  router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: object }) => ({
     schema,
     rootValue: {},
     context: {
@@ -46,7 +43,7 @@ export function createGraphqlRouter({
 
   if (enableGraphQLEditor) {
     router.get(PATH_GRAPHQL_PLAYGROUND, graphiqlExpress({
-      endpointURL: join('/', routerPrefix, '/')
+      endpointURL: PATH_GRAPHQL
     }));
   }
 

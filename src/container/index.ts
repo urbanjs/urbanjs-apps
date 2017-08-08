@@ -1,26 +1,30 @@
 import { Container } from 'inversify';
-import { reinitializeTrackDecorators } from '../decorators';
-import { logModule } from '../modules/log';
+import { supportLazyInject, reinitializeTrackDecorators } from '../decorators';
+import { createLoggerMiddleware } from './middlewares';
 import {
   LoggerConfig,
   TYPE_CONFIG_LOGGER,
   ILoggerService,
   TYPE_SERVICE_LOGGER
 } from '../modules/log/types';
-import { createLoggerMiddleware } from './middlewares';
 
 export type ContainerConfig = {
   devMode: boolean;
+  lazyInject?: boolean;
 };
 
-export function createContainer(config: ContainerConfig) {
+export function createContainer({devMode, lazyInject}: ContainerConfig) {
   const container = new Container({defaultScope: 'Singleton'});
 
-  if (config.devMode) {
-    container.load(logModule);
+  if (lazyInject) {
+    supportLazyInject(container);
+  }
+
+  if (devMode) {
+    container.load(require('../modules/log').logModule);
 
     container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
-      debug: config.devMode,
+      debug: devMode,
       info: true,
       error: true,
       warning: true
@@ -28,6 +32,7 @@ export function createContainer(config: ContainerConfig) {
 
     container.applyMiddleware(...[createLoggerMiddleware()]);
 
+    const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);
     reinitializeTrackDecorators({
       track: () => (target: ObjectConstructor, propertyKey: string, descriptor: PropertyDescriptor) => {
         const oldMethod = descriptor.value;
@@ -39,7 +44,7 @@ export function createContainer(config: ContainerConfig) {
         const debugPrefix = `${target.constructor.name}.${propertyKey}`;
         Object.assign(descriptor, {
           value: function () {
-            container.get<ILoggerService>(TYPE_SERVICE_LOGGER).debug(debugPrefix, 'called');
+            loggerService.debug(debugPrefix, 'called');
 
             return oldMethod.apply(this, arguments);
           }

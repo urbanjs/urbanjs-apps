@@ -1,9 +1,9 @@
 import { Guid } from '../uuid/types';
+import { Feature } from '../authorization/types';
 
 export const TYPE_USER_SERVICE = 'TYPE_USER_SERVICE';
 
 export type SubscriptionType = 'FREE';
-export type ApplicationFeature = 'CORE';
 
 export type RawUser = {
   facebookId: string;
@@ -20,7 +20,7 @@ export type User = {
     createdAt: Date;
     expiresAt: Date;
     type: SubscriptionType;
-    features: ApplicationFeature[];
+    features: Feature[];
   }
 };
 

@@ -1,10 +1,4 @@
-import {
-  PATH_API,
-  PATH_AUTH,
-  PATH_AUTH_FACEBOOK,
-  PATH_AUTH_FACEBOOK_CALLBACK,
-  PATH_GRAPHQL
-} from '../../../constants';
+import { PATH_AUTH_FACEBOOK_CALLBACK } from '../../../constants';
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';
@@ -37,22 +31,17 @@ export type ExpressApplicationConfig = HttpServerConfig & {
 export function createExpressApplication(config: ExpressApplicationConfig) {
   const app = createApp(config as AppConfig);
   const passport = createPassport(Object.assign({}, config, {
-    facebookCallbackURL: `${config.hostOrigin}${PATH_AUTH}${PATH_AUTH_FACEBOOK}${PATH_AUTH_FACEBOOK_CALLBACK}`
+    facebookCallbackURL: `${config.hostOrigin}${PATH_AUTH_FACEBOOK_CALLBACK}`
   }) as PassportConfig);
 
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use(PATH_API, createApiRouter(config as ApiRouterConfig));
+  app.use(createApiRouter(config as ApiRouterConfig));
 
-  const graphqlRouterPrefix = PATH_GRAPHQL;
-  app.use(graphqlRouterPrefix, createGraphqlRouter(Object.assign({}, config, {
-    routerPrefix: graphqlRouterPrefix
-  }) as GraphqlRouterConfig));
+  app.use(createGraphqlRouter(config as GraphqlRouterConfig));
 
-  const authRouterPrefix = PATH_AUTH;
-  app.use(authRouterPrefix, createAuthRouter(Object.assign({}, config, {
-    routerPrefix: authRouterPrefix,
+  app.use(createAuthRouter(Object.assign({}, config, {
     passport: passport as Passport
   })));
 

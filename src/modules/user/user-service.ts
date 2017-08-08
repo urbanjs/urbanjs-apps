@@ -1,6 +1,8 @@
 import { injectable, inject, track } from '../../decorators';
+import { FEATURE_CORE } from '../../constants';
 import { IUuidService, TYPE_UUID_SERVICE } from '../uuid/types';
-import { IUserService, RawUser, ApplicationFeature, User } from './types';
+import { Feature } from '../authorization/types';
+import { IUserService, RawUser, User } from './types';
 
 @injectable()
 export class UserService implements IUserService {
@@ -32,8 +34,8 @@ export class UserService implements IUserService {
         createdAt: now,
         expiresAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
         type: 'FREE',
-        features: <ApplicationFeature[]> [
-          'CORE'
+        features: <Feature[]> [
+          FEATURE_CORE
         ]
       }
     };

@@ -5,3 +5,4 @@ export * from './monitor';
 export * from './user';
 export * from './error';
 export * from './uuid';
+export * from './authorization';

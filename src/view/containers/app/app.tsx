@@ -2,16 +2,29 @@ import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
+import {
+  PATH_APP_PROFILE,
+  PATH_AUTH,
+  PATH_AUTH_LOGOUT
+} from '../../../constants';
 import { track } from '../../../decorators';
-import './app.css';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
 import { Sidebar, Navbar, Footer } from '../../components';
 import { ProfilePage } from '../profile-page';
+import { Feature } from '../../../modules/authorization/types';
+import './app.css';
 
 type OwnProps = {
-  name?: string;
-  data: ApolloQueryProps & { user?: { id: string } }
+  data: ApolloQueryProps & {
+    user?: {
+      id: string;
+      displayName: string;
+      subscription: {
+        features: Feature[]
+      }
+    }
+  }
 };
 
 type StateProps = {
@@ -32,18 +45,23 @@ export class App extends React.Component<AppProps, State> {
 
   @track()
   render() {
+    const allowedFeatures: Feature[] = this.props.data.user
+      ? this.props.data.user.subscription.features
+      : [];
+
     return (
       <div className={`zv-app h-100 ${this.state.isSidebarCollapsed ? 'zv-sidebar-hidden' : ''}`}>
         <aside className="zv-sidebar fixed-top h-100">
-          <Sidebar/>
+          <Sidebar allowedFeatures={allowedFeatures}/>
         </aside>
 
         <div className="zv-content-wrapper">
           <Navbar
+            allowedFeatures={allowedFeatures}
             notifications={Array(100)}
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
             onLogout={() => {
-              console.info('logged out');// tslint:disable-line
+              this.props.history.push(`${PATH_AUTH}${PATH_AUTH_LOGOUT}`);
             }}
           />
 
@@ -52,10 +70,8 @@ export class App extends React.Component<AppProps, State> {
           </pre>
 
           <Route
-            path="/user/:id"
-            render={(routeProps: RouteComponentProps<null>) =>
-              <ProfilePage rootUrl={routeProps.match.url}/>
-            }
+            path={PATH_APP_PROFILE}
+            render={() => <ProfilePage/>}
           />
         </div>
 
@@ -87,6 +103,9 @@ const withQuery = graphql(
       user {
         id
         displayName
+        subscription {
+          features
+        }
       }
     }
   `,
