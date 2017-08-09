@@ -1,6 +1,7 @@
 export default {
   'component.footer.copyright': 'Minden jog fenntartva',
   'component.navbar.button.logout': 'Kijelentkezés',
+  'component.navbar.button.login': 'Bejelentkezés',
   'component.userCard.age': '{value} éves',
   'component.userCard.name': '{lastName} {firstName}',
   'component.userInformationEdit.title': 'Adatok szerkesztése',

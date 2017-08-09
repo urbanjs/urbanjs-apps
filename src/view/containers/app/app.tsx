@@ -2,11 +2,7 @@ import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
-import {
-  PATH_APP_PROFILE,
-  PATH_AUTH,
-  PATH_AUTH_LOGOUT
-} from '../../../constants';
+import { PATH_APP_PROFILE } from '../../../constants';
 import { track } from '../../../decorators';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
@@ -60,8 +56,10 @@ export class App extends React.Component<AppProps, State> {
             allowedFeatures={allowedFeatures}
             notifications={Array(100)}
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
-            onLogout={() => {
-              this.props.history.push(`${PATH_AUTH}${PATH_AUTH_LOGOUT}`);
+            user={this.props.data.user && {
+              displayName: this.props.data.user.displayName,
+              avatar: 'http://bulma.io/images/placeholders/96x96.png',
+              email: 'asd@asd.hu'
             }}
           />
 

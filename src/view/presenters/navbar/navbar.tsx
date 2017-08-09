@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import * as classnames from 'classnames';
 import { inject } from '../../../decorators';
 import {
   ACTIVITY_VIEW_NOTIFICATIONS,
-  PATH_APP,
+  PATH_AUTH_FACEBOOK,
+  PATH_AUTH_LOGOUT,
   PATH_APP_NOTIFICATIONS
 } from '../../../constants';
 import {
@@ -16,10 +18,14 @@ import { messages } from './messages';
 import './navbar.css';
 
 type OwnProps = {
+  user?: {
+    displayName: string;
+    email: string;
+    avatar: string;
+  };
   allowedFeatures: Feature[];
   notifications: string[];
   onCollapse: () => void;
-  onLogout: () => void;
 };
 
 type State = {
@@ -75,31 +81,46 @@ export class Navbar extends React.Component<NavbarProps, State> {
           className="btn btn-link text-muted"
           onClick={() => this.setState({profileCardIsOpen: !this.state.profileCardIsOpen})}
         >
-          <i className="fa fa-3x fa-user-circle-o"/>
+          <i
+            className={classnames('fa', 'fa-3x', {
+              'fa-user-circle-o': !!this.props.user,
+              'fa-sign-in': !this.props.user
+            })}
+          />
         </a>
 
         <div className="dropdown-menu dropdown-menu-right p-4 mt-0 mr-4">
-          <div className="d-inline-block">
-            <img
-              className="mr-3 rounded-circle"
-              src="http://bulma.io/images/placeholders/96x96.png"
-              alt="Generic placeholder image"
-            />
-            <div className="d-inline-block align-middle">
-              <h4>
-                John Smith
-                <br/>
-                <small>john.smith@gmail.com</small>
-              </h4>
+          {
+            this.props.user ? (
+              <div className="d-inline-block">
+                <img
+                  className="mr-3 rounded-circle"
+                  src={this.props.user.avatar}
+                  alt="Generic placeholder image"
+                />
+                <div className="d-inline-block align-middle">
+                  <h4>
+                    {this.props.user.displayName}
+                    <br/>
+                    <small>{this.props.user.email}</small>
+                  </h4>
 
+                  <Link
+                    to={PATH_AUTH_LOGOUT}
+                    className="btn btn-link p-0"
+                  >
+                    <FormattedMessage id={messages['button.logout']}/>
+                  </Link>
+                </div>
+              </div>) : (
               <Link
-                to={PATH_APP}
-                className="btn btn-link p-0"
+                className="btn btn-lg btn-primary"
+                to={PATH_AUTH_FACEBOOK}
               >
-                <FormattedMessage id={messages['button.logout']}/>
+                <FormattedMessage id={messages['button.login']}/>
               </Link>
-            </div>
-          </div>
+            )
+          }
         </div>
 
       </div>
