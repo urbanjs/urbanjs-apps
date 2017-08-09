@@ -6,7 +6,7 @@ import {
   PATH_APP_PROFILE_GALLERY,
   PATH_APP_PROFILE_INFORMATION, PATH_APP_PROFILE
 } from '../../../constants';
-import { Gallery, UserCard, UserInformation, UserInformationEdit } from '../../components';
+import { Gallery, UserCard, UserInformation, UserInformationEdit } from '../../presenters';
 import './profile-page.css';
 
 const tempUser = {

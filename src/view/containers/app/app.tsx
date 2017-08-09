@@ -10,7 +10,7 @@ import {
 import { track } from '../../../decorators';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
-import { Sidebar, Navbar, Footer } from '../../components';
+import { Sidebar, Navbar, Footer } from '../../presenters';
 import { ProfilePage } from '../profile-page';
 import { Feature } from '../../../modules/authorization/types';
 import './app.css';
