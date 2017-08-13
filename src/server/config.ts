@@ -1,10 +1,20 @@
-/// <reference path="./es6-template-strings.d.ts" />
+/// <reference path="../utils/config/es6-template-strings.d.ts" />
 
 import { join } from 'path';
-import { config as initializeDotEnvVariables } from 'dotenv';
 import es6TemplateResolver = require('es6-template-strings');
-import { applyEnvironmentVariables, resolveReferences } from './utils';
-import { Configuration } from './types';
+import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
+
+export type ServerConfiguration = {
+  port: number;
+  hostOrigin: string;
+  corsAllowedOrigins: string;
+  devMode: boolean;
+  absolutePublicPath: string;
+  facebookAppId: string;
+  facebookAppSecret: string;
+  sessionSecret: string;
+};
+
 
 export const defaults = {
   port: 3001,
@@ -17,12 +27,10 @@ export const defaults = {
   sessionSecret: 'awesome_secret'
 };
 
-initializeDotEnvVariables();
-
 export const config =
-  resolveReferences<Configuration>(
-    applyEnvironmentVariables<Configuration>(
-      applyEnvironmentVariables<Configuration>(
+  resolveReferences<ServerConfiguration>(
+    applyEnvironmentVariables<ServerConfiguration>(
+      applyEnvironmentVariables<ServerConfiguration>(
         defaults,
         'REACT_APP'
       ),

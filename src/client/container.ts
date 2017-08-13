@@ -1,4 +1,4 @@
-import { createContainer } from '../container';
+import { createContainer } from '../utils/container';
 import { config } from './config';
 
 export const container = createContainer({

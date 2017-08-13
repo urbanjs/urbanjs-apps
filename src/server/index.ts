@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import { IHttpServer, TYPE_HTTP_SERVER } from '../modules/http/types';
 import { container } from './container';
 
