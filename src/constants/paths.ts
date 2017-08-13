@@ -1,11 +1,13 @@
 export function toPath(strings: TemplateStringsArray, ...args: string[]) {
-  const trim = (str?: string) => (str || '').replace(/(.+)\/$/, '$1');
+  const trim = (str?: string) => (str || '').replace(/^\/?(.*?)\/?$/, '$1');
 
-  return strings.reduce(
+  const parts = strings.reduce(
     (acc, value, index) =>
-      `${acc}${trim(value)}${trim(args[index])}`,
+      [acc, trim(value), trim(args[index])].filter(item => !!item).join('/'),
     ''
   );
+
+  return `/${parts}`;
 }
 
 export const PATH_GRAPHQL = toPath`/graphql`;
