@@ -1,5 +1,5 @@
 export function toPath(strings: TemplateStringsArray, ...args: string[]) {
-  const trim = (str?: string) => (str || '').replace(/^\//, '/').replace(/\/$/, '');
+  const trim = (str?: string) => (str || '').replace(/(.+)\/$/, '$1');
 
   return strings.reduce(
     (acc, value, index) =>

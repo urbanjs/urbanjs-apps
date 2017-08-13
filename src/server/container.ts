@@ -7,7 +7,7 @@ export const container = createContainer({devMode: config.devMode});
 
 container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
   port: config.port,
-  hostOrigin: config.hostOrigin,
+  serverOrigin: config.serverOrigin,
   corsAllowedOrigins: config.corsAllowedOrigins,
   devMode: config.devMode,
   enableGraphQLEditor: config.devMode,

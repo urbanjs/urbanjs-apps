@@ -7,7 +7,8 @@ import {
   ACTIVITY_VIEW_NOTIFICATIONS,
   PATH_AUTH_FACEBOOK,
   PATH_AUTH_LOGOUT,
-  PATH_APP_NOTIFICATIONS
+  PATH_APP_NOTIFICATIONS,
+  PATH_APP
 } from '../../../constants';
 import {
   TYPE_AUTHORIZATION_SERVICE,
@@ -23,6 +24,7 @@ type OwnProps = {
     email: string;
     avatar: string;
   };
+  serverOrigin: string;
   allowedFeatures: Feature[];
   notifications: string[];
   onCollapse: () => void;
@@ -42,6 +44,9 @@ export class Navbar extends React.Component<NavbarProps, State> {
   private authorizationService: IAuthorizationService;
 
   render() {
+    const currentOrigin = window && window.location.href || '';
+    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(currentOrigin + PATH_APP)}`;
+
     let notificationLink;
     if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {
       const notifications = this.props.notifications;
@@ -105,20 +110,20 @@ export class Navbar extends React.Component<NavbarProps, State> {
                     <small>{this.props.user.email}</small>
                   </h4>
 
-                  <Link
-                    to={PATH_AUTH_LOGOUT}
+                  <a
+                    href={`${this.props.serverOrigin}${PATH_AUTH_LOGOUT}${redirectUriQueryParam}`}
                     className="btn btn-link p-0"
                   >
                     <FormattedMessage id={messages['button.logout']}/>
-                  </Link>
+                  </a>
                 </div>
               </div>) : (
-              <Link
+              <a
                 className="btn btn-lg btn-primary"
-                to={PATH_AUTH_FACEBOOK}
+                href={`${this.props.serverOrigin}${PATH_AUTH_FACEBOOK}${redirectUriQueryParam}`}
               >
                 <FormattedMessage id={messages['button.login']}/>
-              </Link>
+              </a>
             )
           }
         </div>

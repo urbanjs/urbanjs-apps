@@ -20,16 +20,15 @@ export function createContainer({devMode, lazyInject}: ContainerConfig) {
     supportLazyInject(container);
   }
 
+  container.load(require('../../modules/log').logModule);
+  container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
+    debug: devMode,
+    info: true,
+    error: true,
+    warning: true
+  });
+
   if (devMode) {
-    container.load(require('../../modules/log').logModule);
-
-    container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
-      debug: devMode,
-      info: true,
-      error: true,
-      warning: true
-    });
-
     container.applyMiddleware(...[createLoggerMiddleware()]);
 
     const loggerService = container.get<ILoggerService>(TYPE_SERVICE_LOGGER);

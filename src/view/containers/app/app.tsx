@@ -26,6 +26,7 @@ type OwnProps = {
 type StateProps = {
   currentLocale: string;
   locales: string[];
+  serverOrigin: string;
 };
 
 type DispatchProps = {
@@ -53,6 +54,7 @@ export class App extends React.Component<AppProps, State> {
 
         <div className="zv-content-wrapper">
           <Navbar
+            serverOrigin={this.props.serverOrigin}
             allowedFeatures={allowedFeatures}
             notifications={Array(100)}
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
@@ -88,7 +90,8 @@ export class App extends React.Component<AppProps, State> {
 const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
   (state: RootState): StateProps => ({
     currentLocale: state.i18n.locale,
-    locales: state.i18n.availableLocales
+    locales: state.i18n.availableLocales,
+    serverOrigin: state.runtime.variables.serverOrigin
   }),
   (dispatch: Dispatch<RootState>): DispatchProps => ({
     setLocale: (locale: string) => dispatch(setLocale({locale}))

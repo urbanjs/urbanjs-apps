@@ -16,7 +16,8 @@ import {
   AppRouterConfig,
   createAuthRouter,
   createGraphqlRouter,
-  GraphqlRouterConfig
+  GraphqlRouterConfig,
+  AuthRouterConfig
 } from './router';
 
 export type ExpressApplicationConfig = HttpServerConfig & {
@@ -31,7 +32,8 @@ export type ExpressApplicationConfig = HttpServerConfig & {
 export function createExpressApplication(config: ExpressApplicationConfig) {
   const app = createApp(config as AppConfig);
   const passport = createPassport(Object.assign({}, config, {
-    facebookCallbackURL: `${config.hostOrigin}${PATH_AUTH_FACEBOOK_CALLBACK}`
+    facebookCallbackURL: `${config.serverOrigin}${PATH_AUTH_FACEBOOK_CALLBACK}`,
+    state: true
   }) as PassportConfig);
 
   app.use(passport.initialize());
@@ -42,8 +44,12 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
   app.use(createGraphqlRouter(config as GraphqlRouterConfig));
 
   app.use(createAuthRouter(Object.assign({}, config, {
-    passport: passport as Passport
-  })));
+    passport: passport as Passport,
+    allowedRedirectOrigins: [
+      config.serverOrigin,
+      ...config.corsAllowedOrigins.split(', ')
+    ]
+  }) as AuthRouterConfig));
 
   app.use(createStaticRouter(config as StaticRouterConfig));
 

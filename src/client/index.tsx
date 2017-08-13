@@ -27,13 +27,13 @@ store.dispatch(setRuntimeVariable({
 }));
 
 store.dispatch(setRuntimeVariable({
-  name: 'hostOrigin',
-  value: config.hostOrigin
+  name: 'serverOrigin',
+  value: config.serverOrigin
 }));
 
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: `${config.hostOrigin}${PATH_GRAPHQL}`,
+    uri: `${config.serverOrigin}${PATH_GRAPHQL}`,
     opts: {
       credentials: 'include'
     }
