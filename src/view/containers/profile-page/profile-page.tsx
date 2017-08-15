@@ -90,7 +90,7 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
             exact={true}
             path={PATH_APP_PROFILE_GALLERY}
             render={() =>
-              <div className="row no-gutters">
+              <div className="row no-gutters m-2">
                 <div className="hidden-md-down col-lg-4">
                   <UserInformation
                     user={tempUser}

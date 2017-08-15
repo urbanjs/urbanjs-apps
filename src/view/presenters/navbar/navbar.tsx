@@ -44,7 +44,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
   private authorizationService: IAuthorizationService;
 
   render() {
-    const currentOrigin = window && window.location.href || '';
+    const currentOrigin = window && window.location.origin || '';
     const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(currentOrigin + PATH_APP)}`;
 
     let notificationLink;
@@ -57,7 +57,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
           className={`btn btn-link text-muted ${
             this.props.location.pathname === PATH_APP_NOTIFICATIONS ? 'text-primary' : ''}`}
         >
-          <i className="fa fa-3x fa-bell"/>
+          <i className="fa fa-2x fa-bell"/>
           {
             notifications.length
               ? <span className="badge badge-primary">
@@ -77,7 +77,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
           className="btn btn-link text-muted mr-auto"
           onClick={this.props.onCollapse}
         >
-          <i className="fa fa-2x fa-bars"/>
+          <i className="fa fa-bars"/>
         </a>
 
         {notificationLink}
@@ -87,39 +87,46 @@ export class Navbar extends React.Component<NavbarProps, State> {
           onClick={() => this.setState({profileCardIsOpen: !this.state.profileCardIsOpen})}
         >
           <i
-            className={classnames('fa', 'fa-3x', {
+            className={classnames('fa', 'fa-2x', {
               'fa-user-circle-o': !!this.props.user,
               'fa-sign-in': !this.props.user
             })}
           />
         </a>
 
-        <div className="dropdown-menu dropdown-menu-right p-4 mt-0 mr-4">
+        <div className="dropdown-menu dropdown-menu-right p-4 mt-0">
           {
             this.props.user ? (
-              <div className="d-inline-block">
-                <img
-                  className="mr-3 rounded-circle"
-                  src={this.props.user.avatar}
-                  alt="Generic placeholder image"
-                />
-                <div className="d-inline-block align-middle">
-                  <h4>
+              <div className="row align-items-center no-gutters">
+                <div className="col-3">
+                  <img
+                    className="mr-3 rounded-circle img-fluid"
+                    src={this.props.user.avatar}
+                    alt="Generic placeholder image"
+                  />
+                </div>
+
+                <div className="col-7 align-middle">
+                  <h6 className="ml-4">
                     {this.props.user.displayName}
                     <br/>
-                    <small>{this.props.user.email}</small>
-                  </h4>
+                    <small className="text-muted">{this.props.user.email}</small>
+                  </h6>
+                </div>
 
+                <div className="col-2">
                   <a
                     href={`${this.props.serverOrigin}${PATH_AUTH_LOGOUT}${redirectUriQueryParam}`}
-                    className="btn btn-link p-0"
+                    className="btn btn-link p-0 text-muted mr-4"
                   >
-                    <FormattedMessage id={messages['button.logout']}/>
+                    <i
+                      className={classnames('fa', 'fa-2x', 'fa-sign-out')}
+                    />
                   </a>
                 </div>
               </div>) : (
               <a
-                className="btn btn-lg btn-primary"
+                className="btn btn-primary w-100"
                 href={`${this.props.serverOrigin}${PATH_AUTH_FACEBOOK}${redirectUriQueryParam}`}
               >
                 <FormattedMessage id={messages['button.login']}/>

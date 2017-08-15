@@ -64,7 +64,7 @@ export class Sidebar extends React.Component<SidebarProps, {}> {
             this.props.location.pathname === PATH_APP ? 'active' : ''}`}
           to={PATH_APP}
         >
-          <i className="fa fa-3x"/>
+          <i className="fa fa-2x"/>
         </Link>
         {
           ...items
@@ -77,7 +77,7 @@ export class Sidebar extends React.Component<SidebarProps, {}> {
                   item.path === this.props.location.pathname ? 'text-primary' : ''}`}
                 to={item.path}
               >
-                <i className={`fa fa-${item.icon} fa-3x`}/>
+                <i className={`fa fa-${item.icon} fa-2x`}/>
               </Link>
             ))
         }
