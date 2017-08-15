@@ -7,5 +7,6 @@ export const container = createContainer({
 });
 
 container.load(
-  require('../modules/authorization').authorizationModule
+  require('../modules/authorization').authorizationModule,
+  require('../modules/route').routeModule
 );
