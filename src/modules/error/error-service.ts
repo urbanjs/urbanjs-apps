@@ -1,6 +1,6 @@
 import { injectable, inject, track } from '../../decorators';
 import { ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
-import { HttpError } from './errors';
+import { HttpError, ValidationError } from './errors';
 import { IErrorService } from './types';
 
 @injectable()
@@ -9,13 +9,13 @@ export class ErrorService implements IErrorService {
   }
 
   @track()
-  createHttpError(error: Error): HttpError {
-    if (error instanceof HttpError) {
-      return error as HttpError;
-    } else if (!(error instanceof Error)) {
-      this.loggerService.debug(`${this.constructor.name}.createHttpError invalid-error-object`, error);
+  createHttpError(rawError: Error): HttpError {
+    if (rawError instanceof HttpError) {
+      return rawError as HttpError;
+    } else if (!(rawError instanceof Error)) {
+      this.loggerService.debug(`${this.constructor.name}.createHttpError invalid-error-object`, rawError);
 
-      error = new Error(`${error}`);
+      rawError = new Error(`${rawError}`);
     }
 
     const httpError = new HttpError(
@@ -23,8 +23,24 @@ export class ErrorService implements IErrorService {
       500
     );
 
-    httpError.innerError = error;
+    httpError.innerError = rawError;
 
     return httpError;
+  }
+
+  @track()
+  createValidationError(rawError: Error): ValidationError {
+    if (rawError instanceof ValidationError) {
+      return rawError as ValidationError;
+    } else if (!(rawError instanceof Error)) {
+      this.loggerService.debug(`${this.constructor.name}.createValidatorError invalid-error-object`, rawError);
+
+      rawError = new Error(`${rawError}`);
+    }
+
+    const validationError = new ValidationError(rawError.message);
+    validationError.innerError = rawError;
+
+    return validationError;
   }
 }

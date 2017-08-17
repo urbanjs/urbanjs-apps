@@ -38,5 +38,6 @@ container.load(
   require('../modules/user').userModule,
   require('../modules/error').errorModule,
   require('../modules/uuid').uuidModule,
-  require('../modules/route').routeModule
+  require('../modules/route').routeModule,
+  require('../modules/json').jsonModule
 );

@@ -1,6 +1,6 @@
 import { inherits } from 'util';
 
-export type ErrorResponse = {
+export type HttpErrorResponse = {
   message: string;
   innerError?: {
     message: string;
@@ -15,7 +15,7 @@ export class HttpError {
   constructor(public message: string, public statusCode: number) {
   }
 
-  public toResponse(includeInnerError: boolean = false): ErrorResponse {
+  public toResponse(includeInnerError: boolean = false): HttpErrorResponse {
     const error = {message: this.message};
 
     if (includeInnerError === true && this.innerError) {
@@ -32,3 +32,12 @@ export class HttpError {
 }
 
 inherits(HttpError, Error);
+
+export class ValidationError {
+  public innerError: Error;
+
+  constructor(public message: string) {
+  }
+}
+
+inherits(ValidationError, Error);

@@ -17,7 +17,10 @@ tools.initialize(gulp, {
   },
   'check-dependencies': true,
   'check-file-names': defaults => Object.assign({}, defaults, {
-    paramCase: ['!src/**/*test.ts'].concat(defaults.paramCase),
+    paramCase: [
+      '!src/**/*test.ts',
+      '!src/utils/config/es6-template-strings.d.ts'
+    ].concat(defaults.paramCase),
     dotCase: ['src/**/*test.ts']
   }),
   mocha: {
