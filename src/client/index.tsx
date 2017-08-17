@@ -27,6 +27,11 @@ store.dispatch(setRuntimeVariable({
 }));
 
 store.dispatch(setRuntimeVariable({
+  name: 'appOrigin',
+  value: config.appOrigin
+}));
+
+store.dispatch(setRuntimeVariable({
   name: 'serverOrigin',
   value: config.serverOrigin
 }));

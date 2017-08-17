@@ -42,7 +42,7 @@ const tempUser = {
 
 export type OwnProps = {};
 
-export type ProfilePageProps = OwnProps & RouteComponentProps<null>;
+export type ProfilePageProps = OwnProps & RouteComponentProps<{}>;
 export type State = {};
 
 export class ProfilePage extends React.Component<ProfilePageProps, State> {

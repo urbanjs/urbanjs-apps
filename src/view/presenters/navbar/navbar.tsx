@@ -11,6 +11,10 @@ import {
   PATH_APP
 } from '../../../constants';
 import {
+  TYPE_ROUTE_SERVICE,
+  IRouteService
+} from '../../../modules/route/types';
+import {
   TYPE_AUTHORIZATION_SERVICE,
   IAuthorizationService,
   Feature
@@ -42,10 +46,12 @@ export class Navbar extends React.Component<NavbarProps, State> {
 
   @inject(TYPE_AUTHORIZATION_SERVICE)
   private authorizationService: IAuthorizationService;
+  @inject(TYPE_ROUTE_SERVICE)
+  private routeService: IRouteService;
 
   render() {
-    const currentOrigin = window && window.location.origin || '';
-    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(currentOrigin + PATH_APP)}`;
+    const rootUrl = this.routeService.format(PATH_APP, {prefixWithOrigin: true});
+    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(rootUrl)}`;
 
     let notificationLink;
     if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {

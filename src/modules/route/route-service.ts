@@ -1,16 +1,50 @@
-import { injectable, track } from '../../decorators';
-import { IRouteService, FormatOptions } from './types';
+import { injectable, inject, track } from '../../decorators';
+import * as knownPaths from '../../constants/paths';
+import { ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
+import {
+  TYPE_ROUTE_SERVICE_CONFIG,
+  RouterServiceConfig,
+  IRouteService,
+  FormatOptions
+} from './types';
 
 @injectable()
 export class RouteService implements IRouteService {
+  constructor(@inject(TYPE_ROUTE_SERVICE_CONFIG) private config: RouterServiceConfig,
+              @inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
+  }
 
   @track()
-  format(path: string, options: FormatOptions) {
-    const {params} = options;
+  format(rawPath: string, options: FormatOptions) {
+    let origin = '';
 
-    return Object.keys(params).reduce(
-      (acc, key) => acc.replace(`:${key}`, params[key]),
-      path
-    );
+    if (options && options.prefixWithOrigin) {
+      if (!Object.keys(knownPaths).some(knownPathName => {
+          if (knownPaths[knownPathName] === rawPath) {
+            origin = knownPathName.indexOf('PATH_APP') === 0
+              ? this.config.appOrigin
+              : this.config.serverOrigin;
+
+            return true;
+          }
+
+          return false;
+        })) {
+        this.loggerService.error('Unknown path', rawPath);
+        throw new Error('unknown path');
+      }
+    }
+
+    const params = options && options.params || {};
+    const resolvedPath = rawPath.replace(/:([^\/]+)/g, (match, key) => {
+      if (!params.hasOwnProperty(key)) {
+        this.loggerService.error('Missing route parameter', rawPath, key);
+        throw new Error('missing route parameter');
+      }
+
+      return params[key];
+    });
+
+    return `${origin}${resolvedPath}`;
   }
 }

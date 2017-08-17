@@ -1,9 +1,21 @@
 import { relative } from 'path';
-import { HttpServerConfig, TYPE_HTTP_CONFIG } from '../modules/http/types';
+import {
+  HttpServerConfig,
+  TYPE_HTTP_CONFIG
+} from '../modules/http/types';
+import {
+  TYPE_ROUTE_SERVICE_CONFIG,
+  RouterServiceConfig
+} from '../modules/route/types';
 import { createContainer } from '../utils/container';
 import { config } from './config';
 
 export const container = createContainer({devMode: config.devMode});
+
+container.bind<RouterServiceConfig>(TYPE_ROUTE_SERVICE_CONFIG).toConstantValue({
+  appOrigin: config.appOrigin,
+  serverOrigin: config.serverOrigin
+});
 
 container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
   port: config.port,
@@ -25,5 +37,6 @@ container.load(
   require('../modules/graphql').graphqlModule,
   require('../modules/user').userModule,
   require('../modules/error').errorModule,
-  require('../modules/uuid').uuidModule
+  require('../modules/uuid').uuidModule,
+  require('../modules/route').routeModule
 );

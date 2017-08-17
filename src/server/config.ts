@@ -6,6 +6,7 @@ import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
 
 export type ServerConfiguration = {
   port: number;
+  appOrigin: string;
   serverOrigin: string;
   corsAllowedOrigins: string;
   devMode: boolean;
@@ -17,8 +18,9 @@ export type ServerConfiguration = {
 
 export const defaults = {
   port: 3001,
+  appOrigin: 'http://localhost:3000',
   serverOrigin: 'http://localhost:${port}',
-  corsAllowedOrigins: '${serverOrigin}, http://localhost:3000',
+  corsAllowedOrigins: '${serverOrigin}, ${appOrigin}',
   devMode: process.env.NODE_ENV !== 'production',
   absolutePublicPath: join(__dirname, '../../build'),
   facebookAppId: '369058166771856',
