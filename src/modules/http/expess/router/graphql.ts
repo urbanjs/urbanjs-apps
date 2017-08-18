@@ -23,7 +23,8 @@ export function createGraphqlRouter({
   const router = Router();
   const schema = makeExecutableSchema({
     typeDefs: graphqlTypeDefs,
-    resolvers: graphqlResolvers
+    resolvers: graphqlResolvers,
+    allowUndefinedInResolve: !devMode
   });
 
   addErrorLoggingToSchema(
@@ -31,11 +32,11 @@ export function createGraphqlRouter({
     {log: (e: Error) => loggerService.error(e.stack)}
   );
 
-  router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: object }) => ({
+  router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: { id: string } }) => ({
     schema,
     rootValue: {},
     context: {
-      user: req.user || null
+      authenticatedUserId: req.user && req.user.id || null
     } as GraphqlResolverContext,
     debug: devMode
     // logFunction: message => loggerService.debug(message)

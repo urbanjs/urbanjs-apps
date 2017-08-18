@@ -9,10 +9,10 @@ export function resolversFactory(context: inversify.Context) {
   const userResolver = context.container.getNamed<IGraphqlResolver<User>>(TYPE_GRAPHQL_RESOLVER, 'user');
 
   return () => ({
+    Email: GraphQLEmail,
+    Date: GraphQLDateTime,
     Query: {
       user: userResolver.resolve.bind(userResolver)
-    },
-    Email: GraphQLEmail,
-    Date: GraphQLDateTime
+    }
   });
 }

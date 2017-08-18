@@ -63,9 +63,13 @@ export function createPassport({
     loggerService.debug('passport deserialization...', userId);
 
     try {
-      const user = await userService.getUser(userId);
-      cb(null, user);
-      loggerService.debug('passport deserialization succeeded', user);
+      // TODO: validate userId based on the session storage
+      //       instead of querying from the database
+      //       for performance reasons
+      await userService.getUser(userId);
+
+      cb(null, {id: userId});
+      loggerService.debug('passport deserialization succeeded', userId);
     } catch (e) {
       loggerService.debug('passport deserialization failed with', e);
       cb(e);

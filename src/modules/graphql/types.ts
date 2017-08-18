@@ -1,5 +1,4 @@
 import { IResolvers } from 'graphql-tools/dist/Interfaces';
-import { User } from '../user/types';
 
 export const TYPE_GRAPHQL_TYPE_DEFS = 'TYPE_GRAPHQL_TYPE_DEFS';
 export const TYPE_GRAPHQL_RESOLVER = 'TYPE_GRAPHQL_RESOLVER';
@@ -9,9 +8,9 @@ export type GraphqlTypeDefs = string;
 export type GraphqlResolvers = IResolvers;
 export type GraphqlResolversFactory = () => IResolvers;
 export type GraphqlResolverContext = {
-  user: null | User
+  authenticatedUserId?: string
 };
 
 export interface IGraphqlResolver<T> {
-  resolve(obj: object, args: object, context: GraphqlResolverContext): T;
+  resolve(obj: object, args: object, context: GraphqlResolverContext): Promise<T>;
 }

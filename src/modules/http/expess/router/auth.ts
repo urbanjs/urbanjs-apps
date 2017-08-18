@@ -67,11 +67,11 @@ export function createAuthRouter({passport, allowedRedirectOrigins, loggerServic
       let redirectUri = PATH_APP;
       try {
         redirectUri = JSON.parse(req.query.state).redirectUri;
-        loggerService.debug('redirecting...', redirectUri);
       } catch (e) {
         loggerService.error('session parse failed', req.query.state);
       }
 
+      loggerService.debug('redirecting...', redirectUri);
       res.redirect(redirectUri);
     }
   );

@@ -8,6 +8,6 @@ ${job}
 ${user}
 
 type Query {
-  user: User
+  user(id: ID): User
 }
 `;

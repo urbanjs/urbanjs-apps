@@ -39,10 +39,6 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use(createApiRouter(config as ApiRouterConfig));
-
-  app.use(createGraphqlRouter(config as GraphqlRouterConfig));
-
   app.use(createAuthRouter(Object.assign({}, config, {
     passport: passport as Passport,
     allowedRedirectOrigins: [
@@ -50,6 +46,10 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
       ...config.corsAllowedOrigins.split(', ')
     ]
   }) as AuthRouterConfig));
+
+  app.use(createGraphqlRouter(config as GraphqlRouterConfig));
+
+  app.use(createApiRouter(config as ApiRouterConfig));
 
   app.use(createStaticRouter(config as StaticRouterConfig));
 
