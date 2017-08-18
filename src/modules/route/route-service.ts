@@ -1,4 +1,5 @@
 import { injectable, inject, track } from '../../decorators';
+import { ImplementationError } from '../error/errors';
 import * as knownPaths from '../../constants/paths';
 import { ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
 import {
@@ -31,7 +32,7 @@ export class RouteService implements IRouteService {
           return false;
         })) {
         this.loggerService.error('Unknown path', rawPath);
-        throw new Error('unknown path');
+        throw new ImplementationError('unknown path');
       }
     }
 
@@ -39,7 +40,7 @@ export class RouteService implements IRouteService {
     const resolvedPath = rawPath.replace(/:([^\/]+)/g, (match, key) => {
       if (!params.hasOwnProperty(key)) {
         this.loggerService.error('Missing route parameter', rawPath, key);
-        throw new Error('missing route parameter');
+        throw new ImplementationError('missing route parameter');
       }
 
       return params[key];

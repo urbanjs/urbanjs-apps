@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Switch, Route, Redirect, Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
 import {
   PATH_APP,
   PATH_APP_PROFILE_INFORMATION_EDIT,
@@ -9,11 +10,15 @@ import {
 import { Gallery, UserCard, UserInformation, UserInformationEdit } from '../../presenters';
 import './profile-page.css';
 
-const tempUser = {
-  firstName: 'Emily',
-  lastName: 'Ratajkowski',
-  age: 26,
+const tempUserData = {
+  firstName: 'n/a',
+  lastName: 'n/a',
+
+  // addresses
+  age: 28,
   city: 'Budapest',
+
+  // portfolio
   height: 168,
   chest: 90,
   waist: 60,
@@ -40,7 +45,17 @@ const tempUser = {
   ]
 };
 
-export type OwnProps = {};
+export type OwnProps = {
+  data: ApolloQueryProps & {
+    user?: {
+      personalInformation: {
+        firstName: string;
+        lastName: string;
+        birthDate: string;
+      }
+    }
+  }
+};
 
 export type ProfilePageProps = OwnProps & RouteComponentProps<{}>;
 export type State = {};
@@ -50,6 +65,13 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
   state: State = {};
 
   render() {
+    const personalInformation = this.props.data.user && this.props.data.user.personalInformation;
+    const tempUser = Object.assign(
+      {},
+      tempUserData,
+      personalInformation
+    );
+
     return (
       <div className="zv-profile-page">
         <div className="m-2">
@@ -155,4 +177,21 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
   }
 }
 
-export const ProfilePageWithState = withRouter<OwnProps>(ProfilePage);
+const withQuery = graphql(
+  gql`
+    query {
+      user {
+        id
+        personalInformation {
+          id
+          firstName
+          lastName
+          birthDate
+        }
+      }
+    }
+  `,
+  {}
+);
+
+export const ProfilePageWithState = withQuery(withRouter<OwnProps>(ProfilePage));

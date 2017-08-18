@@ -103,8 +103,8 @@ export class Navbar extends React.Component<NavbarProps, State> {
         <div className="dropdown-menu dropdown-menu-right p-4 mt-0">
           {
             this.props.user ? (
-              <div className="row align-items-center no-gutters">
-                <div className="col-3">
+              <div className="d-flex flex-row justify-content-start align-items-center">
+                <div className="p-2">
                   <img
                     className="mr-3 rounded-circle img-fluid"
                     src={this.props.user.avatar}
@@ -112,18 +112,18 @@ export class Navbar extends React.Component<NavbarProps, State> {
                   />
                 </div>
 
-                <div className="col-7 align-middle">
-                  <h6 className="ml-4">
+                <div className="p-2">
+                  <h6>
                     {this.props.user.displayName}
                     <br/>
                     <small className="text-muted">{this.props.user.email}</small>
                   </h6>
                 </div>
 
-                <div className="col-2">
+                <div className="ml-auto p-2">
                   <a
                     href={`${this.props.serverOrigin}${PATH_AUTH_LOGOUT}${redirectUriQueryParam}`}
-                    className="btn btn-link p-0 text-muted mr-4"
+                    className="btn btn-link p-0 text-muted ml-4"
                   >
                     <i
                       className={classnames('fa', 'fa-2x', 'fa-sign-out')}

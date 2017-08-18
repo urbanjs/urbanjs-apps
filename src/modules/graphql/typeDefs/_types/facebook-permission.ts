@@ -1,9 +1,0 @@
-export default `
-enum FacebookPermission {
-  PUBLIC_PROFILE
-  USER_PHOTOS
-  USER_MANAGED_GROUPS
-  PAGES_MESSAGING
-  PAGES_MESSAGING_SUBSCRIPTIONS
-}
-`;

@@ -1,7 +1,7 @@
 import { PATH_AUTH_FACEBOOK_CALLBACK } from '../../../constants';
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
-import { GraphqlResolvers, GraphqlTypeDefs } from '../../graphql/types';
+import { GraphqlResolverMap, GraphqlTypeDefs } from '../../graphql/types';
 import { IErrorService } from '../../error/types';
 import { HttpServerConfig, IHttpController } from '../types';
 import { createApp, AppConfig } from './app';
@@ -21,7 +21,7 @@ import {
 } from './router';
 
 export type ExpressApplicationConfig = HttpServerConfig & {
-  graphqlResolvers: GraphqlResolvers,
+  graphqlResolvers: GraphqlResolverMap,
   graphqlTypeDefs: GraphqlTypeDefs,
   apiControllers: IHttpController[],
   loggerService: ILoggerService,

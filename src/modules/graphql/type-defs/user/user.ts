@@ -1,14 +1,16 @@
 export default `
 type User {
   id: ID!
+  createdAt: Date!
+  facebookId: String!
+  email: Email!
   displayName: String!
-  facebookRegistration: UserFacebookRegistration!
+  avatar: String!
+  subscription: UserSubscription
   personalInformation: UserPersonalInformation
-  metadata: UserMetadata
   settings: UserSettings
-  addresses: [Address]
   portfolio: UserPortfolio
-  subscription: UserSubscription!
+  addresses: [Address]
   jobs: [Job]
 }
 `;

@@ -2,13 +2,18 @@ import { Router, Request } from 'express';
 import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addErrorLoggingToSchema } from 'graphql-tools';
 import { PATH_GRAPHQL, PATH_GRAPHQL_PLAYGROUND } from '../../../../constants';
-import { GraphqlTypeDefs, GraphqlResolvers, GraphqlResolverContext } from '../../../graphql/types';
+import {
+  GraphqlTypeDefs,
+  GraphqlResolverMap,
+  GraphqlResolverContext,
+  GraphqlRootValue
+} from '../../../graphql/types';
 import { ILoggerService } from '../../../log/types';
 
 export type GraphqlRouterConfig = {
   devMode: boolean;
   enableGraphQLEditor: boolean;
-  graphqlResolvers: GraphqlResolvers;
+  graphqlResolvers: GraphqlResolverMap;
   graphqlTypeDefs: GraphqlTypeDefs;
   loggerService: ILoggerService;
 };
@@ -34,7 +39,7 @@ export function createGraphqlRouter({
 
   router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: { id: string } }) => ({
     schema,
-    rootValue: {},
+    rootValue: null as GraphqlRootValue,
     context: {
       authenticatedUserId: req.user && req.user.id || null
     } as GraphqlResolverContext,

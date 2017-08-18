@@ -1,4 +1,8 @@
 export default `
+enum UserSubscriptionType {
+  FREE
+}
+
 type UserSubscription {
   id: ID!
   createdAt: Date!

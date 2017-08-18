@@ -15,7 +15,9 @@ type OwnProps = {
   data: ApolloQueryProps & {
     user?: {
       id: string;
+      email: string;
       displayName: string;
+      avatar: string;
       subscription: {
         features: Feature[]
       }
@@ -60,8 +62,8 @@ export class App extends React.Component<AppProps, State> {
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
             user={this.props.data.user && {
               displayName: this.props.data.user.displayName,
-              avatar: 'http://bulma.io/images/placeholders/96x96.png',
-              email: 'asd@asd.hu'
+              avatar: this.props.data.user.avatar,
+              email: this.props.data.user.email
             }}
           />
 
@@ -103,7 +105,9 @@ const withQuery = graphql(
     query {
       user {
         id
+        email
         displayName
+        avatar
         subscription {
           features
         }

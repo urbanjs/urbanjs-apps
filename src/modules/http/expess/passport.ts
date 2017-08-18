@@ -1,5 +1,6 @@
 import { Strategy as FacebookStrategy, VerifyFunction } from 'passport-facebook';
 import { Passport } from 'passport';
+import { ValidationError } from '../../error/errors';
 import { IUserService, User } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 
@@ -39,9 +40,18 @@ export function createPassport({
   const verifyFunction: VerifyFunction = async (accessToken, refreshToken, profile, cb) => {
     try {
       loggerService.debug('passport verification...', profile);
+
+      if (!profile.emails || !profile.emails.length) {
+        throw new ValidationError('missing email from facebook');
+      } else if (!profile.photos || !profile.photos.length) {
+        throw new ValidationError('missing avatar from facebook');
+      }
+
       const user = await userService.createUser({
         facebookId: profile.id,
-        displayName: profile.displayName
+        email: profile.emails[0].value,
+        displayName: profile.displayName,
+        avatar: profile.photos[0].value
       });
 
       cb(null, user);

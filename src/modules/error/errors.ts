@@ -34,10 +34,29 @@ export class HttpError {
 inherits(HttpError, Error);
 
 export class ValidationError {
-  public innerError: Error;
-
   constructor(public message: string) {
   }
 }
 
 inherits(ValidationError, Error);
+
+export class ForbiddenError {
+  constructor(public message: string = 'forbidden') {
+  }
+}
+
+inherits(ForbiddenError, Error);
+
+export class ImplementationError {
+  constructor(public message: string = 'oh_uh') {
+  }
+}
+
+inherits(ImplementationError, Error);
+
+export class NotFoundError {
+  constructor(public message: string = 'not_found') {
+  }
+}
+
+inherits(NotFoundError, Error);
