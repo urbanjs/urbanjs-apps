@@ -1,7 +1,6 @@
-import { createBatchingNetworkInterface } from 'react-apollo';
+import { createBatchingNetworkInterface, ApolloClient } from 'react-apollo';
 import { PATH_GRAPHQL } from '../constants';
 import { sendHttpRequests, receiveHttpResponses } from '../actions';
-import { store } from './store';
 import { config } from './config';
 
 export const networkInterface = createBatchingNetworkInterface({
@@ -20,6 +19,7 @@ export type MiddlewareRequest = {
 
 networkInterface.use([{
   applyBatchMiddleware(req: MiddlewareRequest, next: Function) {
+    const store = require('./store').store;
     store.dispatch(sendHttpRequests({requests: req.requests}));
 
     if (config.devMode) {
@@ -38,9 +38,17 @@ export type AfterwareResponse = {
 
 networkInterface.useAfter([{
   applyBatchAfterware(res: AfterwareResponse, next: Function) {
+    const store = require('./store').store;
+
     // TODO: find a better way to wait a couple of milliseconds
     //       to let a new http request start if needed
     setTimeout(() => store.dispatch(receiveHttpResponses({responses: res.responses})), 50);
     next();
   }
 }]);
+
+export const apolloClient = new ApolloClient({
+  networkInterface,
+  queryDeduplication: true,
+  connectToDevTools: config.devMode
+});

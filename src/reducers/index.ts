@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers, ReducersMapObject } from 'redux';
 import { runtime, RuntimeState } from './runtime';
 import { i18n, I18NState } from './i18n';
 import { ping, PingState } from './ping';
@@ -11,4 +11,10 @@ export type RootState = {
   loader: LoaderState;
 };
 
-export const root = combineReducers({runtime, i18n, ping, loader});
+export const root = (extraReducers?: ReducersMapObject) => combineReducers({
+  runtime,
+  i18n,
+  ping,
+  loader,
+  ...(extraReducers || {})
+});

@@ -28,7 +28,7 @@ export class ContextProvider extends React.Component<ContextProviderProps, {}> {
   render() {
     return (
       <StoreProvider store={this.props.store}>
-        <ApolloProvider client={this.props.apolloClient}>
+        <ApolloProvider client={this.props.apolloClient} store={this.props.store}>
           <IntlProvider
             messages={this.props.translations[this.props.locale]}
             locale={this.props.locale}

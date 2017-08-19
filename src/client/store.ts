@@ -1,10 +1,12 @@
 import { setRuntimeVariable } from '../actions';
 import { createStore } from '../store';
+import { apolloClient } from './apollo';
 import { config } from './config';
 
 export const store = createStore({}, {
   devMode: config.devMode,
-  platform: 'browser'
+  platform: 'browser',
+  apolloClient
 });
 
 store.dispatch(setRuntimeVariable({

@@ -1,15 +1,23 @@
-import { createStore as createReduxStore, applyMiddleware, compose, Middleware } from 'redux';
+import { createStore as createReduxStore, applyMiddleware, compose, Middleware, ReducersMapObject } from 'redux';
+import { ApolloClient } from 'react-apollo';
 import { root as rootReducer } from '../reducers';
 import { root as rootEpic } from '../epics';
 import { createLoggerMiddleware, createEpicMiddleware } from './middlewares';
 
 export type StoreConfig = {
-  platform: 'browser' | 'node',
-  devMode: boolean
+  platform: 'browser' | 'node';
+  devMode: boolean;
+  apolloClient?: ApolloClient;
 };
 
 export function createStore(initialState: object = {}, config: StoreConfig) {
   const middlewares: Middleware[] = [createEpicMiddleware(rootEpic)];
+  const extraReducers: ReducersMapObject = {};
+
+  if (config.apolloClient) {
+    extraReducers.apollo = config.apolloClient.reducer();
+    middlewares.push(config.apolloClient.middleware());
+  }
 
   if (config.devMode) {
     middlewares.push(createLoggerMiddleware());
@@ -25,7 +33,7 @@ export function createStore(initialState: object = {}, config: StoreConfig) {
   }
 
   return createReduxStore(
-    rootReducer,
+    rootReducer(extraReducers),
     initialState,
     composeEnhancer(applyMiddleware(...middlewares))
   );
