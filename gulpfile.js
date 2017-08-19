@@ -65,5 +65,12 @@ gulp.task('start-server:watch', () => {
   });
 
   startServer();
-  gulp.watch(['src/**', '!src/view/**'], debounce(startServer, 300));
+  gulp.watch(
+    [
+      'src/**',
+      '!src/view/**',
+      '!src/client/**'
+    ],
+    debounce(startServer, 300)
+  );
 });

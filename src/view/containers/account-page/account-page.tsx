@@ -54,8 +54,9 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
                     user={user}
                     onSave={async (data) => {
                       await this.props.submit(user.id, data.changes);
-                      await this.props.data.refetch();
                       this.props.history.push(PATH_APP_ACCOUNT);
+
+                      await this.props.data.refetch();
                     }}
                     onCancel={() =>
                       this.props.history.goBack()}

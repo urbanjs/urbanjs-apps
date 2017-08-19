@@ -3,46 +3,21 @@ import './container';
 
 import * as React from 'react';
 import { render } from 'react-dom';
-import { ApolloClient, createNetworkInterface } from 'react-apollo';
+import { ApolloClient } from 'react-apollo';
 import { createBrowserHistory } from 'history';
-import { PATH_GRAPHQL } from '../constants';
 import { config } from './config';
-import { setRuntimeVariable } from '../actions';
-import { createStore } from '../store';
 import { ContextProvider, App, ErrorBoundary } from '../view';
 import { translations } from '../i18n';
 import registerServiceWorker from '../register-service-worker';
+import { networkInterface } from './network-interface';
+import { store } from './store';
 import './index.css';
 
 const history = createBrowserHistory();
 
-const store = createStore({}, {
-  devMode: config.devMode,
-  platform: 'browser'
-});
-
-store.dispatch(setRuntimeVariable({
-  name: 'devMode',
-  value: config.devMode
-}));
-
-store.dispatch(setRuntimeVariable({
-  name: 'appOrigin',
-  value: config.appOrigin
-}));
-
-store.dispatch(setRuntimeVariable({
-  name: 'serverOrigin',
-  value: config.serverOrigin
-}));
-
 const apolloClient = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: `${config.serverOrigin}${PATH_GRAPHQL}`,
-    opts: {
-      credentials: 'include'
-    }
-  }),
+  networkInterface,
+  queryDeduplication: true,
   connectToDevTools: config.devMode
 });
 

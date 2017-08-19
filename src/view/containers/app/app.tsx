@@ -6,7 +6,7 @@ import { PATH_APP_ACCOUNT, PATH_APP_PROFILE } from '../../../constants';
 import { track } from '../../../decorators';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
-import { Sidebar, Navbar, Footer } from '../../presenters';
+import { Sidebar, Navbar, Footer, Loader } from '../../presenters';
 import { ProfilePage } from '../profile-page';
 import { AccountPage } from '../account-page';
 import { Feature } from '../../../modules/authorization/types';
@@ -27,6 +27,7 @@ type OwnProps = {
 };
 
 type StateProps = {
+  isLoading: boolean;
   currentLocale: string;
   locales: string[];
 };
@@ -44,6 +45,10 @@ export class App extends React.Component<AppProps, State> {
 
   @track()
   render() {
+    if (this.props.isLoading) {
+      return <Loader/>;
+    }
+
     const allowedFeatures: Feature[] = this.props.data.user
       ? this.props.data.user.subscription.features
       : [];
@@ -92,7 +97,8 @@ export class App extends React.Component<AppProps, State> {
 const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
   (state: RootState): StateProps => ({
     currentLocale: state.i18n.locale,
-    locales: state.i18n.availableLocales
+    locales: state.i18n.availableLocales,
+    isLoading: state.loader.isLoading
   }),
   (dispatch: Dispatch<RootState>): DispatchProps => ({
     setLocale: (locale: string) => dispatch(setLocale({locale}))
