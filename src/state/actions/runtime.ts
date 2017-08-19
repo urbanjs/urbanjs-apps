@@ -1,4 +1,4 @@
-import { ACTION_SET_RUNTIME_VARIABLE, ACTION_SET_RUNTIME_ERROR } from '../constants';
+import { ACTION_SET_RUNTIME_VARIABLE, ACTION_SET_RUNTIME_ERROR } from '../../constants';
 
 export type SetRuntimeVariablePayload = {
   name: string;

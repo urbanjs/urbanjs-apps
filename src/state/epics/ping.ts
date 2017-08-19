@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionsObservable } from 'redux-observable';
-import { ACTION_PING } from '../constants';
+import { ACTION_PING } from '../../constants';
 import { pong } from '../actions/ping';
 
 export const ping = (action$: ActionsObservable<Action>) => {

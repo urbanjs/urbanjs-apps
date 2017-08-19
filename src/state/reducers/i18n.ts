@@ -1,5 +1,5 @@
-import { translations } from '../i18n';
-import { ACTION_SET_LOCALE, DEFAULT_LOCALE } from '../constants';
+import { translations } from '../../i18n';
+import { ACTION_SET_LOCALE, DEFAULT_LOCALE } from '../../constants';
 
 export type SetLocaleAction = {
   type: string;

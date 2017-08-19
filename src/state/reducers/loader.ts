@@ -1,7 +1,7 @@
 import {
   ACTION_SEND_HTTP_REQUEST,
   ACTION_RECEIVE_HTTP_RESPONSES
-} from '../constants';
+} from '../../constants';
 import {
   SendHttpRequestsPayload,
   ReceiveHttpResponsesPayload

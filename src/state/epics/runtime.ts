@@ -1,7 +1,7 @@
 import { MiddlewareAPI, Action } from 'redux';
 import { Observable } from 'rxjs';
 import { ActionsObservable } from 'redux-observable';
-import { ACTION_SET_RUNTIME_ERROR, ACTION_SET_RUNTIME_ERROR_FULFILLED } from '../constants';
+import { ACTION_SET_RUNTIME_ERROR, ACTION_SET_RUNTIME_ERROR_FULFILLED } from '../../constants';
 import { SetRuntimeErrorPayload } from '../actions';
 import { RootState } from '../reducers';
 

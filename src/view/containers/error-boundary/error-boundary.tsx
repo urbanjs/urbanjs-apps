@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect, Dispatch, ActionCreator } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { RootState } from '../../../reducers';
-import { setRuntimeError, SetRuntimeErrorPayload } from '../../../actions';
+import { RootState } from '../../../state/reducers';
+import { setRuntimeError, SetRuntimeErrorPayload } from '../../../state/actions';
 import './error-boundary.css';
 
 type OwnProps = {

@@ -1,7 +1,7 @@
 import {
   ACTION_SET_RUNTIME_VARIABLE,
   ACTION_SET_RUNTIME_ERROR
-} from '../constants';
+} from '../../constants';
 import {
   SetRuntimeErrorPayload,
   SetRuntimeVariablePayload

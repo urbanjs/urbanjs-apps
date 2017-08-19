@@ -1,6 +1,6 @@
 import { createBatchingNetworkInterface, ApolloClient } from 'react-apollo';
 import { PATH_GRAPHQL } from '../constants';
-import { sendHttpRequests, receiveHttpResponses } from '../actions';
+import { sendHttpRequests, receiveHttpResponses } from '../state/actions';
 import { config } from './config';
 
 export const networkInterface = createBatchingNetworkInterface({

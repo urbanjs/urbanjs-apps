@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionsObservable } from 'redux-observable';
-import { ACTION_APOLLO_MUTATION_ERROR, ACTION_APOLLO_QUERY_ERROR } from '../constants';
+import { ACTION_APOLLO_MUTATION_ERROR, ACTION_APOLLO_QUERY_ERROR } from '../../constants';
 import { setRuntimeError } from '../actions/runtime';
 
 export type ApolloErrorAction = Action & { error: { message: string, stack: string } };

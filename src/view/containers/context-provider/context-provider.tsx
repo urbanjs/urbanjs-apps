@@ -4,7 +4,7 @@ import { connect, Store, Provider as StoreProvider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { Router } from 'react-router-dom';
 import { History } from 'history';
-import { RootState } from '../../../reducers';
+import { RootState } from '../../../state/reducers';
 
 type OwnProps = {
   store: Store<object>;

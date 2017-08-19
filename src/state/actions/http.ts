@@ -1,4 +1,4 @@
-import { ACTION_SEND_HTTP_REQUEST, ACTION_RECEIVE_HTTP_RESPONSES } from '../constants';
+import { ACTION_SEND_HTTP_REQUEST, ACTION_RECEIVE_HTTP_RESPONSES } from '../../constants';
 
 export type SendHttpRequestsPayload = {
   requests: Request[]
