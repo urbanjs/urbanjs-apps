@@ -1,42 +1,16 @@
-export default {
-  'component.footer.copyright': 'Minden jog fenntartva',
-  'component.navbar.button.logout': 'Kijelentkezés',
-  'component.navbar.button.login': 'Bejelentkezés',
-  'component.userCard.age': '{value} éves',
-  'component.userCard.name': '{lastName} {firstName}',
-  'component.userInformationEdit.title': 'Adatok szerkesztése',
-  'component.userInformationEdit.editPersonalInformation': 'Személyes adatok szerkesztése',
-  'component.userInformation.title': 'Adatok',
-  'component.userInformation.field.name': 'Név',
-  'component.userInformation.field.age': 'Kor',
-  'component.userInformation.field.city': 'Lakhely',
-  'component.userInformation.field.height': 'Magasság',
-  'component.userInformation.field.chest': 'Mellbőség',
-  'component.userInformation.field.waist': 'Derék',
-  'component.userInformation.field.hip': 'Csípő',
-  'component.userInformation.field.foot': 'Láb',
-  'component.userInformation.field.highestQualificationLevel': 'Legmagasabb iskolai végzettség',
-  'component.userInformation.field.isStudent': 'Aktív hallgatói jogviszony',
-  'component.userInformation.field.drivingLicense': 'Jogosítvány',
-  'component.userInformation.hint.height': 'Fejtetőtől talpig mérjük, cipő nélkül, összezárt lábbal',
-  'component.userInformation.hint.chest': 'A mell legerősebb részén vízszintesen körbemérjük.',
-  'component.userInformation.hint.waist': 'A törzs legkeskenyebb részén vízszintesen körbemérjük.',
-  'component.userInformation.hint.hip': 'A csípő legerősebb részén vízszintesen körbemérjük',
-  'component.userInformation.hint.foot': 'A talk belső felén, a nagylábujj elejétől a sarok végéig mérjük.',
-  'component.userInformation.value.age': '{value} éves',
-  'common.language.english': 'Angol',
-  'common.language.german': 'Német',
-  'common.language.hungarian': 'Magyar',
-  'common.qualificationLevel.university': 'Egyetem',
-  'common.qualificationLevel.secondary': 'Érettségi',
-  'common.qualificationLevel.primary': 'Általános iskola',
-  'common.languageLevel.none': '-',
-  'common.languageLevel.basic': 'Alapfok',
-  'common.languageLevel.intermediate': 'Középfok',
-  'common.languageLevel.professional': 'Felsőfok',
-  'common.languageLevel.native': 'Anyanyelv',
-  'common.action.edit': 'Szerkesztés',
-  'common.action.save': 'Mentés',
-  'common.action.cancel': 'Mégse',
-  'common.help': 'Segítség'
-};
+import accountInformation from './account-information';
+import userInformation from './user-information';
+import common from './common';
+
+export default Object.assign(
+  common,
+  userInformation,
+  accountInformation,
+  {
+    'component.footer.copyright': 'Minden jog fenntartva',
+    'component.navbar.link.login': 'Bejelentkezés',
+    'component.navbar.link.account': 'Adatlap',
+    'component.userCard.age': '{value} éves',
+    'component.userCard.name': '{lastName} {firstName}'
+  }
+);

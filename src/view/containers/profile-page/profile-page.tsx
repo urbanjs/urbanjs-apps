@@ -58,17 +58,22 @@ export type OwnProps = {
 };
 
 export type ProfilePageProps = OwnProps & RouteComponentProps<{}>;
-export type State = {};
+export type State = {
+  user: object;
+};
 
 export class ProfilePage extends React.Component<ProfilePageProps, State> {
   props: ProfilePageProps;
-  state: State = {};
+  state: State = {
+    user: tempUserData
+  };
 
   render() {
     const personalInformation = this.props.data.user && this.props.data.user.personalInformation;
     const tempUser = Object.assign(
       {},
       tempUserData,
+      this.state.user,
       personalInformation
     );
 
@@ -144,6 +149,7 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
                         user={tempUser}
                         onSave={({user}) => {
                           Object.assign(tempUser, user);
+                          this.setState({user: tempUser});
                           this.props.history.push(PATH_APP_PROFILE_INFORMATION);
                         }}
                         onCancel={() =>

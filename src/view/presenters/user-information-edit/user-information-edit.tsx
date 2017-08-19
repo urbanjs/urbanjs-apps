@@ -97,19 +97,22 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
         </div>
 
         <form
-          onSubmit={() => this.props.onSave({
-            changes: this.state.changes,
-            user: {
-              ...this.props.user,
-              ...this.state.changes,
-              languages: ([] as UserLanguageItem[])
-                .concat(this.state.changes.languages || [])
-                .concat(this.props.user.languages || [])
-                .filter((item, index, languages) =>
-                  (index <= languages.findIndex(innerItem => innerItem.language === item.language)))
-                .filter(item => item.level !== 'NONE')
-            }
-          })}
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.onSave({
+              changes: this.state.changes,
+              user: {
+                ...this.props.user,
+                ...this.state.changes,
+                languages: ([] as UserLanguageItem[])
+                  .concat(this.state.changes.languages || [])
+                  .concat(this.props.user.languages || [])
+                  .filter((item, index, languages) =>
+                    (index <= languages.findIndex(innerItem => innerItem.language === item.language)))
+                  .filter(item => item.level !== 'NONE')
+              }
+            });
+          }}
         >
           <table className="table">
             <tbody>
@@ -257,7 +260,7 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
           <div className="row">
             <div className="col-6">
               <a
-                className="btn btn-secondary btn-lg btn-block"
+                className="btn btn-secondary btn-block"
                 onClick={this.props.onCancel}
               >
                 <FormattedMessage id={messages.cancel}/>
@@ -266,7 +269,7 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
             <div className="col-6">
               <button
                 type="submit"
-                className="btn btn-primary btn-lg btn-block text-white"
+                className="btn btn-primary btn-block text-white"
                 disabled={!Object.keys(this.state.changes).length}
               >
                 <FormattedMessage id={messages.save}/>

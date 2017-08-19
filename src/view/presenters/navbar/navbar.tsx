@@ -8,7 +8,7 @@ import {
   PATH_AUTH_FACEBOOK,
   PATH_AUTH_LOGOUT,
   PATH_APP_NOTIFICATIONS,
-  PATH_APP
+  PATH_APP, PATH_APP_ACCOUNT
 } from '../../../constants';
 import {
   TYPE_ROUTE_SERVICE,
@@ -28,7 +28,6 @@ type OwnProps = {
     email: string;
     avatar: string;
   };
-  serverOrigin: string;
   allowedFeatures: Feature[];
   notifications: string[];
   onCollapse: () => void;
@@ -50,8 +49,10 @@ export class Navbar extends React.Component<NavbarProps, State> {
   private routeService: IRouteService;
 
   render() {
-    const rootUrl = this.routeService.format(PATH_APP, {prefixWithOrigin: true});
-    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(rootUrl)}`;
+    const appUrl = this.routeService.format(PATH_APP, {prefixWithOrigin: true});
+    const loginUrl = this.routeService.format(PATH_AUTH_FACEBOOK, {prefixWithOrigin: true});
+    const logoutUrl = this.routeService.format(PATH_AUTH_LOGOUT, {prefixWithOrigin: true});
+    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(appUrl)}`;
 
     let notificationLink;
     if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {
@@ -100,7 +101,10 @@ export class Navbar extends React.Component<NavbarProps, State> {
           />
         </a>
 
-        <div className="dropdown-menu dropdown-menu-right p-4 mt-0">
+        <div
+          className="dropdown-menu dropdown-menu-right p-4 mt-0"
+          onClick={() => this.setState({profileCardIsOpen: false})}
+        >
           {
             this.props.user ? (
               <div className="d-flex flex-row justify-content-start align-items-center">
@@ -115,14 +119,23 @@ export class Navbar extends React.Component<NavbarProps, State> {
                 <div className="p-2">
                   <h6>
                     {this.props.user.displayName}
+
                     <br/>
                     <small className="text-muted">{this.props.user.email}</small>
+
+                    <br/>
+                    <Link
+                      className="btn btn-link p-0"
+                      to={PATH_APP_ACCOUNT}
+                    >
+                      <FormattedMessage id={messages['link.account']}/>
+                    </Link>
                   </h6>
                 </div>
 
                 <div className="ml-auto p-2">
                   <a
-                    href={`${this.props.serverOrigin}${PATH_AUTH_LOGOUT}${redirectUriQueryParam}`}
+                    href={`${logoutUrl}${redirectUriQueryParam}`}
                     className="btn btn-link p-0 text-muted ml-4"
                   >
                     <i
@@ -133,9 +146,9 @@ export class Navbar extends React.Component<NavbarProps, State> {
               </div>) : (
               <a
                 className="btn btn-primary w-100"
-                href={`${this.props.serverOrigin}${PATH_AUTH_FACEBOOK}${redirectUriQueryParam}`}
+                href={`${loginUrl}${redirectUriQueryParam}`}
               >
-                <FormattedMessage id={messages['button.login']}/>
+                <FormattedMessage id={messages['link.login']}/>
               </a>
             )
           }

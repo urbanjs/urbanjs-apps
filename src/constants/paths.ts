@@ -23,6 +23,8 @@ export const PATH_AUTH_FACEBOOK = toPath`${PATH_AUTH}/facebook`;
 export const PATH_AUTH_FACEBOOK_CALLBACK = toPath`${PATH_AUTH_FACEBOOK}/callback`;
 
 export const PATH_APP = toPath`/`;
+export const PATH_APP_ACCOUNT = toPath`${PATH_APP}/account`;
+export const PATH_APP_ACCOUNT_EDIT = toPath`${PATH_APP_ACCOUNT}/edit`;
 export const PATH_APP_PROFILE = toPath`${PATH_APP}/profile`;
 export const PATH_APP_PROFILE_INFORMATION = toPath`${PATH_APP_PROFILE}/about`;
 export const PATH_APP_PROFILE_INFORMATION_EDIT = toPath`${PATH_APP_PROFILE_INFORMATION}/edit`;

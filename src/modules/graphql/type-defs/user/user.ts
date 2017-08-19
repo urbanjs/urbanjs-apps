@@ -6,10 +6,9 @@ type User {
   email: Email!
   displayName: String!
   avatar: String!
-  subscription: UserSubscription
-  personalInformation: UserPersonalInformation
-  settings: UserSettings
-  portfolio: UserPortfolio
+  subscription: UserSubscription!
+  personalInformation: UserPersonalInformation!
+  portfolio: UserPortfolio!
   addresses: [Address]
   jobs: [Job]
 }

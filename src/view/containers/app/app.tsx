@@ -2,12 +2,13 @@ import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
-import { PATH_APP_PROFILE } from '../../../constants';
+import { PATH_APP_ACCOUNT, PATH_APP_PROFILE } from '../../../constants';
 import { track } from '../../../decorators';
 import { RootState } from '../../../reducers';
 import { setLocale } from '../../../actions';
 import { Sidebar, Navbar, Footer } from '../../presenters';
 import { ProfilePage } from '../profile-page';
+import { AccountPage } from '../account-page';
 import { Feature } from '../../../modules/authorization/types';
 import './app.css';
 
@@ -28,7 +29,6 @@ type OwnProps = {
 type StateProps = {
   currentLocale: string;
   locales: string[];
-  serverOrigin: string;
 };
 
 type DispatchProps = {
@@ -56,7 +56,6 @@ export class App extends React.Component<AppProps, State> {
 
         <div className="zv-content-wrapper">
           <Navbar
-            serverOrigin={this.props.serverOrigin}
             allowedFeatures={allowedFeatures}
             notifications={Array(100)}
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
@@ -67,13 +66,14 @@ export class App extends React.Component<AppProps, State> {
             }}
           />
 
-          <pre>
-            {JSON.stringify(this.props.data.user, null, '  ')}
-          </pre>
-
           <Route
             path={PATH_APP_PROFILE}
             render={() => <ProfilePage/>}
+          />
+
+          <Route
+            path={PATH_APP_ACCOUNT}
+            render={() => <AccountPage/>}
           />
         </div>
 
@@ -92,8 +92,7 @@ export class App extends React.Component<AppProps, State> {
 const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
   (state: RootState): StateProps => ({
     currentLocale: state.i18n.locale,
-    locales: state.i18n.availableLocales,
-    serverOrigin: state.runtime.variables.serverOrigin
+    locales: state.i18n.availableLocales
   }),
   (dispatch: Dispatch<RootState>): DispatchProps => ({
     setLocale: (locale: string) => dispatch(setLocale({locale}))
