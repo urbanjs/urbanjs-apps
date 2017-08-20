@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import { relative } from 'path';
 import {
   HttpServerConfig,
@@ -7,10 +8,16 @@ import {
   TYPE_ROUTE_SERVICE_CONFIG,
   RouterServiceConfig
 } from '../modules/route/types';
+import {
+  Fetch,
+  TYPE_DRIVER_FETCH
+} from '../modules/http/types';
 import { createContainer } from '../utils/container';
 import { config } from './config';
 
 export const container = createContainer({devMode: config.devMode});
+
+container.bind<Fetch>(TYPE_DRIVER_FETCH).toConstantValue(fetch);
 
 container.bind<RouterServiceConfig>(TYPE_ROUTE_SERVICE_CONFIG).toConstantValue({
   appOrigin: config.appOrigin,
@@ -34,6 +41,7 @@ container.load(
   require('../modules/authorization').authorizationModule,
   require('../modules/monitor').monitorModule,
   require('../modules/http-server').httpServerModule,
+  require('../modules/http').httpModule,
   require('../modules/graphql').graphqlModule,
   require('../modules/user').userModule,
   require('../modules/error').errorModule,
