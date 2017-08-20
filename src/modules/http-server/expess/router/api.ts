@@ -46,6 +46,8 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
                 remoteAddress: req.ip
               };
 
+              // TODO: json schema validation based on the annotation
+
               let httpResponse: HttpControllerResponse = await controller[methodName](requestParams);
               loggerService.debug(`execution of ${debugPrefix} returned with`, httpResponse);
 

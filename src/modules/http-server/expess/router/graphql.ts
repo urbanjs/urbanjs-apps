@@ -1,6 +1,7 @@
 import { Router, Request } from 'express';
 import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addErrorLoggingToSchema } from 'graphql-tools';
+import { GraphQLError } from 'graphql';
 import { PATH_GRAPHQL, PATH_GRAPHQL_PLAYGROUND } from '../../../../constants';
 import {
   GraphqlTypeDefs,
@@ -9,6 +10,7 @@ import {
   GraphqlRootValue
 } from '../../../graphql/types';
 import { ILoggerService } from '../../../log/types';
+import { IErrorService } from '../../../error/types';
 
 export type GraphqlRouterConfig = {
   devMode: boolean;
@@ -16,6 +18,7 @@ export type GraphqlRouterConfig = {
   graphqlResolvers: GraphqlResolverMap;
   graphqlTypeDefs: GraphqlTypeDefs;
   loggerService: ILoggerService;
+  errorService: IErrorService;
 };
 
 export function createGraphqlRouter({
@@ -23,7 +26,8 @@ export function createGraphqlRouter({
                                       graphqlTypeDefs,
                                       graphqlResolvers,
                                       enableGraphQLEditor,
-                                      loggerService
+                                      loggerService,
+                                      errorService
                                     }: GraphqlRouterConfig) {
   const router = Router();
   const schema = makeExecutableSchema({
@@ -43,7 +47,17 @@ export function createGraphqlRouter({
     context: {
       authenticatedUserId: req.user && req.user.id || null
     } as GraphqlResolverContext,
-    debug: devMode
+    debug: devMode,
+    formatError(error: GraphQLError) {
+      const {locations, path} = error;
+      const httpError = errorService.createHttpError(error.originalError || error);
+      return {
+        ...httpError.toResponse(devMode),
+        statusCode: httpError.statusCode,
+        locations,
+        path
+      };
+    }
     // logFunction: message => loggerService.debug(message)
   })));
 

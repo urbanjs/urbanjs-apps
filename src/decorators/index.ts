@@ -1,4 +1,5 @@
 export { httpRoute } from './http-route';
+export { resolver } from './graphql';
 export {
   track,
   reinitializeTrackDecorators

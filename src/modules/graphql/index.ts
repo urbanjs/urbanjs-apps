@@ -5,54 +5,15 @@ import {
   TYPE_GRAPHQL_TYPE_DEFS,
   TYPE_GRAPHQL_RESOLVER,
   TYPE_GRAPHQL_RESOLVER_MAP,
-  RESOLVER_USER,
-  RESOLVER_USER_SUBSCRIPTION,
-  GraphqlRootValue,
   GraphqlTypeDefs,
-  IGraphqlResolver,
   GraphqlResolverMap,
-  User,
-  UserSubscription,
-  UserPersonalInformation,
-  RESOLVER_USER_PERSONAL_INFORMATION,
-  RESOLVER_UPDATE_USER_PERSONAL_INFORMATION,
-  RESOLVER_FACEBOOK_PERMISSIONS,
-  FacebookPermissions, Photos, RESOLVER_PHOTOS
+  IGraphqlResolver
 } from './types';
-import {
-  UserResolver,
-  UserSubscriptionResolver,
-  UserPersonalInformationResolver,
-  UpdateUserPersonalInformationResolver,
-  FacebookPermissionsResolver, PhotosResolver
-} from './resolvers';
+import { UserResolver } from './resolvers';
 
 export const graphqlModule = new ContainerModule((bind) => {
   bind<GraphqlTypeDefs>(TYPE_GRAPHQL_TYPE_DEFS).toConstantValue(typeDefs);
-
-  bind<IGraphqlResolver<GraphqlRootValue, User>>(TYPE_GRAPHQL_RESOLVER)
-    .to(UserResolver)
-    .whenTargetNamed(RESOLVER_USER);
-
-  bind<IGraphqlResolver<User, UserSubscription>>(TYPE_GRAPHQL_RESOLVER)
-    .to(UserSubscriptionResolver)
-    .whenTargetNamed(RESOLVER_USER_SUBSCRIPTION);
-
-  bind<IGraphqlResolver<User, UserPersonalInformation>>(TYPE_GRAPHQL_RESOLVER)
-    .to(UserPersonalInformationResolver)
-    .whenTargetNamed(RESOLVER_USER_PERSONAL_INFORMATION);
-
-  bind<IGraphqlResolver<GraphqlRootValue, UserPersonalInformation>>(TYPE_GRAPHQL_RESOLVER)
-    .to(UpdateUserPersonalInformationResolver)
-    .whenTargetNamed(RESOLVER_UPDATE_USER_PERSONAL_INFORMATION);
-
-  bind<IGraphqlResolver<User, FacebookPermissions>>(TYPE_GRAPHQL_RESOLVER)
-    .to(FacebookPermissionsResolver)
-    .whenTargetNamed(RESOLVER_FACEBOOK_PERMISSIONS);
-
-  bind<IGraphqlResolver<User, Photos>>(TYPE_GRAPHQL_RESOLVER)
-    .to(PhotosResolver)
-    .whenTargetNamed(RESOLVER_PHOTOS);
-
   bind<GraphqlResolverMap>(TYPE_GRAPHQL_RESOLVER_MAP).toDynamicValue(resolverMap);
+
+  bind<IGraphqlResolver>(TYPE_GRAPHQL_RESOLVER).to(UserResolver);
 });

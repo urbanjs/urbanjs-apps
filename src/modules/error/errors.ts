@@ -1,5 +1,15 @@
 import { inherits } from 'util';
 
+export class BaseError {
+  constructor(public message: string) {
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+// we can not extend built-in classes
+// by `extends` syntax as we are using babel
+inherits(BaseError, Error);
+
 export type HttpErrorResponse = {
   message: string;
   innerError?: {
@@ -8,11 +18,12 @@ export type HttpErrorResponse = {
   }
 };
 
-export class HttpError {
+export class HttpError extends BaseError {
   public headers: Object = {};
   public innerError: Error;
 
   constructor(public message: string, public statusCode: number) {
+    super(message);
   }
 
   public toResponse(includeInnerError: boolean = false): HttpErrorResponse {
@@ -31,32 +42,26 @@ export class HttpError {
   }
 }
 
-inherits(HttpError, Error);
-
-export class ValidationError {
+export class ValidationError extends BaseError {
   constructor(public message: string) {
+    super(message);
   }
 }
 
-inherits(ValidationError, Error);
-
-export class ForbiddenError {
+export class ForbiddenError extends BaseError {
   constructor(public message: string = 'forbidden') {
+    super(message);
   }
 }
 
-inherits(ForbiddenError, Error);
-
-export class ImplementationError {
+export class ImplementationError extends BaseError {
   constructor(public message: string = 'oh_uh') {
+    super(message);
   }
 }
 
-inherits(ImplementationError, Error);
-
-export class NotFoundError {
+export class NotFoundError extends BaseError {
   constructor(public message: string = 'not_found') {
+    super(message);
   }
 }
-
-inherits(NotFoundError, Error);
