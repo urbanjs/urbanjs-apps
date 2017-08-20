@@ -57,5 +57,6 @@ container.load(
   require('../modules/uuid').uuidModule,
   require('../modules/route').routeModule,
   require('../modules/json').jsonModule,
-  require('../modules/facebook').facebookModule
+  require('../modules/facebook').facebookModule,
+  require('../modules/date').dateModule
 );

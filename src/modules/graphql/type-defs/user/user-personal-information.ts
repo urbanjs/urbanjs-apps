@@ -5,6 +5,7 @@ type UserPersonalInformation {
   lastName: String
   phoneNumber: String
   birthDate: Date
+  age: Int
   birthPlace: String
   socialSecurityNumber: String
   taxNumber: String

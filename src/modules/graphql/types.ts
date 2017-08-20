@@ -33,6 +33,6 @@ export interface IGraphqlResolver<T1, T2> {
 
 export type User = null | StoredUser;
 export type UserSubscription = StoredUserSubscription;
-export type UserPersonalInformation = StoredUserPersonalInformation;
+export type UserPersonalInformation = StoredUserPersonalInformation & { age: number | null };
 export type FacebookPermissions = FacebookPermission[];
 export type Photos = FacebookPhoto[];

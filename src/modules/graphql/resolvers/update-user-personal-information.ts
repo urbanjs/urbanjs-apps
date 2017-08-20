@@ -3,6 +3,7 @@ import { ForbiddenError } from '../../error/errors';
 import { ILoggerService, TYPE_SERVICE_LOGGER } from '../../log/types';
 import { TYPE_USER_SERVICE, IUserService, UserPersonalInformationInput } from '../../user/types';
 import { Guid } from '../../uuid/types';
+import { TYPE_DATE_SERVICE, IDateService } from '../../date/types';
 import {
   GraphqlResolverContext,
   IGraphqlResolver,
@@ -20,7 +21,8 @@ export class UpdateUserPersonalInformationResolver
   implements IGraphqlResolver<GraphqlRootValue, UserPersonalInformation> {
 
   constructor(@inject(TYPE_USER_SERVICE) private userService: IUserService,
-              @inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
+              @inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService,
+              @inject(TYPE_DATE_SERVICE) private dateService: IDateService) {
   }
 
   @track()
@@ -35,6 +37,12 @@ export class UpdateUserPersonalInformationResolver
       throw new ForbiddenError();
     }
 
-    return await this.userService.updatePersonalInformation(args.userId, args.data);
+    const personalInformation = await this.userService.updatePersonalInformation(args.userId, args.data);
+
+    return {
+      ...personalInformation,
+      age: personalInformation.birthDate && this.dateService.getYears(
+        new Date().getTime() - personalInformation.birthDate.getTime())
+    };
   }
 }

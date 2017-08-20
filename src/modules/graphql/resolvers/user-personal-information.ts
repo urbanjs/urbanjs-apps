@@ -1,6 +1,7 @@
 import { injectable, inject, track } from '../../../decorators';
 import { ValidationError } from '../../error/errors';
 import { TYPE_USER_SERVICE, IUserService } from '../../user/types';
+import { TYPE_DATE_SERVICE, IDateService } from '../../date/types';
 import {
   GraphqlResolverContext,
   IGraphqlResolver,
@@ -11,7 +12,8 @@ import {
 @injectable()
 export class UserPersonalInformationResolver implements IGraphqlResolver<User, UserPersonalInformation> {
 
-  constructor(@inject(TYPE_USER_SERVICE) private userService: IUserService) {
+  constructor(@inject(TYPE_USER_SERVICE) private userService: IUserService,
+              @inject(TYPE_DATE_SERVICE) private dateService: IDateService) {
   }
 
   @track()
@@ -20,6 +22,12 @@ export class UserPersonalInformationResolver implements IGraphqlResolver<User, U
       throw new ValidationError('user is required');
     }
 
-    return await this.userService.getPersonalInformation(user.id);
+    const personalInformation = await this.userService.getPersonalInformation(user.id);
+
+    return {
+      ...personalInformation,
+      age: personalInformation.birthDate && this.dateService.getYears(
+        new Date().getTime() - personalInformation.birthDate.getTime())
+    };
   }
 }
