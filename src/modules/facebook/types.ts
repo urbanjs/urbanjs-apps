@@ -16,7 +16,13 @@ export type FacebookPermission = {
   granted: boolean;
 };
 
+export type FacebookPhoto = {
+  id: string;
+  uri: string;
+};
+
 export interface IFacebookApiService {
   getLongLivedToken(accessToken: string): Promise<FacebookAccessToken>;
   getPermissions(facebookUserId: string, accessToken: string): Promise<FacebookPermission[]>;
+  getPhotos(facebookUserId: string, accessToken: string): Promise<FacebookPhoto[]>;
 }

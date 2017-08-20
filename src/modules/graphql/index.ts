@@ -17,14 +17,14 @@ import {
   RESOLVER_USER_PERSONAL_INFORMATION,
   RESOLVER_UPDATE_USER_PERSONAL_INFORMATION,
   RESOLVER_FACEBOOK_PERMISSIONS,
-  FacebookPermissions
+  FacebookPermissions, Photos, RESOLVER_PHOTOS
 } from './types';
 import {
   UserResolver,
   UserSubscriptionResolver,
   UserPersonalInformationResolver,
   UpdateUserPersonalInformationResolver,
-  FacebookPermissionsResolver
+  FacebookPermissionsResolver, PhotosResolver
 } from './resolvers';
 
 export const graphqlModule = new ContainerModule((bind) => {
@@ -49,6 +49,10 @@ export const graphqlModule = new ContainerModule((bind) => {
   bind<IGraphqlResolver<User, FacebookPermissions>>(TYPE_GRAPHQL_RESOLVER)
     .to(FacebookPermissionsResolver)
     .whenTargetNamed(RESOLVER_FACEBOOK_PERMISSIONS);
+
+  bind<IGraphqlResolver<User, Photos>>(TYPE_GRAPHQL_RESOLVER)
+    .to(PhotosResolver)
+    .whenTargetNamed(RESOLVER_PHOTOS);
 
   bind<GraphqlResolverMap>(TYPE_GRAPHQL_RESOLVER_MAP).toDynamicValue(resolverMap);
 });

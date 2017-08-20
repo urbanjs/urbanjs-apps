@@ -7,6 +7,7 @@ type User {
   displayName: String!
   avatar: String!
   facebookPermissions(id: String): [FacebookPermission]!
+  photos: [Photo]!
   subscription: UserSubscription!
   personalInformation: UserPersonalInformation!
   portfolio: UserPortfolio!

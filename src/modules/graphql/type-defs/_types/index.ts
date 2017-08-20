@@ -9,6 +9,7 @@ import lengthUnit from './length-unit';
 import locale from './locale';
 import qualificationLevel from './qualification-level';
 import facebookPermission from './facebook-permission';
+import photo from './photo';
 
 export default `
 ${address}
@@ -22,4 +23,5 @@ ${locale}
 ${applicationFeature}
 ${qualificationLevel}
 ${facebookPermission}
+${photo}
 `;

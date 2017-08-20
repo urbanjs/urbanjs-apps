@@ -13,7 +13,9 @@ import {
   UserPersonalInformation,
   RESOLVER_UPDATE_USER_PERSONAL_INFORMATION,
   FacebookPermissions,
-  RESOLVER_FACEBOOK_PERMISSIONS
+  RESOLVER_FACEBOOK_PERMISSIONS,
+  Photos,
+  RESOLVER_PHOTOS
 } from './types';
 
 export const resolverMap = (context: inversify.Context) => {
@@ -38,6 +40,9 @@ export const resolverMap = (context: inversify.Context) => {
   const facebookPermissionsResolver = container
     .getNamed<IGraphqlResolver<User, FacebookPermissions>>(
       TYPE_GRAPHQL_RESOLVER, RESOLVER_FACEBOOK_PERMISSIONS);
+  const photosResolver = container
+    .getNamed<IGraphqlResolver<User, Photos>>(
+      TYPE_GRAPHQL_RESOLVER, RESOLVER_PHOTOS);
 
   return {
     Email: GraphQLEmail,
@@ -49,7 +54,9 @@ export const resolverMap = (context: inversify.Context) => {
       personalInformation: (obj: User, args: {}, con: GraphqlResolverContext) =>
         userPersonalInformationResolver.resolve(obj, args, con),
       facebookPermissions: (obj: User, args: {}, con: GraphqlResolverContext) =>
-        facebookPermissionsResolver.resolve(obj, args, con)
+        facebookPermissionsResolver.resolve(obj, args, con),
+      photos: (obj: User, args: {}, con: GraphqlResolverContext) =>
+        photosResolver.resolve(obj, args, con)
     },
 
     Query: {

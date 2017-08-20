@@ -5,7 +5,8 @@ import {
   UserPersonalInformation as StoredUserPersonalInformation
 } from '../user/types';
 import {
-  FacebookPermission
+  FacebookPermission,
+  FacebookPhoto
 } from '../facebook/types';
 
 export const TYPE_GRAPHQL_TYPE_DEFS = 'TYPE_GRAPHQL_TYPE_DEFS';
@@ -17,6 +18,7 @@ export const RESOLVER_USER_SUBSCRIPTION = 'RESOLVER_USER_SUBSCRIPTION';
 export const RESOLVER_USER_PERSONAL_INFORMATION = 'RESOLVER_USER_PERSONAL_INFORMATION';
 export const RESOLVER_UPDATE_USER_PERSONAL_INFORMATION = 'RESOLVER_UPDATE_USER_PERSONAL_INFORMATION';
 export const RESOLVER_FACEBOOK_PERMISSIONS = 'RESOLVER_FACEBOOK_PERMISSIONS';
+export const RESOLVER_PHOTOS = 'RESOLVER_PHOTOS';
 
 export type GraphqlTypeDefs = string;
 export type GraphqlResolverMap = IResolvers;
@@ -33,3 +35,4 @@ export type User = null | StoredUser;
 export type UserSubscription = StoredUserSubscription;
 export type UserPersonalInformation = StoredUserPersonalInformation;
 export type FacebookPermissions = FacebookPermission[];
+export type Photos = FacebookPhoto[];
