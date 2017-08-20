@@ -8,7 +8,7 @@ import {
   HttpApplicationFactory
 } from './types';
 
-export const httpModule = new ContainerModule((bind) => {
+export const httpServerModule = new ContainerModule((bind) => {
   bind<IHttpServer>(TYPE_HTTP_SERVER).to(HttpServer);
 
   bind<HttpApplicationFactory>(TYPE_HTTP_APPLICATION_FACTORY)

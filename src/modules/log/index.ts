@@ -2,7 +2,7 @@ import { ContainerModule } from 'inversify';
 import * as chalk from 'chalk';
 import { ConsoleLoggerService } from 'urbanjs-tools-core/dist/services/console-logger-service';
 import { TraceService } from 'urbanjs-tools-core/dist/services/trace-service';
-import { TYPE_HTTP_CONTROLLER, IHttpController } from '../http/types';
+import { TYPE_HTTP_CONTROLLER, IHttpController } from '../http-server/types';
 import { ReportController } from './report-controller';
 import { LogService } from './log-service';
 import {

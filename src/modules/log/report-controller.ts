@@ -3,7 +3,7 @@ import { PATH_API_REPORT_ERROR } from '../../constants';
 import {
   HttpControllerRequestParams,
   IHttpController
-} from '../http/types';
+} from '../http-server/types';
 import {
   ILogService,
   TYPE_LOG_SERVICE

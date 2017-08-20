@@ -1,5 +1,5 @@
 // tslint:disable no-console
-import { config } from './client/config';
+import { config } from './config';
 
 // In production, we register a service worker to serve assets from local cache.
 

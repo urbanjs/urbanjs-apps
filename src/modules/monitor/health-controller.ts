@@ -1,6 +1,6 @@
 import { injectable, httpRoute, track } from '../../decorators';
 import { PATH_API_HEALTH } from '../../constants';
-import { HttpControllerResponse, IHttpController } from '../http/types';
+import { HttpControllerResponse, IHttpController } from '../http-server/types';
 
 @injectable()
 export class HealthController implements IHttpController {

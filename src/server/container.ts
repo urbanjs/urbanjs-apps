@@ -2,7 +2,7 @@ import { relative } from 'path';
 import {
   HttpServerConfig,
   TYPE_HTTP_CONFIG
-} from '../modules/http/types';
+} from '../modules/http-server/types';
 import {
   TYPE_ROUTE_SERVICE_CONFIG,
   RouterServiceConfig
@@ -33,7 +33,7 @@ container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
 container.load(
   require('../modules/authorization').authorizationModule,
   require('../modules/monitor').monitorModule,
-  require('../modules/http').httpModule,
+  require('../modules/http-server').httpServerModule,
   require('../modules/graphql').graphqlModule,
   require('../modules/user').userModule,
   require('../modules/error').errorModule,
