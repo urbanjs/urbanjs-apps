@@ -20,6 +20,7 @@ export const PATH_API_REPORT_ERROR = toPath`${PATH_API}/v1/report/error`;
 export const PATH_AUTH = toPath`/auth`;
 export const PATH_AUTH_LOGOUT = toPath`${PATH_AUTH}/logout`;
 export const PATH_AUTH_FACEBOOK = toPath`${PATH_AUTH}/facebook`;
+export const PATH_AUTH_FACEBOOK_RESTART = toPath`${PATH_AUTH}/facebook/restart`;
 export const PATH_AUTH_FACEBOOK_CALLBACK = toPath`${PATH_AUTH_FACEBOOK}/callback`;
 
 export const PATH_APP = toPath`/`;

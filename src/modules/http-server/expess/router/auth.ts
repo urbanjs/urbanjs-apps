@@ -1,7 +1,12 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { parse, UrlObject } from 'url';
 import { PATH_APP } from '../../../../constants';
-import { PATH_AUTH_LOGOUT, PATH_AUTH_FACEBOOK_CALLBACK, PATH_AUTH_FACEBOOK } from '../../../../constants';
+import {
+  PATH_AUTH_LOGOUT,
+  PATH_AUTH_FACEBOOK_CALLBACK,
+  PATH_AUTH_FACEBOOK,
+  PATH_AUTH_FACEBOOK_RESTART
+} from '../../../../constants';
 import { STRATEGY_FACEBOOK, Passport } from '../passport';
 import { ILoggerService } from '../../../log/types';
 import { AuthenticateOptions } from 'passport-facebook';
@@ -13,6 +18,12 @@ export type AuthRouterConfig = {
 };
 
 export function createAuthRouter({passport, allowedRedirectOrigins, loggerService}: AuthRouterConfig) {
+  const requiredPermissions = [
+    'public_profile',
+    'user_photos',
+    'email'
+  ];
+
   const router = Router();
   const allowedRedirectUriObjects = allowedRedirectOrigins.map(origin => parse(origin));
   const getRedirectUriFromRequest = (req: Request) => {
@@ -53,6 +64,21 @@ export function createAuthRouter({passport, allowedRedirectOrigins, loggerServic
       loggerService.debug('logging in with facebook...', redirectUri);
 
       passport.authenticate(STRATEGY_FACEBOOK, <AuthenticateOptions> {
+        scope: requiredPermissions,
+        state: JSON.stringify({redirectUri})
+      })(req, res, next);
+    }
+  );
+
+  router.get(
+    PATH_AUTH_FACEBOOK_RESTART,
+    (req: Request, res: Response, next: NextFunction) => {
+      const redirectUri = getRedirectUriFromRequest(req);
+      loggerService.debug('logging in with facebook (clean)...', redirectUri);
+
+      passport.authenticate(STRATEGY_FACEBOOK, <AuthenticateOptions> {
+        scope: requiredPermissions,
+        authType: 'rerequest',
         state: JSON.stringify({redirectUri})
       })(req, res, next);
     }

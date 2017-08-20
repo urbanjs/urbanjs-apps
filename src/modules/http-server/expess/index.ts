@@ -3,6 +3,7 @@ import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolverMap, GraphqlTypeDefs } from '../../graphql/types';
 import { IErrorService } from '../../error/types';
+import { IFacebookApiService } from '../../facebook/types';
 import { HttpServerConfig, IHttpController } from '../types';
 import { createApp, AppConfig } from './app';
 import { createPassport, PassportConfig, Passport } from './passport';
@@ -21,12 +22,13 @@ import {
 } from './router';
 
 export type ExpressApplicationConfig = HttpServerConfig & {
-  graphqlResolvers: GraphqlResolverMap,
-  graphqlTypeDefs: GraphqlTypeDefs,
-  apiControllers: IHttpController[],
-  loggerService: ILoggerService,
-  errorService: IErrorService,
-  userService: IUserService
+  graphqlResolvers: GraphqlResolverMap;
+  graphqlTypeDefs: GraphqlTypeDefs;
+  apiControllers: IHttpController[];
+  loggerService: ILoggerService;
+  errorService: IErrorService;
+  userService: IUserService;
+  facebookApiService: IFacebookApiService;
 };
 
 export function createExpressApplication(config: ExpressApplicationConfig) {

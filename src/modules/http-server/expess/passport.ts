@@ -3,6 +3,7 @@ import { Passport } from 'passport';
 import { ValidationError } from '../../error/errors';
 import { IUserService, User } from '../../user/types';
 import { ILoggerService } from '../../log/types';
+import { IFacebookApiService } from '../../facebook/types';
 
 export { Passport } from 'passport';
 
@@ -12,6 +13,7 @@ export type PassportConfig = {
   facebookCallbackURL: string;
   userService: IUserService;
   loggerService: ILoggerService;
+  facebookApiService: IFacebookApiService;
 };
 
 export const STRATEGY_FACEBOOK = 'facebook';
@@ -21,7 +23,8 @@ export function createPassport({
                                  facebookAppSecret,
                                  facebookCallbackURL,
                                  userService,
-                                 loggerService
+                                 loggerService,
+                                 facebookApiService
                                }: PassportConfig) {
   const passport = new Passport();
   const strategyOptions = {
@@ -47,8 +50,11 @@ export function createPassport({
         throw new ValidationError('missing avatar from facebook');
       }
 
+      const facebookToken = await facebookApiService.getLongLivedToken(accessToken);
+
       const user = await userService.createUser({
         facebookId: profile.id,
+        facebookToken: facebookToken,
         email: profile.emails[0].value,
         displayName: profile.displayName,
         avatar: profile.photos[0].value

@@ -29,6 +29,7 @@ export class UserService implements IUserService {
       id: this.uuidService.createUuid(),
       createdAt: now,
       facebookId: user.facebookId,
+      facebookToken: user.facebookToken,
       email: user.email,
       displayName: user.displayName,
       avatar: user.avatar

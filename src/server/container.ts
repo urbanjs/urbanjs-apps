@@ -12,6 +12,10 @@ import {
   Fetch,
   TYPE_DRIVER_FETCH
 } from '../modules/http/types';
+import {
+  FacebookApiServiceConfig,
+  TYPE_FACEBOOK_API_SERVICE_CONFIG
+} from '../modules/facebook/types';
 import { createContainer } from '../utils/container';
 import { config } from './config';
 
@@ -37,6 +41,11 @@ container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
   relativePublicPath: relative(process.cwd(), config.absolutePublicPath)
 });
 
+container.bind<FacebookApiServiceConfig>(TYPE_FACEBOOK_API_SERVICE_CONFIG).toConstantValue({
+  appId: config.facebookAppId,
+  appSecret: config.facebookAppSecret
+});
+
 container.load(
   require('../modules/authorization').authorizationModule,
   require('../modules/monitor').monitorModule,
@@ -47,5 +56,6 @@ container.load(
   require('../modules/error').errorModule,
   require('../modules/uuid').uuidModule,
   require('../modules/route').routeModule,
-  require('../modules/json').jsonModule
+  require('../modules/json').jsonModule,
+  require('../modules/facebook').facebookModule
 );

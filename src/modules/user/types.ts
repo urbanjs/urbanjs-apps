@@ -1,10 +1,12 @@
 import { Guid } from '../uuid/types';
 import { Feature } from '../authorization/types';
+import { FacebookAccessToken } from '../facebook/types';
 
 export const TYPE_USER_SERVICE = 'TYPE_USER_SERVICE';
 
 export type RawUser = {
   facebookId: string;
+  facebookToken: FacebookAccessToken;
   email: string;
   displayName: string;
   avatar: string;
@@ -14,6 +16,7 @@ export type User = {
   id: Guid;
   createdAt: Date;
   facebookId: string;
+  facebookToken: FacebookAccessToken;
   email: string;
   displayName: string;
   avatar: string;

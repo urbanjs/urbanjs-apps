@@ -2,6 +2,7 @@ import { interfaces  as inversify } from 'inversify';
 import { IUserService, TYPE_USER_SERVICE } from '../user/types';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../log/types';
 import { IErrorService, TYPE_ERROR_SERVICE } from '../error/types';
+import { IFacebookApiService, TYPE_FACEBOOK_API_SERVICE } from '../facebook/types';
 import {
   TYPE_GRAPHQL_RESOLVER_MAP,
   GraphqlResolverMap,
@@ -25,5 +26,6 @@ export const expressApplicationFactory: inversify.FactoryCreator<HttpApplication
         apiControllers: context.container.getAll<IHttpController>(TYPE_HTTP_CONTROLLER),
         loggerService: context.container.get<ILoggerService>(TYPE_SERVICE_LOGGER),
         errorService: context.container.get<IErrorService>(TYPE_ERROR_SERVICE),
-        userService: context.container.get<IUserService>(TYPE_USER_SERVICE)
+        userService: context.container.get<IUserService>(TYPE_USER_SERVICE),
+        facebookApiService: context.container.get<IFacebookApiService>(TYPE_FACEBOOK_API_SERVICE)
       }));

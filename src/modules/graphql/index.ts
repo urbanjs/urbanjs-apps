@@ -15,13 +15,16 @@ import {
   UserSubscription,
   UserPersonalInformation,
   RESOLVER_USER_PERSONAL_INFORMATION,
-  RESOLVER_UPDATE_USER_PERSONAL_INFORMATION
+  RESOLVER_UPDATE_USER_PERSONAL_INFORMATION,
+  RESOLVER_FACEBOOK_PERMISSIONS,
+  FacebookPermissions
 } from './types';
 import {
   UserResolver,
   UserSubscriptionResolver,
   UserPersonalInformationResolver,
-  UpdateUserPersonalInformationResolver
+  UpdateUserPersonalInformationResolver,
+  FacebookPermissionsResolver
 } from './resolvers';
 
 export const graphqlModule = new ContainerModule((bind) => {
@@ -42,6 +45,10 @@ export const graphqlModule = new ContainerModule((bind) => {
   bind<IGraphqlResolver<GraphqlRootValue, UserPersonalInformation>>(TYPE_GRAPHQL_RESOLVER)
     .to(UpdateUserPersonalInformationResolver)
     .whenTargetNamed(RESOLVER_UPDATE_USER_PERSONAL_INFORMATION);
+
+  bind<IGraphqlResolver<User, FacebookPermissions>>(TYPE_GRAPHQL_RESOLVER)
+    .to(FacebookPermissionsResolver)
+    .whenTargetNamed(RESOLVER_FACEBOOK_PERMISSIONS);
 
   bind<GraphqlResolverMap>(TYPE_GRAPHQL_RESOLVER_MAP).toDynamicValue(resolverMap);
 });
