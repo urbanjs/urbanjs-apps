@@ -13,7 +13,10 @@ export default {
   'common.action.edit': 'Szerkesztés',
   'common.action.save': 'Mentés',
   'common.action.cancel': 'Mégse',
+  'common.action.login': 'Bejelentkezés',
   'common.help': 'Segítség',
   'common.error': 'Hiba',
+  'common.error.four01': 'A kért oldal nem elérhető',
+  'common.error.four01.login': 'Kérlek jelentkezz be!',
   'common.error.four04': 'A kért oldal nem létezik'
 };

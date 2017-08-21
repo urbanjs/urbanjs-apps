@@ -6,7 +6,7 @@ import {
   PATH_APP_ACCOUNT,
   PATH_APP_ACCOUNT_EDIT
 } from '../../../constants';
-import { AccountInformation, AccountInformationEdit } from '../../presenters';
+import { AccountInformation, AccountInformationEdit, Four01 } from '../../presenters';
 import './account-page.css';
 
 export type OwnProps = {
@@ -38,12 +38,19 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
   props: AccountPageProps;
   state: State = {};
 
+  private unauthenticatedUser = {
+    id: 'unknown'
+  };
+
   render() {
-    const user = this.props.data.user || {id: 'unknown'};
+    const user = this.props.data.user || this.unauthenticatedUser;
 
     return (
       <div className="zv-account-page">
         <Switch>
+          {!this.props.data.loading && user === this.unauthenticatedUser
+            ? <Four01 unauthenticated={true}/> : ''}
+
           <Route
             path={PATH_APP_ACCOUNT_EDIT}
             exact={true}

@@ -8,9 +8,9 @@ export function Four04() {
     <div className="zv-four04">
       <div className="cover">
         <FormattedMessage tagName="h1" id={messages.error}/>
-        <p className="lead">
+        <div className="lead">
           <FormattedMessage id={messages.four04}/>
-        </p>
+        </div>
       </div>
     </div>
   );

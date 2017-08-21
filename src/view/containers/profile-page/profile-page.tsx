@@ -126,6 +126,7 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
                       this.props.history.push(PATH_APP_PROFILE_INFORMATION_EDIT)}
                   />
                 </div>
+
                 <div className="col-xs-12 col-lg-8">
                   <Gallery
                     images={
@@ -175,6 +176,7 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
                     <Redirect to={PATH_APP_404}/>
                   </Switch>
                 </div>
+
                 <div className="hidden-md-down col-lg-8">
                   <Gallery
                     images={

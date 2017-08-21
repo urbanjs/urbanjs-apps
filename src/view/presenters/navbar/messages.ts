@@ -1,4 +1,4 @@
 export const messages = {
-  'link.login': 'component.navbar.link.login',
+  'link.login': 'common.action.login',
   'link.account': 'component.navbar.link.account'
 };

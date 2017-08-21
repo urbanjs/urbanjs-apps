@@ -36,10 +36,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
         <div className="zv-error-boundary">
           <div className="cover">
             <h1>Oh no! The application has crashed</h1>
-            <p className="lead">
+            <div className="lead">
               An unexpected error was encountered.<br />
               Our team has been dispatched to fix this issue.
-            </p>
+            </div>
           </div>
         </div>
       );
