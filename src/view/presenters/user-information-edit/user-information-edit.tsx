@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import { PATH_APP } from '../../../constants';
+import { PATH_APP_ACCOUNT } from '../../../constants';
 import { messages } from './messages';
 import './user-information-edit.css';
 
@@ -120,7 +120,7 @@ export class UserInformationEdit extends React.Component<UserInformationEditProp
                 <td className="text-muted p-4" colSpan={2}>
                   <Link
                     className="btn btn-link"
-                    to={PATH_APP}
+                    to={PATH_APP_ACCOUNT}
                   >
                     <FormattedMessage id={messages.editPersonalInformation}/>
                   </Link>

@@ -13,5 +13,7 @@ export default {
   'common.action.edit': 'Szerkesztés',
   'common.action.save': 'Mentés',
   'common.action.cancel': 'Mégse',
-  'common.help': 'Segítség'
+  'common.help': 'Segítség',
+  'common.error': 'Hiba',
+  'common.error.four04': 'A kért oldal nem létezik'
 };

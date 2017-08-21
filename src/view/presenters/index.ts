@@ -1,4 +1,5 @@
 export { Loader } from './loader';
+export { Four04 } from './four04';
 export { Sidebar } from './sidebar';
 export { Navbar } from './navbar';
 export { Footer } from './footer';

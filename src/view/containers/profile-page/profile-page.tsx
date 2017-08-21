@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Switch, Route, Redirect, Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
 import {
-  PATH_APP,
+  PATH_APP_404,
   PATH_APP_PROFILE_INFORMATION_EDIT,
+  PATH_APP_PROFILE_INFORMATION,
   PATH_APP_PROFILE_GALLERY,
-  PATH_APP_PROFILE_INFORMATION, PATH_APP_PROFILE
+  PATH_APP_PROFILE
 } from '../../../constants';
 import { Gallery, UserCard, UserInformation, UserInformationEdit } from '../../presenters';
 import './profile-page.css';
@@ -143,25 +144,36 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
             render={() =>
               <div className="row no-gutters m-2">
                 <div className="col-xs-12 col-lg-4">
-                  {
-                    this.props.location.pathname === PATH_APP_PROFILE_INFORMATION_EDIT ? (
-                      <UserInformationEdit
-                        user={tempUser}
-                        onSave={({user}) => {
-                          Object.assign(tempUser, user);
-                          this.setState({user: tempUser});
-                          this.props.history.push(PATH_APP_PROFILE_INFORMATION);
-                        }}
-                        onCancel={() =>
-                          this.props.history.goBack()}
-                      />)
-                      : (
-                      <UserInformation
-                        user={tempUser}
-                        onEdit={() =>
-                          this.props.history.push(PATH_APP_PROFILE_INFORMATION_EDIT)}
-                      />)
-                  }
+                  <Switch>
+                    <Route
+                      path={PATH_APP_PROFILE_INFORMATION_EDIT}
+                      render={() => (
+                        <UserInformationEdit
+                          user={tempUser}
+                          onSave={({user}) => {
+                            Object.assign(tempUser, user);
+                            this.setState({user: tempUser});
+                            this.props.history.push(PATH_APP_PROFILE_INFORMATION);
+                          }}
+                          onCancel={() =>
+                            this.props.history.goBack()}
+                        />
+                      )}
+                    />
+
+                    <Route
+                      path={PATH_APP_PROFILE_INFORMATION}
+                      render={() => (
+                        <UserInformation
+                          user={tempUser}
+                          onEdit={() =>
+                            this.props.history.push(PATH_APP_PROFILE_INFORMATION_EDIT)}
+                        />
+                      )}
+                    />
+
+                    <Redirect to={PATH_APP_404}/>
+                  </Switch>
                 </div>
                 <div className="hidden-md-down col-lg-8">
                   <Gallery
@@ -176,7 +188,7 @@ export class ProfilePage extends React.Component<ProfilePageProps, State> {
             }
           />
 
-          <Redirect to={PATH_APP}/>
+          <Redirect to={PATH_APP_404}/>
         </Switch>
       </div>
     );
