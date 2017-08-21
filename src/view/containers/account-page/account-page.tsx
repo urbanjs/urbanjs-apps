@@ -17,7 +17,7 @@ export type OwnProps = {
       email?: string;
       displayName?: string;
       avatar?: string;
-      personalInformation?: {
+      personalInformation: {
         firstName?: string;
         lastName?: string;
         birthDate?: string;
@@ -39,7 +39,8 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
   state: State = {};
 
   private unauthenticatedUser = {
-    id: 'unknown'
+    id: 'unknown',
+    personalInformation: {}
   };
 
   render() {
@@ -57,12 +58,10 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
             render={() => (
               <div className="m-2">
                 <AccountInformationEdit
-                  user={user}
+                  accountInformation={user.personalInformation}
                   onSave={async (data) => {
-                    await this.props.submit(user.id, data.changes);
                     this.props.history.push(PATH_APP_ACCOUNT);
-
-                    await this.props.data.refetch();
+                    await this.props.submit(user.id, data.changes);
                   }}
                   onCancel={() =>
                     this.props.history.goBack()}
@@ -123,6 +122,13 @@ const withMutation = graphql(
       updateUserPersonalInformation(userId:$userId, data: $data) {
         id
         firstName
+        lastName
+        birthDate
+        phoneNumber
+        birthPlace
+        socialSecurityNumber
+        taxNumber
+        mothersMaidenName
       }
     }
   `,

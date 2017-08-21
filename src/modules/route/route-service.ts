@@ -48,4 +48,9 @@ export class RouteService implements IRouteService {
 
     return `${origin}${resolvedPath}`;
   }
+
+  @track()
+  isPathKnown(rawPath: string) {
+    return Object.keys(knownPaths).some(knownPathName => knownPaths[knownPathName] === rawPath);
+  }
 }

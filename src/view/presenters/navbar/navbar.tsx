@@ -8,7 +8,7 @@ import {
   PATH_AUTH_FACEBOOK,
   PATH_AUTH_LOGOUT,
   PATH_APP_NOTIFICATIONS,
-  PATH_APP_ACCOUNT
+  PATH_APP_ACCOUNT, PATH_APP
 } from '../../../constants';
 import {
   TYPE_ROUTE_SERVICE,
@@ -51,7 +51,14 @@ export class Navbar extends React.Component<NavbarProps, State> {
   render() {
     const loginUrl = this.routeService.format(PATH_AUTH_FACEBOOK, {prefixWithOrigin: true});
     const logoutUrl = this.routeService.format(PATH_AUTH_LOGOUT, {prefixWithOrigin: true});
-    const redirectUri = this.routeService.format(this.props.location.pathname, {prefixWithOrigin: true});
+
+    const redirectUri = this.routeService.format(
+      this.routeService.isPathKnown(this.props.location.pathname)
+        ? this.props.location.pathname
+        : PATH_APP,
+      {prefixWithOrigin: true}
+    );
+
     const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(redirectUri)}`;
 
     let notificationLink;

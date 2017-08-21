@@ -13,4 +13,5 @@ export type FormatOptions = {
 
 export interface IRouteService {
   format(path: string, options?: FormatOptions): string;
+  isPathKnown(path: string): boolean;
 }

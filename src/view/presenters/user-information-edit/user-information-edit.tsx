@@ -9,10 +9,6 @@ export type UserInformationEditPopover = 'none' | 'height' | 'chest' | 'waist' |
 export type UserLanguageItem = { language: string, level: string };
 
 export type User = {
-  firstName?: string;
-  lastName?: string;
-  age?: number;
-  city?: string;
   height?: number;
   chest?: number;
   waist?: number;

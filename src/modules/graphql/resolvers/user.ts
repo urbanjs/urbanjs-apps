@@ -110,8 +110,7 @@ export class UserResolver implements IGraphqlResolver {
 
     return {
       ...personalInformation,
-      age: personalInformation.birthDate && this.dateService.getYears(
-        new Date().getTime() - personalInformation.birthDate.getTime())
+      age: this.getAge(personalInformation.birthDate)
     };
   }
 
@@ -134,8 +133,17 @@ export class UserResolver implements IGraphqlResolver {
 
     return {
       ...personalInformation,
-      age: personalInformation.birthDate && this.dateService.getYears(
-        new Date().getTime() - personalInformation.birthDate.getTime())
+      age: this.getAge(personalInformation.birthDate)
     };
+  }
+
+  private getAge(birthDate: null | string) {
+    let age = null;
+    if (birthDate) {
+      age = this.dateService.getYears(
+        new Date().getTime() - new Date(birthDate).getTime());
+    }
+
+    return age;
   }
 }

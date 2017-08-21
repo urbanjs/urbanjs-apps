@@ -3,14 +3,25 @@ import { FormattedMessage } from 'react-intl';
 import { messages } from './messages';
 import './account-information-edit.css';
 
+export type AccountInformation = {
+  firstName?: string;
+  lastName?: string;
+  birthDate?: Date;
+  phoneNumber?: string;
+  birthPlace?: string;
+  socialSecurityNumber?: string;
+  taxNumber?: string;
+  mothersMaidenName?: string;
+};
+
 export type OwnProps = {
-  user: {};
-  onSave: (data: { changes: object }) => void
+  accountInformation: AccountInformation;
+  onSave: (data: { changes: AccountInformation, accountInformation: AccountInformation }) => void;
   onCancel: () => void
 };
 
 export type State = {
-  changes: {}
+  changes: AccountInformation;
 };
 
 export type AccountInformationProps = OwnProps;
@@ -18,10 +29,41 @@ export type AccountInformationProps = OwnProps;
 export class AccountInformationEdit extends React.Component<AccountInformationProps, State> {
   props: AccountInformationProps;
   state: State = {
-    changes: {firstName: 'asd'}
+    changes: {}
   };
 
   render() {
+    const createStringInput = (id: string) => {
+      const isDirty = this.state.changes.hasOwnProperty(id);
+      const isValid = isDirty
+        ? this.state.changes[id].length > 0
+        : this.props.accountInformation[id] && this.props.accountInformation[id].length > 0;
+      const isSuccess = isDirty && isValid;
+      const isWarning = !isValid;
+
+      return (
+        <div className={`form-group ${isSuccess ? 'has-success' : (isWarning ? 'has-warning' : '')}`}>
+          <input
+            type="text"
+            defaultValue={this.props.accountInformation[id]}
+            onChange={(e) => {
+              const changes = {...this.state.changes};
+              const value = e.target.value;
+              if (value === this.props.accountInformation[id]) {
+                delete changes[id];
+              } else {
+                changes[id] = value;
+              }
+
+              this.setState({changes});
+            }}
+            className={`form-control text-right ${
+              isSuccess ? 'form-control-success' : (isWarning ? 'form-control-warning' : '')}`}
+          />
+        </div>
+      );
+    };
+
     return (
       <div className="zv-account-information-edit bg-faded p-4">
         <div className="p-4">
@@ -34,16 +76,38 @@ export class AccountInformationEdit extends React.Component<AccountInformationPr
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            this.props.onSave({changes: this.state.changes});
+            this.props.onSave({
+              changes: this.state.changes,
+              accountInformation: {
+                ...this.props.accountInformation,
+                ...this.state.changes,
+              }
+            });
           }}
         >
           <table className="table">
             <tbody>
-              <tr className="zv-group">
-                <td className="text-muted p-4">
-                  <pre>{JSON.stringify(this.props.user, null, ' ')}</pre>
-                </td>
-              </tr>
+              {
+                [
+                  'firstName',
+                  'lastName',
+                  'phoneNumber',
+                  'birthDate',
+                  'birthPlace',
+                  'taxNumber',
+                  'socialSecurityNumber',
+                  'mothersMaidenName'
+                ].map((fieldName) => (
+                  <tr key={fieldName} className="zv-group">
+                    <td className="text-muted p-4">
+                      <FormattedMessage id={messages.field[fieldName]}/>
+                    </td>
+                    <td className="text-right font-weight-bold p-4">
+                      {createStringInput(fieldName)}
+                    </td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
 

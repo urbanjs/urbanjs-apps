@@ -35,7 +35,7 @@ export type UserPersonalInformationInput = {
   firstName: null | string;
   lastName: null | string;
   phoneNumber: null | string;
-  birthDate: null | Date;
+  birthDate: null | string;
   birthPlace: null | string;
   socialSecurityNumber: null | string;
   taxNumber: null | string;
