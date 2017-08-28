@@ -49,17 +49,19 @@ export class Navbar extends React.Component<NavbarProps, State> {
   private routeService: IRouteService;
 
   render() {
-    const loginUrl = this.routeService.format(PATH_AUTH_FACEBOOK, {prefixWithOrigin: true});
-    const logoutUrl = this.routeService.format(PATH_AUTH_LOGOUT, {prefixWithOrigin: true});
-
-    const redirectUri = this.routeService.format(
+    let loginUri = this.routeService.format(PATH_AUTH_FACEBOOK, {prefixWithOrigin: true});
+    loginUri += `?redirect_uri=${encodeURIComponent(this.routeService.format(
       this.routeService.isPathKnown(this.props.location.pathname)
         ? this.props.location.pathname
         : PATH_APP,
       {prefixWithOrigin: true}
-    );
+    ))}`;
 
-    const redirectUriQueryParam = `?redirect_uri=${encodeURIComponent(redirectUri)}`;
+    let logoutUri = this.routeService.format(PATH_AUTH_LOGOUT, {prefixWithOrigin: true});
+    logoutUri += `?redirect_uri=${encodeURIComponent(this.routeService.format(
+      PATH_APP,
+      {prefixWithOrigin: true}
+    ))}`;
 
     let notificationLink;
     if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {
@@ -142,7 +144,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
 
                 <div className="ml-auto p-2">
                   <a
-                    href={`${logoutUrl}${redirectUriQueryParam}`}
+                    href={logoutUri}
                     className="btn btn-link p-0 text-muted ml-4"
                   >
                     <i
@@ -153,7 +155,7 @@ export class Navbar extends React.Component<NavbarProps, State> {
               </div>) : (
               <a
                 className="btn btn-primary w-100"
-                href={`${loginUrl}${redirectUriQueryParam}`}
+                href={loginUri}
               >
                 <FormattedMessage id={messages['link.login']}/>
               </a>

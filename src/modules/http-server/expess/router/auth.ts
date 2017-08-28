@@ -27,25 +27,28 @@ export function createAuthRouter({passport, allowedRedirectOrigins, loggerServic
   const router = Router();
   const allowedRedirectUriObjects = allowedRedirectOrigins.map(origin => parse(origin));
   const getRedirectUriFromRequest = (req: Request) => {
-    let redirectUri = PATH_APP;
+    let redirectUrisInPriority: string[] = [
+      req.query && req.query.redirect_uri || '',
+      req.headers && req.headers.referer || '',
+      PATH_APP
+    ];
 
-    if (req.query.hasOwnProperty('redirect_uri')) {
-      const redirectUriObject: UrlObject = parse(req.query.redirect_uri);
+    const filteredRedirectUris = redirectUrisInPriority.filter((redirectUri) => {
+      if (!redirectUri) {
+        return false;
+      }
 
-      if (redirectUriObject.host === null ||
+      const redirectUriObject: UrlObject = parse(redirectUri);
+
+      return redirectUriObject.host === null ||
         allowedRedirectUriObjects.some((allowedRedirectUriObject) => (
           allowedRedirectUriObject.host === redirectUriObject.host
           && allowedRedirectUriObject.port === redirectUriObject.port
           && allowedRedirectUriObject.protocol === redirectUriObject.protocol
-        ))
-      ) {
-        redirectUri = req.query.redirect_uri;
-      } else {
-        loggerService.debug('invalid redirect_uri parameter', req.query.redirect_uri);
-      }
-    }
+        ));
+    });
 
-    return redirectUri;
+    return filteredRedirectUris[0];
   };
 
   router.get(PATH_AUTH_LOGOUT, (req: Request & { user: object, logout: () => void }, res: Response) => {
