@@ -6,7 +6,7 @@ import { PATH_APP, PATH_APP_ACCOUNT, PATH_APP_PROFILE } from '../../../constants
 import { track } from '../../../decorators';
 import { RootState } from '../../../state/reducers';
 import { setLocale } from '../../../state/actions';
-import { Sidebar, Navbar, Footer, Loader, Four04 } from '../../presenters';
+import { Sidebar, Navbar, Footer, Loader, ErrorPage404 } from '../../presenters';
 import { ProfilePage } from '../profile-page';
 import { AccountPage } from '../account-page';
 import { Feature } from '../../../modules/authorization/types';
@@ -89,7 +89,7 @@ export class App extends React.Component<AppProps, State> {
 
             <Route
               path="**"
-              render={() => <Four04/>}
+              render={() => <ErrorPage404/>}
             />
           </Switch>
         </div>

@@ -1,6 +1,6 @@
 export { Loader } from './loader';
-export { Four01 } from './four01';
-export { Four04 } from './four04';
+export { ErrorPage401 } from './error-page-401';
+export { ErrorPage404 } from './error-page-404';
 export { Sidebar } from './sidebar';
 export { Navbar } from './navbar';
 export { Footer } from './footer';

@@ -6,7 +6,7 @@ import {
   PATH_APP_ACCOUNT,
   PATH_APP_ACCOUNT_EDIT
 } from '../../../constants';
-import { AccountInformation, AccountInformationEdit, Four01 } from '../../presenters';
+import { AccountInformation, AccountInformationEdit, ErrorPage401 } from '../../presenters';
 import './account-page.css';
 
 export type OwnProps = {
@@ -46,12 +46,13 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
   render() {
     const user = this.props.data.user || this.unauthenticatedUser;
 
+    if (!this.props.data.loading && user === this.unauthenticatedUser) {
+      return <ErrorPage401 unauthenticated={true}/>;
+    }
+
     return (
       <div className="zv-account-page">
         <Switch>
-          {!this.props.data.loading && user === this.unauthenticatedUser
-            ? <Four01 unauthenticated={true}/> : ''}
-
           <Route
             path={PATH_APP_ACCOUNT_EDIT}
             exact={true}
