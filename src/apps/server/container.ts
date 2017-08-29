@@ -13,6 +13,10 @@ import {
   TYPE_DRIVER_FETCH
 } from '../../modules/http/types';
 import {
+  JWTServiceConfig,
+  TYPE_JWT_SERVICE_CONFIG
+} from '../../modules/jwt/types';
+import {
   FacebookApiServiceConfig,
   TYPE_FACEBOOK_API_SERVICE_CONFIG
 } from '../../modules/facebook/types';
@@ -46,6 +50,10 @@ container.bind<FacebookApiServiceConfig>(TYPE_FACEBOOK_API_SERVICE_CONFIG).toCon
   appSecret: config.facebookAppSecret
 });
 
+container.bind<JWTServiceConfig>(TYPE_JWT_SERVICE_CONFIG).toConstantValue({
+  jwtSignatureSecret: config.sessionSecret
+});
+
 container.load(
   require('../../modules/authorization').authorizationModule,
   require('../../modules/monitor').monitorModule,
@@ -58,5 +66,6 @@ container.load(
   require('../../modules/route').routeModule,
   require('../../modules/json').jsonModule,
   require('../../modules/facebook').facebookModule,
-  require('../../modules/date').dateModule
+  require('../../modules/date').dateModule,
+  require('../../modules/jwt').jwtModule
 );

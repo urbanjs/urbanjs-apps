@@ -1,4 +1,5 @@
 import { PATH_AUTH_FACEBOOK_CALLBACK } from '../../../constants';
+import { IJWTService } from '../../jwt/types';
 import { IUserService } from '../../user/types';
 import { ILoggerService } from '../../log/types';
 import { GraphqlResolverMap, GraphqlTypeDefs } from '../../graphql/types';
@@ -28,6 +29,7 @@ export type ExpressApplicationConfig = HttpServerConfig & {
   loggerService: ILoggerService;
   errorService: IErrorService;
   userService: IUserService;
+  jwtService: IJWTService;
   facebookApiService: IFacebookApiService;
 };
 

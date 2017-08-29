@@ -3,14 +3,18 @@ import { Passport } from 'passport';
 import { ValidationError } from '../../error/errors';
 import { IUserService, User } from '../../user/types';
 import { ILoggerService } from '../../log/types';
+import { IJWTService } from '../../jwt/types';
 import { IFacebookApiService } from '../../facebook/types';
 
 export { Passport } from 'passport';
+
+export type SessionTokenPayload = { userId: string };
 
 export type PassportConfig = {
   facebookAppId: string;
   facebookAppSecret: string;
   facebookCallbackURL: string;
+  jwtService: IJWTService;
   userService: IUserService;
   loggerService: ILoggerService;
   facebookApiService: IFacebookApiService;
@@ -24,6 +28,7 @@ export function createPassport({
                                  facebookCallbackURL,
                                  userService,
                                  loggerService,
+                                 jwtService,
                                  facebookApiService
                                }: PassportConfig) {
   const passport = new Passport();
@@ -72,21 +77,17 @@ export function createPassport({
 
   passport.serializeUser((user: User, cb) => {
     loggerService.debug('passport serialization...', user);
-    // TODO: create jwt
-    cb(null, user.id);
+    cb(null, jwtService.sign({userId: user.id} as SessionTokenPayload));
   });
 
-  passport.deserializeUser(async (userId: string, cb) => {
-    loggerService.debug('passport deserialization...', userId);
+  passport.deserializeUser(async (token: string, cb) => {
+    loggerService.debug('passport deserialization...', token);
 
     try {
-      // TODO: validate userId based the jwt signature
-      //       instead of querying from the database
-      //       for performance reasons
-      await userService.getUser(userId);
+      const payload = jwtService.verify<SessionTokenPayload>(token);
+      loggerService.debug('passport deserialization succeeded', payload);
 
-      cb(null, {id: userId});
-      loggerService.debug('passport deserialization succeeded', userId);
+      cb(null, payload);
     } catch (e) {
       loggerService.debug('passport deserialization failed with', e);
       cb(e);

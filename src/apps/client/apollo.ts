@@ -40,9 +40,7 @@ networkInterface.useAfter([{
   applyBatchAfterware(res: AfterwareResponse, next: Function) {
     const store = require('./store').store;
 
-    // TODO: find a better way to wait a couple of milliseconds
-    //       to let a new http request start if needed
-    setTimeout(() => store.dispatch(receiveHttpResponses({responses: res.responses})), 50);
+    store.dispatch(receiveHttpResponses({responses: res.responses}));
     next();
   }
 }]);

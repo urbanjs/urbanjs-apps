@@ -11,6 +11,7 @@ import {
 } from '../../../graphql/types';
 import { ILoggerService } from '../../../log/types';
 import { IErrorService } from '../../../error/types';
+import { SessionTokenPayload } from '../passport';
 
 export type GraphqlRouterConfig = {
   devMode: boolean;
@@ -41,11 +42,11 @@ export function createGraphqlRouter({
     {log: (e: Error) => loggerService.error(e.stack)}
   );
 
-  router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: { id: string } }) => ({
+  router.post(PATH_GRAPHQL, graphqlExpress((req: Request & { user?: SessionTokenPayload }) => ({
     schema,
     rootValue: null as GraphqlRootValue,
     context: {
-      authenticatedUserId: req.user && req.user.id || null
+      authenticatedUserId: req.user && req.user.userId || null
     } as GraphqlResolverContext,
     debug: devMode,
     formatError(error: GraphQLError) {

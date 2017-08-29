@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
-import * as session from 'express-session';
-import * as cors from 'cors';
 import * as express from 'express';
+import * as cors from 'cors';
+import session = require('cookie-session');
 
 export type AppConfig = {
   sessionSecret: string;
@@ -17,17 +17,18 @@ export function createApp({sessionSecret, corsAllowedOrigins}: AppConfig) {
   }));
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
-  app.use(session({
-    secret: sessionSecret,
+  app.use(session(<CookieSessionInterfaces.CookieSessionOptions> {
     name: 'zvapp.sid',
-    cookie: {
-      httpOnly: true,
-      sameSite: 'strict',
-      // secure: true, // TODO: https would be required
-    },
-    // store: 'MemoryStore', // TODO: use redis in production
-    resave: true,
-    saveUninitialized: true
+    secret: sessionSecret,
+    signed: true,
+    httpOnly: true,
+    sameSite: true,
+    overwrite: true,
+    maxAge: 0,
+
+    // TODO: https would be required
+    // https://expressjs.com/en/guide/behind-proxies.html
+    // secure: true,
   }));
 
   return app;
