@@ -72,6 +72,7 @@ export function createPassport({
 
   passport.serializeUser((user: User, cb) => {
     loggerService.debug('passport serialization...', user);
+    // TODO: create jwt
     cb(null, user.id);
   });
 
@@ -79,7 +80,7 @@ export function createPassport({
     loggerService.debug('passport deserialization...', userId);
 
     try {
-      // TODO: validate userId based on the session storage
+      // TODO: validate userId based the jwt signature
       //       instead of querying from the database
       //       for performance reasons
       await userService.getUser(userId);

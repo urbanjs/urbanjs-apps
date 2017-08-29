@@ -1,5 +1,5 @@
-import { setRuntimeVariable } from '../state/actions';
-import { createStore } from '../state/store';
+import { setRuntimeVariable } from '../../state/actions';
+import { createStore } from '../../state/store';
 import { apolloClient } from './apollo';
 import { config } from './config';
 

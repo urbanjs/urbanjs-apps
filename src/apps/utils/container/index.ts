@@ -1,12 +1,12 @@
 import { Container } from 'inversify';
-import { supportLazyInject, reinitializeTrackDecorators } from '../../decorators';
+import { supportLazyInject, reinitializeTrackDecorators } from '../../../decorators';
 import { createLoggerMiddleware } from './middlewares';
 import {
   LoggerConfig,
   TYPE_CONFIG_LOGGER,
   ILoggerService,
   TYPE_SERVICE_LOGGER
-} from '../../modules/log/types';
+} from '../../../modules/log/types';
 
 export type ContainerConfig = {
   devMode: boolean;
@@ -20,7 +20,7 @@ export function createContainer({devMode, lazyInject}: ContainerConfig) {
     supportLazyInject(container);
   }
 
-  container.load(require('../../modules/log').logModule);
+  container.load(require('../../../modules/log').logModule);
   container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
     debug: devMode,
     info: true,

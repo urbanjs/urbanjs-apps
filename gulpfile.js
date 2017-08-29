@@ -19,7 +19,7 @@ tools.initialize(gulp, {
   'check-file-names': defaults => Object.assign({}, defaults, {
     paramCase: [
       '!src/**/*test.ts',
-      '!src/utils/config/es6-template-strings.d.ts'
+      '!src/apps/utils/config/es6-template-strings.d.ts'
     ].concat(defaults.paramCase),
     dotCase: ['src/**/*test.ts']
   }),
@@ -68,8 +68,10 @@ gulp.task('start-server:watch', () => {
   gulp.watch(
     [
       'src/**',
+      '!src/i18n/**',
       '!src/view/**',
-      '!src/client/**'
+      '!src/state/**',
+      '!src/apps/client/**'
     ],
     debounce(startServer, 300)
   );

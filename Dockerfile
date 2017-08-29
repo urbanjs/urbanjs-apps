@@ -22,4 +22,4 @@ RUN apk add --update python build-base && \
     yarn cache clean && \
     apk del python build-base
 
-CMD pm2-docker start build-server/server/index.js
+CMD pm2-docker start build-server/apps/server/index.js

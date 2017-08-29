@@ -82,7 +82,7 @@
   },
   "scripts": {
     "start": "npm-run-all -p watch-css watch-server watch-app",
-    "start-server": "ts-node src/server/index.ts",
+    "start-server": "ts-node src/apps/server/index.ts",
     "watch-server": "gulp start-server:watch",
     "watch-app": "react-scripts-ts start",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",

@@ -1,6 +1,6 @@
 import { interfaces as inversify } from 'inversify';
 import debounce = require('lodash.debounce');
-import { ITraceService, TYPE_SERVICE_TRACE } from '../../../modules/log/types';
+import { ITraceService, TYPE_SERVICE_TRACE } from '../../../../modules/log/types';
 
 export type TraceMiddlewareConfig = {
   container: inversify.Container;
