@@ -24,13 +24,12 @@
   "exclude": [
     "node_modules",
     "build",
+    "build-server",
+    "public",
     "scripts",
     "acceptance-tests",
     "webpack",
     "jest",
     "src/setupTests.ts"
-  ],
-  "types": [
-    "typePatches"
   ]
 }

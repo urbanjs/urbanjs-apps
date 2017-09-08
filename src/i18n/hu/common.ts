@@ -1,0 +1,22 @@
+export default {
+  'common.language.english': 'Angol',
+  'common.language.german': 'Német',
+  'common.language.hungarian': 'Magyar',
+  'common.qualificationLevel.university': 'Egyetem',
+  'common.qualificationLevel.secondary': 'Érettségi',
+  'common.qualificationLevel.primary': 'Általános iskola',
+  'common.languageLevel.none': '-',
+  'common.languageLevel.basic': 'Alapfok',
+  'common.languageLevel.intermediate': 'Középfok',
+  'common.languageLevel.professional': 'Felsőfok',
+  'common.languageLevel.native': 'Anyanyelv',
+  'common.action.edit': 'Szerkesztés',
+  'common.action.save': 'Mentés',
+  'common.action.cancel': 'Mégse',
+  'common.action.login': 'Bejelentkezés',
+  'common.help': 'Segítség',
+  'common.error': 'Hiba',
+  'common.error.401': 'A kért oldal nem elérhető',
+  'common.error.401.login': 'Kérlek jelentkezz be!',
+  'common.error.404': 'A kért oldal nem létezik'
+};

@@ -1,0 +1,5 @@
+@import '../../mixins.scss';
+
+.zv-error-boundary {
+  @include zv-error-page
+}

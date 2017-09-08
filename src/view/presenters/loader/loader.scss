@@ -1,0 +1,192 @@
+.zv-loader {
+  width: 469px;
+  height: 469px;
+
+  .cssload-wrap {
+    position: absolute;
+    width: 313px;
+    height: 313px;
+    left: 50%;
+    top: 50%;
+    margin-top: -156px;
+    margin-left: -156px;
+    transform: scale(2);
+
+    .cssload-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      box-shadow: 0 0 78px 119px rgb(255, 255, 255) inset;
+    }
+
+    .cssload-cogWheel {
+      position: absolute;
+      top: 50%;
+      margin-top: -78px;
+      width: 156px;
+      height: 156px;
+
+      &.cssload-one {
+        left: -19.25px;
+        animation: cssload-rotLeft 1.15s infinite linear;
+
+        .cssload-one:before {
+          border: none;
+        }
+      }
+
+      &.cssload-two {
+        right: -19.25px;
+        margin-top: -75px;
+        transform: rotate(196deg);
+        animation: cssload-rotRight 1.15s infinite linear;
+
+        .cssload-one:before {
+          border: none;
+        }
+      }
+
+      .cssload-cog {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 50%;
+
+        &:after {
+          display: block;
+          position: absolute;
+          content: ' ';
+          border: 6px solid rgb(0, 0, 0);
+          border-left: none;
+          height: 28px;
+          width: 16px;
+          right: -28px;
+          top: -13px;
+        }
+
+        &:before {
+          display: block;
+          position: absolute;
+          content: ' ';
+          border-left: 6px solid rgb(0, 0, 0);
+          height: 31px;
+          width: 13px;
+          right: -19px;
+          top: -41px;
+          transform: rotate(-20deg);
+        }
+
+        &.cssload-one {
+          transform: rotate(-80deg);
+        }
+
+        &.cssload-two {
+          transform: rotate(-40deg);
+        }
+
+        &.cssload-three {
+          transform: rotate(0deg);
+        }
+
+        &.cssload-four {
+          transform: rotate(40deg);
+        }
+
+        &.cssload-five {
+          transform: rotate(80deg);
+        }
+      }
+
+      @keyframes cssload-rotLeft {
+        from {
+          transform: rotate(-30deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+      }
+
+      @-o-keyframes cssload-rotLeft {
+        from {
+          transform: rotate(-30deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+      }
+
+      @-ms-keyframes cssload-rotLeft {
+        from {
+          transform: rotate(-30deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+      }
+
+      @-webkit-keyframes cssload-rotLeft {
+        from {
+          transform: rotate(-30deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+      }
+
+      @-moz-keyframes cssload-rotLeft {
+        from {
+          transform: rotate(-30deg);
+        }
+        to {
+          transform: rotate(10deg);
+        }
+      }
+
+      @keyframes cssload-rotRight {
+        from {
+          transform: rotate(-174deg);
+        }
+        to {
+          transform: rotate(-214deg);
+        }
+      }
+
+      @-o-keyframes cssload-rotRight {
+        from {
+          transform: rotate(-174deg);
+        }
+        to {
+          transform: rotate(-214deg);
+        }
+      }
+
+      @-ms-keyframes cssload-rotRight {
+        from {
+          transform: rotate(-174deg);
+        }
+        to {
+          transform: rotate(-214deg);
+        }
+      }
+
+      @-webkit-keyframes cssload-rotRight {
+        from {
+          transform: rotate(-174deg);
+        }
+        to {
+          transform: rotate(-214deg);
+        }
+      }
+
+      @-moz-keyframes cssload-rotRight {
+        from {
+          transform: rotate(-174deg);
+        }
+        to {
+          transform: rotate(-214deg);
+        }
+      }
+    }
+  }
+}

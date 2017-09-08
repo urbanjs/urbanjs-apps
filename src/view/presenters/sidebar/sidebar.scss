@@ -1,0 +1,10 @@
+@import "../../mixins.scss";
+
+.zv-sidebar {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .zv-logo-link {
+    @include zv-logo-link;
+  }
+}

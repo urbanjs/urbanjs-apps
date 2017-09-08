@@ -1,0 +1,5 @@
+@import "../../mixins.scss";
+
+.zv-error-page-401 {
+  @include zv-error-page
+}

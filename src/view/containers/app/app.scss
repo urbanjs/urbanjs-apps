@@ -1,0 +1,40 @@
+.zv-app {
+  $sidebar_width: 4em;
+  $footer_height: 3.3em;
+
+  & > * {
+    transition: all .4s ease-in;
+  }
+
+  &.zv-sidebar-hidden {
+    .zv-sidebar {
+      left: -$sidebar_width;
+    }
+
+    .zv-content-wrapper, .zv-footer-wrapper {
+      margin-left: 0;
+    }
+  }
+
+  .zv-sidebar {
+    width: $sidebar_width;
+  }
+
+  .zv-content-wrapper {
+    margin-left: $sidebar_width;
+    margin-bottom: -$footer_height;
+    min-height: 100%;
+
+    &:after {
+      content: "";
+      display: block;
+      height: $footer_height;
+    }
+  }
+
+  .zv-footer-wrapper {
+    margin-left: $sidebar_width;
+    height: $footer_height;
+    overflow: hidden;
+  }
+}
