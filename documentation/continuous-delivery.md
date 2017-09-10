@@ -1,4 +1,4 @@
 ### TODO
 - why bitbucket pipelines
 - why docker 
-- alpine
+- why alpine image

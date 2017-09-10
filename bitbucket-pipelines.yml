@@ -1,25 +1,23 @@
 options:
   docker: true
 
-image: node:8
-
 pipelines:
   default:
     - step:
+        image: node:8-alpine
         caches:
           - node
         script:
           - yarn install
           - yarn run build
           - yarn run test
+
   custom:
-    release:dev:
+    build:dockerhub:
       - step:
+          image: node:8-alpine
           script:
             - export DOCKER_IMAGE_NAME=$DOCKER_REPOSITORY_NAME:$BITBUCKET_COMMIT
-            - export TEMP_ENV_FILE=".env"
-
-            - env | grep REACT_ > $TEMP_ENV_FILE
 
             - yarn global add docker-image-exists
             - if docker-image-exists -q -r $DOCKER_IMAGE_NAME -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD; then export DOCKER_IMAGE_EXISTS=1; fi
@@ -28,9 +26,13 @@ pipelines:
             - if [[ $DOCKER_IMAGE_EXISTS -ne 1 ]]; then docker build -t $DOCKER_IMAGE_NAME . ; fi
             - if [[ $DOCKER_IMAGE_EXISTS -ne 1 ]]; then docker push $DOCKER_IMAGE_NAME; fi
 
-            - scp $TEMP_ENV_FILE $HOST_USER_DEV@$HOST_IP_DEV:$HOST_ENV_FILE_DEV
+    build:aws:
+      - step:
+          image: garland/aws-cli-docker
+          script:
+            - export AWS_REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_REPOSITORY_NAME
+            - export DOCKER_IMAGE_NAME=$AWS_REPOSITORY_URI:$BITBUCKET_COMMIT
 
-            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD;
-            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker pull $DOCKER_IMAGE_NAME;
-            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker rm -f $HOST_DOCKER_CONTAINER_NAME_DEV
-            - ssh $HOST_USER_DEV@$HOST_IP_DEV docker run -itd --rm --name $HOST_DOCKER_CONTAINER_NAME_DEV --env-file=$HOST_ENV_FILE_DEV -p 80:$REACT_SERVER__PORT $DOCKER_IMAGE_NAME
+            - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+            - docker build -t $DOCKER_IMAGE_NAME .
+            - docker push $DOCKER_IMAGE_NAME
