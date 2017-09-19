@@ -9,6 +9,6 @@ addLocaleData(enLocaleData);
 addLocaleData(huLocaleData);
 
 export const translations = {
-  hu: huTranslationMessages,
-  en: addMissingMessagesFrom(enTranslationMessages, huTranslationMessages)
+  en: enTranslationMessages,
+  hu: addMissingMessagesFrom(huTranslationMessages, enTranslationMessages)
 };

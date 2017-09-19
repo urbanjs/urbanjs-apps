@@ -1,5 +1,5 @@
 {
-  "name": "zv-app",
+  "name": "urbanjs-apps",
   "private": true,
   "dependencies": {
     "ajv": "^5.2.2",

@@ -9,14 +9,8 @@ import {
 } from '../../../modules/authorization/types';
 import {
   PATH_APP,
-  PATH_APP_PROFILE,
-  PATH_APP_JOBS,
-  PATH_APP_MESSAGES,
   PATH_APP_CALENDAR,
-  ACTIVITY_VIEW_CALENDAR,
-  ACTIVITY_VIEW_PROFILE,
-  ACTIVITY_VIEW_JOBS,
-  ACTIVITY_VIEW_MESSAGES
+  ACTIVITY_VIEW_CALENDAR
 } from '../../../constants';
 import './sidebar.css';
 
@@ -35,21 +29,6 @@ export class Sidebar extends React.Component<SidebarProps, {}> {
   render() {
     const itemClasses = 'btn btn-link text-muted d-block mx-auto mt-4 mb-4';
     const items: { icon: string, path: string, activity: Activity }[] = [
-      {
-        icon: 'user-o',
-        path: PATH_APP_PROFILE,
-        activity: ACTIVITY_VIEW_PROFILE
-      },
-      {
-        icon: 'tasks',
-        path: PATH_APP_JOBS,
-        activity: ACTIVITY_VIEW_JOBS
-      },
-      {
-        icon: 'comments',
-        path: PATH_APP_MESSAGES,
-        activity: ACTIVITY_VIEW_MESSAGES
-      },
       {
         icon: 'calendar-check-o',
         path: PATH_APP_CALENDAR,

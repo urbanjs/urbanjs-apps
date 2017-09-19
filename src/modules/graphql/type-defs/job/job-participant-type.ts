@@ -1,9 +1,0 @@
-export default `
-enum JobParticipantType{
-  WAITING_FOR_USER
-  ACCEPTED_BY_USER
-  ACCEPTED_BY_AGENCY
-  REJECTED_BY_USER
-  REJECTED_BY_AGENCY
-}
-`;

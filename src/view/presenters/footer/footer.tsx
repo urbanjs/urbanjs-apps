@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { PATH_APP } from '../../../constants';
+import { FormattedMessage } from 'react-intl';
+import { messages } from './messages';
 import './footer.css';
 
 type OwnProps = {
@@ -14,22 +14,25 @@ export class Footer extends React.Component<OwnProps, {}> {
 
   render() {
     return (
-      <div className="zv-footer bg-faded text-muted text-center p-4">
-        <small>
-          <Link to={PATH_APP}>Zingvo</Link>
+      <div className="zv-footer bg-faded d-flex justify-content-between">
+        <div className="p-4 text-muted">
           &nbsp;
           ©
           &nbsp;
+          <FormattedMessage id={messages.copyright}/>
+          &nbsp;
           {new Date().getFullYear()}
-        </small>
+        </div>
 
-        {/*<select*/}
-          {/*className="custom-select mb-2 mr-sm-2 mb-sm-0 mt-3"*/}
-          {/*value={this.props.currentLocale}*/}
-          {/*onChange={(e) => this.props.onLocaleChange(e.target.value)}*/}
-        {/*>*/}
-          {/*{...this.props.locales.map((locale, index) => <option key={index}>{locale}</option>)}*/}
-        {/*</select>*/}
+        <div className="p-2">
+          <select
+            className="form-control"
+            value={this.props.currentLocale}
+            onChange={(e) => this.props.onLocaleChange(e.target.value)}
+          >
+            {...this.props.locales.map((locale, index) => <option key={index}>{locale}</option>)}
+          </select>
+        </div>
       </div>
     );
   }

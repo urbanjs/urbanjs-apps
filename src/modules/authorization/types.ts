@@ -5,9 +5,7 @@ export type Feature =
   'BETA';
 
 export type Activity =
-  'ACTIVITY_VIEW_PROFILE' |
-  'ACTIVITY_VIEW_JOBS' |
-  'ACTIVITY_VIEW_MESSAGES' |
+  'ACTIVITY_SEND_PING' |
   'ACTIVITY_VIEW_CALENDAR' |
   'ACTIVITY_VIEW_NOTIFICATIONS';
 

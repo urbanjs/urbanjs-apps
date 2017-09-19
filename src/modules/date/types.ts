@@ -9,11 +9,4 @@ export type MomentDriver = {
 
 export interface IDateService {
   getYears(duration: number): number;
-  getMonths(duration: number): number;
-  getWeeks(duration: number): number;
-  getDays(duration: number): number;
-  getHours(duration: number): number;
-  getMinutes(duration: number): number;
-  getSeconds(duration: number): number;
-  getMilliseconds(duration: number): number;
 }

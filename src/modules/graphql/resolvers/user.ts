@@ -11,7 +11,6 @@ import {
   IGraphqlResolver,
   User,
   FacebookPermissions,
-  Photos,
   UserPersonalInformation,
   UserSubscription
 } from '../types';
@@ -82,19 +81,6 @@ export class UserResolver implements IGraphqlResolver {
     }
 
     return permissions;
-  }
-
-  @track()
-  @resolver({host: 'User'})
-  async photos(user: User,
-               args: {},
-               context: GraphqlResolverContext): Promise<Photos> {
-    if (!user) {
-      throw new ValidationError('user is required');
-    }
-
-    return await this.facebookApiService.getPhotos(
-      user.facebookId, user.facebookToken.token);
   }
 
   @track()

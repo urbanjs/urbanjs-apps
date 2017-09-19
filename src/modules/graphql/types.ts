@@ -4,10 +4,7 @@ import {
   UserSubscription as StoredUserSubscription,
   UserPersonalInformation as StoredUserPersonalInformation
 } from '../user/types';
-import {
-  FacebookPermission,
-  FacebookPhoto
-} from '../facebook/types';
+import { FacebookPermission } from '../facebook/types';
 
 export const TYPE_GRAPHQL_TYPE_DEFS = 'TYPE_GRAPHQL_TYPE_DEFS';
 export const TYPE_GRAPHQL_RESOLVER = 'TYPE_GRAPHQL_RESOLVER';
@@ -27,4 +24,3 @@ export type User = null | StoredUser;
 export type UserSubscription = StoredUserSubscription;
 export type UserPersonalInformation = StoredUserPersonalInformation & { age: number | null };
 export type FacebookPermissions = FacebookPermission[];
-export type Photos = FacebookPhoto[];

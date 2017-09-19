@@ -16,8 +16,4 @@ jest*
 
 # config
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 /public/config.js

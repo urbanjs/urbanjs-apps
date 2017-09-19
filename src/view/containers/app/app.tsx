@@ -2,12 +2,11 @@ import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
 import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
-import { PATH_APP, PATH_APP_ACCOUNT, PATH_APP_PROFILE } from '../../../constants';
+import { PATH_APP, PATH_APP_ACCOUNT } from '../../../constants';
 import { track } from '../../../decorators';
 import { RootState } from '../../../state/reducers';
 import { setLocale } from '../../../state/actions';
 import { Sidebar, Navbar, Footer, Loader, ErrorPage404 } from '../../presenters';
-import { ProfilePage } from '../profile-page';
 import { AccountPage } from '../account-page';
 import { Feature } from '../../../modules/authorization/types';
 import './app.css';
@@ -72,11 +71,6 @@ export class App extends React.Component<AppProps, State> {
           />
 
           <Switch>
-            <Route
-              path={PATH_APP_PROFILE}
-              render={() => <ProfilePage/>}
-            />
-
             <Route
               path={PATH_APP_ACCOUNT}
               render={() => <AccountPage/>}
