@@ -23,8 +23,8 @@ export const defaults = {
   corsAllowedOrigins: '${serverOrigin}, ${appOrigin}',
   devMode: process.env.NODE_ENV !== 'production',
   absolutePublicPath: join(__dirname, '../../../build'),
-  facebookAppId: '',
-  facebookAppSecret: '',
+  facebookAppId: 'facebook-app-id',
+  facebookAppSecret: 'facebook-app-secret',
   sessionSecret: 'awesome_secret'
 };
 
