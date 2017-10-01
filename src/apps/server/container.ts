@@ -20,52 +20,56 @@ import {
   FacebookApiServiceConfig,
   TYPE_FACEBOOK_API_SERVICE_CONFIG
 } from '../../modules/facebook/types';
-import { createContainer } from '../utils/container';
+import { createContainer as createRawContainer } from '../utils/container';
 import { config } from './config';
 
-export const container = createContainer({devMode: config.devMode});
+export const createContainer = () => {
+  const container = createRawContainer({devMode: config.devMode});
 
-container.bind<Fetch>(TYPE_DRIVER_FETCH).toConstantValue(fetch);
+  container.bind<Fetch>(TYPE_DRIVER_FETCH).toConstantValue(fetch);
 
-container.bind<RouterServiceConfig>(TYPE_ROUTE_SERVICE_CONFIG).toConstantValue({
-  appOrigin: config.appOrigin,
-  serverOrigin: config.serverOrigin
-});
+  container.bind<RouterServiceConfig>(TYPE_ROUTE_SERVICE_CONFIG).toConstantValue({
+    appOrigin: config.appOrigin,
+    serverOrigin: config.serverOrigin
+  });
 
-container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
-  port: config.port,
-  serverOrigin: config.serverOrigin,
-  corsAllowedOrigins: config.corsAllowedOrigins,
-  devMode: config.devMode,
-  enableGraphQLEditor: config.devMode,
-  sessionSecret: config.sessionSecret,
-  facebookAppId: config.facebookAppId,
-  facebookAppSecret: config.facebookAppSecret,
-  absolutePublicPath: config.absolutePublicPath,
-  relativePublicPath: relative(process.cwd(), config.absolutePublicPath)
-});
+  container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
+    port: config.port,
+    serverOrigin: config.serverOrigin,
+    corsAllowedOrigins: config.corsAllowedOrigins,
+    devMode: config.devMode,
+    enableGraphQLEditor: config.devMode,
+    sessionSecret: config.sessionSecret,
+    facebookAppId: config.facebookAppId,
+    facebookAppSecret: config.facebookAppSecret,
+    absolutePublicPath: config.absolutePublicPath,
+    relativePublicPath: relative(process.cwd(), config.absolutePublicPath)
+  });
 
-container.bind<FacebookApiServiceConfig>(TYPE_FACEBOOK_API_SERVICE_CONFIG).toConstantValue({
-  appId: config.facebookAppId,
-  appSecret: config.facebookAppSecret
-});
+  container.bind<FacebookApiServiceConfig>(TYPE_FACEBOOK_API_SERVICE_CONFIG).toConstantValue({
+    appId: config.facebookAppId,
+    appSecret: config.facebookAppSecret
+  });
 
-container.bind<JWTServiceConfig>(TYPE_JWT_SERVICE_CONFIG).toConstantValue({
-  jwtSignatureSecret: config.sessionSecret
-});
+  container.bind<JWTServiceConfig>(TYPE_JWT_SERVICE_CONFIG).toConstantValue({
+    jwtSignatureSecret: config.sessionSecret
+  });
 
-container.load(
-  require('../../modules/authorization').authorizationModule,
-  require('../../modules/monitor').monitorModule,
-  require('../../modules/http-server').httpServerModule,
-  require('../../modules/http').httpModule,
-  require('../../modules/graphql').graphqlModule,
-  require('../../modules/user').userModule,
-  require('../../modules/error').errorModule,
-  require('../../modules/uuid').uuidModule,
-  require('../../modules/route').routeModule,
-  require('../../modules/json').jsonModule,
-  require('../../modules/facebook').facebookModule,
-  require('../../modules/date').dateModule,
-  require('../../modules/jwt').jwtModule
-);
+  container.load(
+    require('../../modules/authorization').authorizationModule,
+    require('../../modules/monitor').monitorModule,
+    require('../../modules/http-server').httpServerModule,
+    require('../../modules/http').httpModule,
+    require('../../modules/graphql').graphqlModule,
+    require('../../modules/user').userModule,
+    require('../../modules/error').errorModule,
+    require('../../modules/uuid').uuidModule,
+    require('../../modules/route').routeModule,
+    require('../../modules/json').jsonModule,
+    require('../../modules/facebook').facebookModule,
+    require('../../modules/date').dateModule,
+    require('../../modules/jwt').jwtModule
+  );
+
+  return container;
+};

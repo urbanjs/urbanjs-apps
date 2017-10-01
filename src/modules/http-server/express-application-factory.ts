@@ -13,12 +13,12 @@ import {
 import {
   TYPE_HTTP_CONTROLLER,
   IHttpController,
-  HttpApplicationFactory,
+  IHttpApplication,
   HttpServerConfig
 } from './types';
 import { createExpressApplication } from './expess';
 
-export const expressApplicationFactory: inversify.FactoryCreator<HttpApplicationFactory> =
+export const expressApplicationFactory: inversify.FactoryCreator<IHttpApplication> =
   (context: inversify.Context) =>
     (config: HttpServerConfig) =>
       createExpressApplication(Object.assign({}, config, {

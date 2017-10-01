@@ -1,3 +1,4 @@
+import { createServer } from 'http';
 import { PATH_AUTH_FACEBOOK_CALLBACK } from '../../../constants';
 import { IJWTService } from '../../jwt/types';
 import { IUserService } from '../../user/types';
@@ -5,7 +6,7 @@ import { ILoggerService } from '../../log/types';
 import { GraphqlResolverMap, GraphqlTypeDefs } from '../../graphql/types';
 import { IErrorService } from '../../error/types';
 import { IFacebookApiService } from '../../facebook/types';
-import { HttpServerConfig, IHttpController } from '../types';
+import { HttpServerConfig, IHttpController, IHttpApplication } from '../types';
 import { createApp, AppConfig } from './app';
 import { createPassport, PassportConfig, Passport } from './passport';
 import { createErrorHandler, ErrorHandlerConfig } from './error';
@@ -33,7 +34,7 @@ export type ExpressApplicationConfig = HttpServerConfig & {
   facebookApiService: IFacebookApiService;
 };
 
-export function createExpressApplication(config: ExpressApplicationConfig) {
+export function createExpressApplication(config: ExpressApplicationConfig): IHttpApplication {
   const app = createApp(config as AppConfig);
   const passport = createPassport(Object.assign({}, config, {
     facebookCallbackURL: `${config.serverOrigin}${PATH_AUTH_FACEBOOK_CALLBACK}`,
@@ -61,5 +62,5 @@ export function createExpressApplication(config: ExpressApplicationConfig) {
 
   app.use(createErrorHandler(config as ErrorHandlerConfig));
 
-  return app;
+  return createServer(app);
 }

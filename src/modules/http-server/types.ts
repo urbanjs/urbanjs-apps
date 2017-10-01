@@ -5,6 +5,8 @@ export const TYPE_HTTP_CONTROLLER = 'TYPE_HTTP_CONTROLLER';
 
 export interface IHttpApplication {
   listen(port: number, cb: (err?: Error) => void): void;
+  close(cb?: () => void): void;
+  address(): { port: number };
 }
 
 export type HttpServerConfig = {
@@ -23,7 +25,8 @@ export type HttpServerConfig = {
 export type HttpApplicationFactory = (config: HttpServerConfig) => IHttpApplication;
 
 export interface IHttpServer {
-  start(): Promise<void>;
+  stop(): Promise<void>;
+  start(): Promise<{ origin: string }>;
 }
 
 export type HttpHeaders = {
