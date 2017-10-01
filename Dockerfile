@@ -11,7 +11,7 @@ ADD . /app
 WORKDIR /app
 
 RUN apk add --update python build-base && \
-    yarn install --production=false && \
+    NODE_ENV=development yarn install --production=false && \
     yarn global add pm2@^2 && \
     yarn run build && \
     yarn run test && \
