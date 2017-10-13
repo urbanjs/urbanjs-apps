@@ -5,16 +5,22 @@ import session = require('cookie-session');
 
 export type AppConfig = {
   sessionSecret: string;
-  corsAllowedOrigins: string;
+  corsAllowedOriginPatterns: string[];
 };
 
-export function createApp({sessionSecret, corsAllowedOrigins}: AppConfig) {
+export function createApp({sessionSecret, corsAllowedOriginPatterns}: AppConfig) {
   const app = express();
 
+  const corsPatterns: RegExp[] = corsAllowedOriginPatterns
+    .map(pattern => new RegExp(pattern));
+
   app.use(cors({
-    origin: corsAllowedOrigins.split(', '),
-    credentials: true
+    credentials: true,
+    origin: (origin: string, next: (err: Error | null, allow?: boolean) => void) => {
+      next(null, corsPatterns.some(pattern => pattern.test(origin)));
+    }
   }));
+
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
   app.use(session(<CookieSessionInterfaces.CookieSessionOptions> {

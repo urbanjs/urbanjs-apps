@@ -1,1 +1,1 @@
-export { ErrorBoundaryWithStore as ErrorBoundary } from './error-boundary';
+export { ErrorBoundaryWithHOCs as ErrorBoundary } from './error-boundary';

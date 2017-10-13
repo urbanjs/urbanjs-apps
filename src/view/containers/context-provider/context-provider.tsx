@@ -18,11 +18,9 @@ type StateProps = {
   locale: string;
 };
 
-type DispatchProps = {};
+export type ContextProviderProps = StateProps & OwnProps;
 
-export type ContextProviderProps = StateProps & DispatchProps & OwnProps;
-
-export class ContextProvider extends React.Component<ContextProviderProps, {}> {
+export class ContextProvider extends React.Component<ContextProviderProps> {
   props: ContextProviderProps;
 
   render() {
@@ -44,11 +42,9 @@ export class ContextProvider extends React.Component<ContextProviderProps, {}> {
   }
 }
 
-export const withState = connect<StateProps, DispatchProps, OwnProps>(
-  (state: RootState): StateProps => ({
-    locale: state.i18n.locale
-  }),
-  (): DispatchProps => ({})
-);
-
-export const ContextProviderWithState = withState(ContextProvider);
+export const ContextProviderWithHOCs =
+  connect<StateProps>(
+    (state: RootState): StateProps => ({
+      locale: state.i18n.locale
+    })
+  )(ContextProvider);

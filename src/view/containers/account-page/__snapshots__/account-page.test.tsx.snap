@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Account page if user is authenticated renders page without error 1`] = `
+<div
+  className="zv-account-page"
+>
+  <div
+    className="m-2"
+  >
+    <div
+      className="zv-account-information bg-faded p-4"
+    >
+      <a
+        className="text-primary float-right btn btn-link m-3"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-2x fa-pencil-square-o align-middle"
+        />
+        <br />
+        <span>
+          Edit
+        </span>
+      </a>
+      <div
+        className="p-4"
+      >
+        <i
+          className="fa fa-3x fa-info align-bottom text-primary"
+        />
+        <h3
+          className="d-inline-block ml-4 text-muted"
+        >
+          <span>
+            Account
+          </span>
+        </h3>
+      </div>
+      <table
+        className="table"
+      >
+        <tbody>
+          <tr
+            className="zv-group"
+          >
+            <td
+              className="text-muted p-4"
+            >
+              <pre>
+                {
+                 "id": "id",
+                 "email": "email",
+                 "displayName": "displayName",
+                 "avatar": "avatar",
+                 "personalInformation": {
+                  "id": "id",
+                  "firstName": "firstName",
+                  "lastName": "lastName",
+                  "birthDate": "birthDate",
+                  "phoneNumber": "phoneNumber",
+                  "birthPlace": "birthPlace",
+                  "socialSecurityNumber": "socialSecurityNumber",
+                  "taxNumber": "taxNumber",
+                  "mothersMaidenName": "mothersMaidenName"
+                 }
+                }
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Account page if user is not authenticated renders 401 error page  1`] = `
+<div
+  className="zv-error-page-401"
+>
+  <div
+    className="cover"
+  >
+    <h1>
+      Error
+    </h1>
+    <div
+      className="lead"
+    >
+      <span>
+        Forbidden
+      </span>
+    </div>
+  </div>
+</div>
+`;

@@ -1,5 +1,4 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { parse, UrlObject } from 'url';
 import { PATH_APP } from '../../../../constants';
 import {
   PATH_AUTH_LOGOUT,
@@ -13,11 +12,10 @@ import { AuthenticateOptions } from 'passport-facebook';
 
 export type AuthRouterConfig = {
   passport: Passport;
-  allowedRedirectOrigins: string[];
   loggerService: ILoggerService;
 };
 
-export function createAuthRouter({passport, allowedRedirectOrigins, loggerService}: AuthRouterConfig) {
+export function createAuthRouter({passport, loggerService}: AuthRouterConfig) {
   const requiredPermissions = [
     'public_profile',
     'user_photos',
@@ -25,7 +23,6 @@ export function createAuthRouter({passport, allowedRedirectOrigins, loggerServic
   ];
 
   const router = Router();
-  const allowedRedirectUriObjects = allowedRedirectOrigins.map(origin => parse(origin));
   const getRedirectUriFromRequest = (req: Request) => {
     let redirectUrisInPriority: string[] = [
       req.query && req.query.redirect_uri || '',
@@ -33,20 +30,8 @@ export function createAuthRouter({passport, allowedRedirectOrigins, loggerServic
       PATH_APP
     ];
 
-    const filteredRedirectUris = redirectUrisInPriority.filter((redirectUri) => {
-      if (!redirectUri) {
-        return false;
-      }
-
-      const redirectUriObject: UrlObject = parse(redirectUri);
-
-      return redirectUriObject.host === null ||
-        allowedRedirectUriObjects.some((allowedRedirectUriObject) => (
-          allowedRedirectUriObject.host === redirectUriObject.host
-          && allowedRedirectUriObject.port === redirectUriObject.port
-          && allowedRedirectUriObject.protocol === redirectUriObject.protocol
-        ));
-    });
+    const filteredRedirectUris = redirectUrisInPriority
+      .filter((redirectUri) => !!redirectUri);
 
     return filteredRedirectUris[0];
   };

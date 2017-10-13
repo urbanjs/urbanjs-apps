@@ -1,1 +1,1 @@
-export { ErrorPage401WithRouter as ErrorPage401 } from './error-page-401';
+export { ErrorPage401WithHOCs as ErrorPage401 } from './error-page-401';

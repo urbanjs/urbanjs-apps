@@ -1,55 +1,54 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Switch, Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
-import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
+import { QueryProps as ApolloQueryProps, graphql } from 'react-apollo';
 import {
   PATH_APP_404,
   PATH_APP_ACCOUNT,
   PATH_APP_ACCOUNT_EDIT
 } from '../../../constants';
 import { AccountInformation, AccountInformationEdit, ErrorPage401 } from '../../presenters';
+import { RootState } from '../../../state/reducers';
+import { updateUserMutation, userQuery } from './graphql';
 import './account-page.css';
 
-export type OwnProps = {
-  submit: (userId: string, data: object) => Promise<void>;
+export type OwnProps = {};
+
+export type StateProps = {
+  serverOrigin: string;
+};
+
+export type User = {
+  id: string;
+  personalInformation: {}
+};
+
+export type UserQueryProps = {
   data: ApolloQueryProps & {
-    user?: {
-      id: string;
-      email?: string;
-      displayName?: string;
-      avatar?: string;
-      personalInformation: {
-        firstName?: string;
-        lastName?: string;
-        birthDate?: string;
-        phoneNumber?: string;
-        birthPlace?: string;
-        socialSecurityNumber?: string;
-        taxNumber?: string;
-        mothersMaidenName?: string;
-      }
-    }
+    user?: User
   }
 };
 
-export type AccountPageProps = OwnProps & RouteComponentProps<{}>;
-export type State = {};
+export type UpdateUserMutationProps = {
+  submit: (userId: string, data: object) => Promise<void>;
+};
 
-export class AccountPage extends React.Component<AccountPageProps, State> {
+export type AccountPageProps =
+  OwnProps
+  & UserQueryProps
+  & UpdateUserMutationProps
+  & StateProps
+  & RouteComponentProps<null>;
+
+export class AccountPage extends React.Component<AccountPageProps> {
   props: AccountPageProps;
-  state: State = {};
-
-  private unauthenticatedUser = {
-    id: 'unknown',
-    personalInformation: {}
-  };
 
   render() {
-    const user = this.props.data.user || this.unauthenticatedUser;
-
-    if (!this.props.data.loading && user === this.unauthenticatedUser) {
-      return <ErrorPage401 unauthenticated={true}/>;
+    if (!this.props.data.loading && !this.props.data.user) {
+      return <ErrorPage401/>;
     }
 
+    const user = this.props.data.user as User;
     return (
       <div className="zv-account-page">
         <Switch>
@@ -92,48 +91,8 @@ export class AccountPage extends React.Component<AccountPageProps, State> {
   }
 }
 
-const withQuery = graphql(
-  gql`
-    query {
-      user {
-        id
-        email
-        displayName
-        avatar
-        personalInformation {
-          id
-          firstName
-          lastName
-          birthDate
-          phoneNumber
-          birthPlace
-          socialSecurityNumber
-          taxNumber
-          mothersMaidenName
-        }
-      }
-    }
-  `,
-  {}
-);
-
-const withMutation = graphql(
-  gql`  
-    mutation updateUserPersonalInformation($userId: ID!, $data: UserPersonalInformationInput!) {
-      updateUserPersonalInformation(userId:$userId, data: $data) {
-        id
-        firstName
-        lastName
-        birthDate
-        phoneNumber
-        birthPlace
-        socialSecurityNumber
-        taxNumber
-        mothersMaidenName
-      }
-    }
-  `,
-  {
+export const AccountPageWithHOCs =
+  graphql<UpdateUserMutationProps, OwnProps>(updateUserMutation, {
     props: ({mutate}) => ({
       submit: (userId: string, data: object) => {
         if (!mutate) {
@@ -143,7 +102,11 @@ const withMutation = graphql(
         return mutate({variables: {userId, data}});
       }
     }),
-  }
-);
-
-export const AccountPageWithState = withMutation(withQuery(withRouter<OwnProps>(AccountPage)));
+  })(
+    graphql<UserQueryProps, OwnProps>(userQuery)(
+      withRouter<OwnProps>(
+        connect<StateProps>(
+          (state: RootState): StateProps => ({
+            serverOrigin: state.runtime.variables.serverOrigin
+          })
+        )(AccountPage))));

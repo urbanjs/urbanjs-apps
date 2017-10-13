@@ -1,1 +1,1 @@
-export { NavbarWithIntl as Navbar } from './navbar';
+export { NavbarWithHOCs as Navbar } from './navbar';

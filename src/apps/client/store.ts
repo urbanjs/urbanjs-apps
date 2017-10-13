@@ -16,7 +16,7 @@ store.dispatch(setRuntimeVariable({
 
 store.dispatch(setRuntimeVariable({
   name: 'appOrigin',
-  value: config.appOrigin
+  value: window.location.origin
 }));
 
 store.dispatch(setRuntimeVariable({

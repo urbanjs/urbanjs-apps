@@ -12,20 +12,24 @@ tools.setGlobalConfiguration({
 });
 
 tools.initialize(gulp, {
-  babel: {
+  babel: defaults => ({
+    ...defaults,
+    files: defaults.files.concat('!src/**/__snapshots__/**'),
     outputPath: 'build-server'
-  },
+  }),
   'check-dependencies': true,
   'check-file-names': defaults => Object.assign({}, defaults, {
     paramCase: [
-      '!src/**/*test.ts',
+      '!src/view/**/*test.?(ts|tsx)',
       '!src/apps/utils/config/es6-template-strings.d.ts'
-    ].concat(defaults.paramCase),
-    dotCase: ['src/**/*test.ts']
+    ].concat(defaults.paramCase)
   }),
-  mocha: {
-    collectCoverage: false
-  },
+  mocha: defaults => ({
+    ...defaults,
+    files: defaults.files.concat('!src/view/**'),
+    collectCoverage: false,
+    timeout: 20000
+  }),
   tslint: {
     configFile: './tslint.json'
   }

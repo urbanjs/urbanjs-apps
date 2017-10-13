@@ -1,1 +1,1 @@
-export { ContextProviderWithState as ContextProvider } from './context-provider';
+export { ContextProviderWithHOCs as ContextProvider } from './context-provider';

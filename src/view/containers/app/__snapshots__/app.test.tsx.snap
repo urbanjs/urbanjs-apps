@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders without crashing 1`] = `
+<div
+  className="zv-app h-100 "
+>
+  <aside
+    className="zv-sidebar fixed-top h-100"
+  >
+    <div
+      className="zv-sidebar bg-faded h-100"
+    >
+      <a
+        className="zv-logo-link btn btn-link text-muted d-block mx-auto mt-4 mb-4 active"
+        href="/"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-2x"
+        />
+      </a>
+    </div>
+  </aside>
+  <div
+    className="zv-content-wrapper"
+  >
+    <div
+      className="zv-navbar p-4 d-flex justify-content-end bg-faded dropdown align-items-center "
+    >
+      <a
+        className="btn btn-link text-muted mr-auto"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-bars"
+        />
+      </a>
+      <a
+        className="btn btn-link text-muted"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-2x fa-sign-in"
+        />
+      </a>
+      <div
+        className="dropdown-menu dropdown-menu-right p-4 mt-0"
+        onClick={[Function]}
+      >
+        <a
+          className="btn btn-primary w-100"
+          href="serverOrigin/auth/facebook?redirect_uri=appOrigin%2F"
+        >
+          <span>
+            Sign in
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <footer
+    className="zv-footer-wrapper"
+  >
+    <div
+      className="zv-footer bg-faded d-flex justify-content-between"
+    >
+      <div
+        className="p-4 text-muted"
+      >
+          ©  
+        <span>
+          Copyright
+        </span>
+         
+        2017
+      </div>
+      <div
+        className="p-2"
+      >
+        <select
+          className="form-control"
+          onChange={[Function]}
+          value="en"
+        >
+          <option>
+            en
+          </option>
+          <option>
+            hu
+          </option>
+        </select>
+      </div>
+    </div>
+  </footer>
+</div>
+`;

@@ -19,7 +19,7 @@ type DispatchProps = {
 
 export type ErrorBoundaryProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   props: ErrorBoundaryProps;
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -37,7 +37,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
           <div className="cover">
             <h1>Oh no! The application has crashed</h1>
             <div className="lead">
-              An unexpected error was encountered.<br />
+              An unexpected error was encountered.<br/>
               Our team has been dispatched to fix this issue.
             </div>
           </div>
@@ -49,13 +49,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, {}> {
   }
 }
 
-const withStore = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
-  (state: RootState): StateProps => ({
-    hasError: !!state.runtime.error
-  }),
-  (dispatch: Dispatch<RootState>): DispatchProps => ({
-    setRuntimeError: (value: SetRuntimeErrorPayload) => dispatch(setRuntimeError(value))
-  })
-);
-
-export const ErrorBoundaryWithStore = withRouter<OwnProps>(withStore(ErrorBoundary));
+export const ErrorBoundaryWithHOCs =
+  withRouter<OwnProps>(
+    connect<StateProps, DispatchProps>(
+      (state: RootState): StateProps => ({
+        hasError: !!state.runtime.error
+      }),
+      (dispatch: Dispatch<RootState>): DispatchProps => ({
+        setRuntimeError: (value: SetRuntimeErrorPayload) => dispatch(setRuntimeError(value))
+      })
+    )(ErrorBoundary));

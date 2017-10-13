@@ -9,7 +9,7 @@ type OwnProps = {
   onLocaleChange: (locale: string) => void;
 };
 
-export class Footer extends React.Component<OwnProps, {}> {
+export class Footer extends React.Component<OwnProps> {
   props: OwnProps;
 
   render() {

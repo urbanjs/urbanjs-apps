@@ -36,20 +36,16 @@ export type ExpressApplicationConfig = HttpServerConfig & {
 
 export function createExpressApplication(config: ExpressApplicationConfig): IHttpApplication {
   const app = createApp(config as AppConfig);
-  const passport = createPassport(Object.assign({}, config, {
-    facebookCallbackURL: `${config.serverOrigin}${PATH_AUTH_FACEBOOK_CALLBACK}`,
-    state: true
+  const passport = createPassport(({
+    ...config,
+    facebookCallbackPath: PATH_AUTH_FACEBOOK_CALLBACK
   }) as PassportConfig);
 
   app.use(passport.initialize());
   app.use(passport.session());
 
   app.use(createAuthRouter(Object.assign({}, config, {
-    passport: passport as Passport,
-    allowedRedirectOrigins: [
-      config.serverOrigin,
-      ...config.corsAllowedOrigins.split(', ')
-    ]
+    passport: passport as Passport
   }) as AuthRouterConfig));
 
   app.use(createGraphqlRouter(config as GraphqlRouterConfig));

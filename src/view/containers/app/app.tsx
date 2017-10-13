@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ActionCreator, connect, Dispatch } from 'react-redux';
 import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
-import { QueryProps as ApolloQueryProps, graphql, gql } from 'react-apollo';
+import { QueryProps as ApolloQueryProps, graphql } from 'react-apollo';
 import { PATH_APP, PATH_APP_ACCOUNT } from '../../../constants';
 import { track } from '../../../decorators';
 import { RootState } from '../../../state/reducers';
@@ -9,9 +9,12 @@ import { setLocale } from '../../../state/actions';
 import { Sidebar, Navbar, Footer, Loader, ErrorPage404 } from '../../presenters';
 import { AccountPage } from '../account-page';
 import { Feature } from '../../../modules/authorization/types';
+import { userQuery } from './graphql';
 import './app.css';
 
-type OwnProps = {
+export type OwnProps = {};
+
+export type UserQueryProps = {
   data: ApolloQueryProps & {
     user?: {
       id: string;
@@ -25,17 +28,25 @@ type OwnProps = {
   }
 };
 
-type StateProps = {
+export type StateProps = {
   isLoading: boolean;
   currentLocale: string;
   locales: string[];
+  serverOrigin: string;
+  appOrigin: string;
 };
 
-type DispatchProps = {
+export type DispatchProps = {
   setLocale: ActionCreator<object>;
 };
 
-export type AppProps = StateProps & DispatchProps & OwnProps & RouteComponentProps<null>;
+export type AppProps =
+  StateProps
+  & DispatchProps
+  & OwnProps
+  & RouteComponentProps<null>
+  & UserQueryProps;
+
 export type State = { isSidebarCollapsed: boolean };
 
 export class App extends React.Component<AppProps, State> {
@@ -60,6 +71,8 @@ export class App extends React.Component<AppProps, State> {
 
         <div className="zv-content-wrapper">
           <Navbar
+            appOrigin={this.props.appOrigin}
+            serverOrigin={this.props.serverOrigin}
             allowedFeatures={allowedFeatures}
             notifications={Array(100)}
             onCollapse={() => this.setState({isSidebarCollapsed: !this.state.isSidebarCollapsed})}
@@ -100,32 +113,18 @@ export class App extends React.Component<AppProps, State> {
   }
 }
 
-const withState = connect<StateProps, DispatchProps, OwnProps & RouteComponentProps<null>>(
-  (state: RootState): StateProps => ({
-    currentLocale: state.i18n.locale,
-    locales: state.i18n.availableLocales,
-    isLoading: state.loader.isLoading
-  }),
-  (dispatch: Dispatch<RootState>): DispatchProps => ({
-    setLocale: (locale: string) => dispatch(setLocale({locale}))
-  })
-);
-
-const withQuery = graphql(
-  gql`
-    query {
-      user {
-        id
-        email
-        displayName
-        avatar
-        subscription {
-          features
-        }
-      }
-    }
-  `,
-  {}
-);
-
-export const AppWithStore = withQuery(withRouter<OwnProps>(withState(App)));
+export const AppWitHOCs =
+  graphql<UserQueryProps, OwnProps>(userQuery)(
+    withRouter<OwnProps>(
+      connect<StateProps, DispatchProps>(
+        (state: RootState): StateProps => ({
+          currentLocale: state.i18n.locale,
+          locales: state.i18n.availableLocales,
+          isLoading: state.loader.isLoading,
+          serverOrigin: state.runtime.variables.serverOrigin,
+          appOrigin: state.runtime.variables.appOrigin
+        }),
+        (dispatch: Dispatch<RootState>): DispatchProps => ({
+          setLocale: (locale: string) => dispatch(setLocale({locale}))
+        })
+      )(App)));

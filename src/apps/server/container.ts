@@ -5,10 +5,6 @@ import {
   TYPE_HTTP_CONFIG
 } from '../../modules/http-server/types';
 import {
-  TYPE_ROUTE_SERVICE_CONFIG,
-  RouterServiceConfig
-} from '../../modules/route/types';
-import {
   Fetch,
   TYPE_DRIVER_FETCH
 } from '../../modules/http/types';
@@ -28,15 +24,9 @@ export const createContainer = () => {
 
   container.bind<Fetch>(TYPE_DRIVER_FETCH).toConstantValue(fetch);
 
-  container.bind<RouterServiceConfig>(TYPE_ROUTE_SERVICE_CONFIG).toConstantValue({
-    appOrigin: config.appOrigin,
-    serverOrigin: config.serverOrigin
-  });
-
   container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
     port: config.port,
-    serverOrigin: config.serverOrigin,
-    corsAllowedOrigins: config.corsAllowedOrigins,
+    corsAllowedOriginPatterns: config.corsAllowedOriginPatterns.split(','),
     devMode: config.devMode,
     enableGraphQLEditor: config.devMode,
     sessionSecret: config.sessionSecret,

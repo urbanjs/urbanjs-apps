@@ -1,4 +1,5 @@
 import { Strategy as FacebookStrategy, VerifyFunction } from 'passport-facebook';
+import { Request } from 'express';
 import { Passport } from 'passport';
 import { ValidationError } from '../../error/errors';
 import { IUserService, User } from '../../user/types';
@@ -13,7 +14,7 @@ export type SessionTokenPayload = { userId: string };
 export type PassportConfig = {
   facebookAppId: string;
   facebookAppSecret: string;
-  facebookCallbackURL: string;
+  facebookCallbackPath: string;
   jwtService: IJWTService;
   userService: IUserService;
   loggerService: ILoggerService;
@@ -25,7 +26,7 @@ export const STRATEGY_FACEBOOK = 'facebook';
 export function createPassport({
                                  facebookAppId,
                                  facebookAppSecret,
-                                 facebookCallbackURL,
+                                 facebookCallbackPath,
                                  userService,
                                  loggerService,
                                  jwtService,
@@ -35,7 +36,7 @@ export function createPassport({
   const strategyOptions = {
     clientID: facebookAppId,
     clientSecret: facebookAppSecret,
-    callbackURL: facebookCallbackURL,
+    callbackURL: 'unknown-yet',
     enableProof: true,
     profileFields: [
       'id',
@@ -73,7 +74,18 @@ export function createPassport({
     }
   };
 
-  passport.use(STRATEGY_FACEBOOK, new FacebookStrategy(strategyOptions, verifyFunction));
+  const facebookStrategy = new FacebookStrategy(strategyOptions, verifyFunction);
+
+  const oldAuthenticate = facebookStrategy.authenticate;
+  facebookStrategy.authenticate = function (req: Request, options: object) {
+    const serverOrigin = `${req.protocol}://${req.headers.host}`;
+    return oldAuthenticate.call(this, req, {
+      ...options,
+      callbackURL: `${serverOrigin}${facebookCallbackPath}`
+    });
+  };
+
+  passport.use(STRATEGY_FACEBOOK, facebookStrategy);
 
   passport.serializeUser((user: User, cb) => {
     loggerService.debug('passport serialization...', user);

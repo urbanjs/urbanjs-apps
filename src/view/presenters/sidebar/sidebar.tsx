@@ -20,7 +20,7 @@ export type OwnProps = {
 
 export type SidebarProps = OwnProps & RouteComponentProps<null>;
 
-export class Sidebar extends React.Component<SidebarProps, {}> {
+export class Sidebar extends React.Component<SidebarProps> {
   props: SidebarProps;
 
   @inject(TYPE_AUTHORIZATION_SERVICE)
@@ -65,4 +65,4 @@ export class Sidebar extends React.Component<SidebarProps, {}> {
   }
 }
 
-export const SidebarWithRouter = withRouter<OwnProps>(Sidebar);
+export const SidebarWithHOCs = withRouter<OwnProps>(Sidebar);

@@ -1,1 +1,1 @@
-export { AppWithStore as App } from './app';
+export { AppWitHOCs as App } from './app';

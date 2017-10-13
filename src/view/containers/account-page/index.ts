@@ -1,1 +1,1 @@
-export { AccountPageWithState as AccountPage } from './account-page';
+export { AccountPageWithHOCs as AccountPage } from './account-page';

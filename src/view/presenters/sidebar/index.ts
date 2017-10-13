@@ -1,1 +1,1 @@
-export { SidebarWithRouter as Sidebar } from './sidebar';
+export { SidebarWithHOCs as Sidebar } from './sidebar';

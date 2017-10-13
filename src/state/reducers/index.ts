@@ -11,7 +11,7 @@ export type RootState = {
   loader: LoaderState;
 };
 
-export const root = (extraReducers?: ReducersMapObject) => combineReducers({
+export const root = (extraReducers?: ReducersMapObject) => combineReducers<RootState>({
   runtime,
   i18n,
   ping,

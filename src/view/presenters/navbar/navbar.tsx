@@ -23,6 +23,8 @@ import { messages } from './messages';
 import './navbar.css';
 
 type OwnProps = {
+  appOrigin: string;
+  serverOrigin: string;
   user?: {
     displayName: string;
     email: string;
@@ -49,19 +51,17 @@ export class Navbar extends React.Component<NavbarProps, State> {
   private routeService: IRouteService;
 
   render() {
-    let loginUri = this.routeService.format(PATH_AUTH_FACEBOOK, {prefixWithOrigin: true});
-    loginUri += `?redirect_uri=${encodeURIComponent(this.routeService.format(
-      this.routeService.isPathKnown(this.props.location.pathname)
-        ? this.props.location.pathname
-        : PATH_APP,
-      {prefixWithOrigin: true}
-    ))}`;
+    const loginReturnPath = this.routeService.isPathKnown(this.props.location.pathname)
+      ? this.props.location.pathname
+      : PATH_APP;
 
-    let logoutUri = this.routeService.format(PATH_AUTH_LOGOUT, {prefixWithOrigin: true});
-    logoutUri += `?redirect_uri=${encodeURIComponent(this.routeService.format(
-      PATH_APP,
-      {prefixWithOrigin: true}
-    ))}`;
+    let loginUri = `${this.props.serverOrigin}${PATH_AUTH_FACEBOOK}`;
+    loginUri += '?redirect_uri=';
+    loginUri += encodeURIComponent(`${this.props.appOrigin}${loginReturnPath}`);
+
+    let logoutUri = `${this.props.serverOrigin}${PATH_AUTH_LOGOUT}`;
+    logoutUri += '?redirect_uri=';
+    logoutUri += encodeURIComponent(`${this.props.appOrigin}${PATH_APP}`);
 
     let notificationLink;
     if (this.authorizationService.isActivityAllowed(ACTIVITY_VIEW_NOTIFICATIONS, this.props.allowedFeatures)) {
@@ -168,4 +168,6 @@ export class Navbar extends React.Component<NavbarProps, State> {
   }
 }
 
-export const NavbarWithIntl = injectIntl<OwnProps>(withRouter<OwnProps & InjectedIntlProps>(Navbar));
+export const NavbarWithHOCs =
+  injectIntl<OwnProps>(
+    withRouter<OwnProps & InjectedIntlProps>(Navbar));
