@@ -1,5 +1,5 @@
 .idea
 build
-build-server
+dist
 node_modules
 src/*.css

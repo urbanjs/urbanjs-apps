@@ -6,6 +6,7 @@
 # runtime
 /coverage
 /build*
+/dist
 /ts-node*
 /src/**/*.css
 *.log

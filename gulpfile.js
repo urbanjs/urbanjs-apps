@@ -14,8 +14,7 @@ tools.setGlobalConfiguration({
 tools.initialize(gulp, {
   babel: defaults => ({
     ...defaults,
-    files: defaults.files.concat('!src/**/__snapshots__/**'),
-    outputPath: 'build-server'
+    files: defaults.files.concat('!src/**/__snapshots__/**')
   }),
   'check-dependencies': true,
   'check-file-names': defaults => Object.assign({}, defaults, {
