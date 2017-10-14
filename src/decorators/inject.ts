@@ -1,7 +1,7 @@
 import { inject as injectSync, Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
-export { injectable } from 'inversify';
+export { injectable, optional, multiInject } from 'inversify';
 
 export type Decorator = (target: object, targetKey: string, index?: number | undefined) => void;
 

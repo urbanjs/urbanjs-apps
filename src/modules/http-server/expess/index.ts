@@ -24,14 +24,14 @@ import {
 } from './router';
 
 export type ExpressApplicationConfig = HttpServerConfig & {
-  graphqlResolvers: GraphqlResolverMap;
-  graphqlTypeDefs: GraphqlTypeDefs;
+  facebookApiService: IFacebookApiService;
+  graphqlResolvers?: GraphqlResolverMap;
+  graphqlTypeDefs?: GraphqlTypeDefs;
   apiControllers: IHttpController[];
   loggerService: ILoggerService;
   errorService: IErrorService;
   userService: IUserService;
   jwtService: IJWTService;
-  facebookApiService: IFacebookApiService;
 };
 
 export function createExpressApplication(config: ExpressApplicationConfig): IHttpApplication {
@@ -48,7 +48,9 @@ export function createExpressApplication(config: ExpressApplicationConfig): IHtt
     passport: passport as Passport
   }) as AuthRouterConfig));
 
-  app.use(createGraphqlRouter(config as GraphqlRouterConfig));
+  if (config.graphqlResolvers && config.graphqlTypeDefs) {
+    app.use(createGraphqlRouter(config as GraphqlRouterConfig));
+  }
 
   app.use(createApiRouter(config as ApiRouterConfig));
 

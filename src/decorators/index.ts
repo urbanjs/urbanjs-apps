@@ -7,5 +7,7 @@ export {
 export {
   injectable,
   inject,
+  optional,
+  multiInject,
   supportLazyInject
 } from './inject';

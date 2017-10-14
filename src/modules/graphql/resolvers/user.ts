@@ -25,7 +25,10 @@ export class UserResolver implements IGraphqlResolver {
   }
 
   @track()
-  @resolver({host: 'Query'})
+  @resolver({
+    host: 'Query',
+    target: 'user'
+  })
   async user(obj: GraphqlRootValue,
              args: { id?: string },
              context: GraphqlResolverContext): Promise<User> {
@@ -45,7 +48,10 @@ export class UserResolver implements IGraphqlResolver {
   }
 
   @track()
-  @resolver({host: 'User'})
+  @resolver({
+    host: 'User',
+    target: 'subscription'
+  })
   async subscription(user: User,
                      args: {},
                      context: GraphqlResolverContext): Promise<UserSubscription> {
@@ -57,7 +63,10 @@ export class UserResolver implements IGraphqlResolver {
   }
 
   @track()
-  @resolver({host: 'User'})
+  @resolver({
+    host: 'User',
+    target: 'facebookPermissions'
+  })
   async facebookPermissions(user: User,
                             args: { id: string },
                             context: GraphqlResolverContext): Promise<FacebookPermissions> {
@@ -84,7 +93,10 @@ export class UserResolver implements IGraphqlResolver {
   }
 
   @track()
-  @resolver({host: 'User'})
+  @resolver({
+    host: 'User',
+    target: 'personalInformation'
+  })
   async personalInformation(user: User,
                             args: {},
                             context: GraphqlResolverContext): Promise<UserPersonalInformation> {
@@ -101,7 +113,10 @@ export class UserResolver implements IGraphqlResolver {
   }
 
   @track()
-  @resolver({host: 'Mutation'})
+  @resolver({
+    host: 'Mutation',
+    target: 'updateUserPersonalInformation'
+  })
   async updateUserPersonalInformation(obj: GraphqlRootValue,
                                       args: { userId: Guid, data: UserPersonalInformationInput },
                                       context: GraphqlResolverContext): Promise<UserPersonalInformation> {

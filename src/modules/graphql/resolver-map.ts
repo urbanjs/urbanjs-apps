@@ -29,7 +29,7 @@ export const resolverMap = ({container}: inversify.Context) => {
         loggerService.debug(`adding ${debugPrefix} to`, resolverOptions);
 
         resolvers[resolverOptions.host] = resolvers[resolverOptions.host] || {};
-        resolvers[resolverOptions.host][methodName] =
+        resolvers[resolverOptions.host][resolverOptions.target] =
           async (obj: GraphqlRootValue | object, args: object, context: GraphqlResolverContext) => {
             loggerService.debug(`executing ${debugPrefix}...`);
 

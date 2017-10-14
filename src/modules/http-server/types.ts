@@ -1,6 +1,6 @@
 import { HttpHeaders } from '../http/types';
 
-export const TYPE_HTTP_APPLICATION_FACTORY = 'TYPE_HTTP_APPLICATION_FACTORY';
+export const TYPE_HTTP_APPLICATION_BUILDER = 'TYPE_HTTP_APPLICATION_BUILDER';
 export const TYPE_HTTP_SERVER = 'TYPE_HTTP_SERVER';
 export const TYPE_HTTP_CONFIG = 'TYPE_HTTP_CONFIG';
 export const TYPE_HTTP_CONTROLLER = 'TYPE_HTTP_CONTROLLER';
@@ -23,7 +23,9 @@ export type HttpServerConfig = {
   facebookAppSecret: string;
 };
 
-export type HttpApplicationFactory = (config: HttpServerConfig) => IHttpApplication;
+export interface IHttpApplicationBuilder {
+  create(): IHttpApplication;
+}
 
 export interface IHttpServer {
   stop(): Promise<void>;

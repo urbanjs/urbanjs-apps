@@ -4,6 +4,7 @@ export const METADATA_KEY_GRAPHQL_RESOLVER = 'METADATA_KEY_GRAPHQL_RESOLVER';
 
 export type ResolverOptions = {
   host: string;
+  target: string;
 };
 
 export function resolver(options: ResolverOptions): MethodDecorator {

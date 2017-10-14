@@ -1,8 +1,8 @@
 import { injectable, inject, track } from '../../decorators';
 import {
   IHttpServer,
-  TYPE_HTTP_APPLICATION_FACTORY,
-  HttpApplicationFactory,
+  TYPE_HTTP_APPLICATION_BUILDER,
+  IHttpApplicationBuilder,
   IHttpApplication,
   TYPE_HTTP_CONFIG,
   HttpServerConfig
@@ -16,13 +16,13 @@ import {
 export class HttpServer implements IHttpServer {
   private app: IHttpApplication;
 
-  constructor(@inject(TYPE_HTTP_APPLICATION_FACTORY)
-                createApplication: HttpApplicationFactory,
+  constructor(@inject(TYPE_HTTP_APPLICATION_BUILDER)
+                applicationBuilder: IHttpApplicationBuilder,
               @inject(TYPE_HTTP_CONFIG)
               private config: HttpServerConfig,
               @inject(TYPE_SERVICE_LOGGER)
               private loggerService: ILoggerService) {
-    this.app = createApplication(config);
+    this.app = applicationBuilder.create();
   }
 
   @track()
