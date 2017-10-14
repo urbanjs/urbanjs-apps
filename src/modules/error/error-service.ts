@@ -1,11 +1,15 @@
 import { injectable, inject, track } from '../../decorators';
 import { ILoggerService, TYPE_SERVICE_LOGGER } from '../log/types';
 import { HttpError, NotFoundError, ForbiddenError, ValidationError } from './errors';
-import { IErrorService } from './types';
+import {
+  HttpMessagesByStatusCode, IErrorService,
+  TYPE_HTTP_MESSAGES_BY_STATUS_CODE
+} from './types';
 
 @injectable()
 export class ErrorService implements IErrorService {
-  constructor(@inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
+  constructor(@inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService,
+              @inject(TYPE_HTTP_MESSAGES_BY_STATUS_CODE) private statuses: HttpMessagesByStatusCode) {
   }
 
   @track()
@@ -22,7 +26,8 @@ export class ErrorService implements IErrorService {
     if (Object.getPrototypeOf(rawError) === ValidationError.prototype) {
       httpError = new HttpError(
         rawError.message,
-        400
+        400,
+        (<ValidationError> rawError).details
       );
     } else if (Object.getPrototypeOf(rawError) === ForbiddenError.prototype) {
       httpError = new HttpError(
@@ -44,5 +49,10 @@ export class ErrorService implements IErrorService {
     httpError.innerError = rawError;
 
     return httpError;
+  }
+
+  @track()
+  createHttpErrorFromStatusCode(statusCode: number) {
+    return new HttpError(this.statuses[statusCode] || 'Internal server error', statusCode || 500);
   }
 }

@@ -1,5 +1,6 @@
 import { createBatchingNetworkInterface, ApolloClient } from 'react-apollo';
-import { PATH_GRAPHQL } from '../../constants';
+import { get as getCookie } from 'js-cookie';
+import { CSRF_TOKEN_KEY, PATH_GRAPHQL } from '../../constants';
 import { sendHttpRequests, receiveHttpResponses } from '../../state/actions';
 import { config } from './config';
 
@@ -19,8 +20,13 @@ export type MiddlewareRequest = {
 
 networkInterface.use([{
   applyBatchMiddleware(req: MiddlewareRequest, next: Function) {
-    const store = require('./store').store;
+    const {store} = require('./store');
     store.dispatch(sendHttpRequests({requests: req.requests}));
+
+    req.options.headers = {
+      ...req.options.headers || {},
+      [CSRF_TOKEN_KEY]: getCookie(CSRF_TOKEN_KEY)
+    };
 
     if (config.devMode) {
       // imitate network latency

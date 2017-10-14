@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { Router, Response, Request, NextFunction } from 'express';
 import { METADATA_KEY_HTTP_ROUTE, HttpRouteOptions } from '../../../../decorators/http-route';
 import { ILoggerService } from '../../../log/types';
+import { HttpHeaders } from '../../../http/types';
 import {
   IHttpController,
   HttpControllerRequestParams,
@@ -37,9 +38,14 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
           async (req: Request, res: Response, next: NextFunction) => {
             loggerService.debug(`executing ${debugPrefix}...`);
 
+            const requestHeaders: HttpHeaders = {};
+            Object.keys(req.headers).forEach(key => {
+              requestHeaders[key] = ([] as string[]).concat(req.headers[key])[0];
+            });
+
             try {
               const requestParams: HttpControllerRequestParams = {
-                headers: req.headers,
+                headers: requestHeaders,
                 params: req.params,
                 query: req.query,
                 payload: req.body,
@@ -55,6 +61,13 @@ export function createApiRouter({apiControllers, loggerService}: ApiRouterConfig
 
               if (typeof httpResponse.statusCode === 'number') {
                 res.status(httpResponse.statusCode);
+              }
+
+              if (typeof httpResponse.headers !== 'undefined') {
+                const headers: HttpHeaders = httpResponse.headers;
+                Object.keys(headers).forEach((key) => {
+                  res.header(key, headers[key]);
+                });
               }
 
               if (typeof httpResponse.payload !== 'undefined') {

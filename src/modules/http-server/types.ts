@@ -1,3 +1,5 @@
+import { HttpHeaders } from '../http/types';
+
 export const TYPE_HTTP_APPLICATION_FACTORY = 'TYPE_HTTP_APPLICATION_FACTORY';
 export const TYPE_HTTP_SERVER = 'TYPE_HTTP_SERVER';
 export const TYPE_HTTP_CONFIG = 'TYPE_HTTP_CONFIG';
@@ -28,14 +30,10 @@ export interface IHttpServer {
   start(): Promise<{ origin: string }>;
 }
 
-export type HttpHeaders = {
-  [key: string]: string | string[];
-};
-
-export type HttpControllerRequestParams = {
+export type HttpControllerRequestParams<T = object> = {
   params: { [key: string]: string };
   query: { [key: string]: string };
-  payload: object;
+  payload: T;
   headers: HttpHeaders;
   remoteAddress: string;
 };
@@ -43,6 +41,7 @@ export type HttpControllerRequestParams = {
 export type HttpControllerResponse = {
   statusCode?: number;
   payload?: object;
+  headers?: HttpHeaders;
 };
 
 export interface IHttpController {

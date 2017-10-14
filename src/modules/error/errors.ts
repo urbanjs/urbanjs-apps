@@ -10,19 +10,25 @@ export class BaseError {
 // by `extends` syntax as we are using babel
 inherits(BaseError, Error);
 
+export type ErrorDetail = {
+  message: string;
+  target: string;
+};
+
 export type HttpErrorResponse = {
   message: string;
   innerError?: {
     message: string;
     stack: string
-  }
+  },
+  details?: ErrorDetail[];
 };
 
 export class HttpError extends BaseError {
   public headers: Object = {};
   public innerError: Error;
 
-  constructor(public message: string, public statusCode: number) {
+  constructor(public message: string, public statusCode: number, public details?: ErrorDetail[]) {
     super(message);
   }
 
@@ -38,12 +44,16 @@ export class HttpError extends BaseError {
       });
     }
 
+    if (this.details) {
+      Object.assign(error, {details: this.details});
+    }
+
     return error;
   }
 }
 
 export class ValidationError extends BaseError {
-  constructor(public message: string) {
+  constructor(public message: string, public details?: ErrorDetail[]) {
     super(message);
   }
 }
