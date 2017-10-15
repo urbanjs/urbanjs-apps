@@ -21,6 +21,9 @@ export const runtime = (ajax: AjaxMethod) =>
         ajax({
           url: `${store.getState().runtime.variables.serverOrigin}${PATH_API_REPORT_ERROR}`,
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: {
             error: action.payload
           },

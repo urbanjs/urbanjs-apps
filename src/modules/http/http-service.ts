@@ -4,18 +4,18 @@ import {
   HttpRequestOptions,
   TYPE_DRIVER_FETCH,
   Fetch,
+  FetchResponse,
   HttpFullResponse,
   HttpHeaders
 } from './types';
+import { BaseError, NO_STACK_TRACE } from '../error/errors';
 import { TYPE_ERROR_SERVICE, IErrorService } from '../error/types';
-import { TYPE_SERVICE_LOGGER, ILoggerService } from '../log/types';
 
 @injectable()
 export class HttpService implements IHttpService {
 
   constructor(@inject(TYPE_DRIVER_FETCH) private fetch: Fetch,
-              @inject(TYPE_ERROR_SERVICE) private errorService: IErrorService,
-              @inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
+              @inject(TYPE_ERROR_SERVICE) private errorService: IErrorService) {
   }
 
   @track()
@@ -30,7 +30,7 @@ export class HttpService implements IHttpService {
 
     const requestHeaders = options.headers || {};
     if (body && typeof body === 'object') {
-      requestHeaders['content-type'] = 'application/json';
+      requestHeaders['Content-Type'] = 'application/json';
       body = JSON.stringify(body);
     }
 
@@ -61,17 +61,12 @@ export class HttpService implements IHttpService {
     } as HttpFullResponse<T>;
   }
 
-  private async assertStatus<T>(response: { status: number, json: () => Promise<T | Error> }) {
+  private async assertStatus<T>(response: FetchResponse<T>) {
     if (response.status < 200 || response.status > 300) {
       const error = this.errorService.createHttpErrorFromStatusCode(response.status);
 
-      try {
-        error.innerError = (await response.json()) as Error;
-      } catch (error) {
-        this.loggerService.debug(
-          'Could not attach innerError to the error because response was not in json format'
-        );
-      }
+      error.innerError = new BaseError(await response.text());
+      error.innerError.stack = NO_STACK_TRACE;
 
       throw error;
     }

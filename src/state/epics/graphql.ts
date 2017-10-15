@@ -8,5 +8,8 @@ export type ApolloErrorAction = Action & { error: { message: string, stack: stri
 export const graphql = () => (action$: ActionsObservable<ApolloErrorAction>) => {
   return action$
     .filter((action) => action.type === ACTION_APOLLO_MUTATION_ERROR || action.type === ACTION_APOLLO_QUERY_ERROR)
-    .map((action) => setRuntimeError(action.error));
+    .map((action) => setRuntimeError({
+      message: action.error.message,
+      stack: action.error.stack
+    }));
 };
