@@ -1,3 +1,3 @@
-export const messages = {
+export default {
   'copyright': 'component.footer.copyright'
 };

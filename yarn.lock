@@ -4235,7 +4235,7 @@ gulp-typescript@3.2.2:
     through2 "~2.0.1"
     vinyl-fs "~2.4.3"
 
-gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@~3.0.7, gulp-util@~3.0.8:
+gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.8, gulp-util@~3.0.7, gulp-util@~3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -7316,7 +7316,7 @@ pretty-hrtime@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
 
-prettyjson@1.2.1:
+prettyjson@1.2.1, prettyjson@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prettyjson/-/prettyjson-1.2.1.tgz#fcffab41d19cab4dfae5e575e64246619b12d289"
   dependencies:

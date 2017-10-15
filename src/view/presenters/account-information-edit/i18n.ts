@@ -1,4 +1,4 @@
-export const messages = {
+export default {
   title: 'component.accountInformationEdit.title',
   save: 'common.action.save',
   cancel: 'common.action.cancel',

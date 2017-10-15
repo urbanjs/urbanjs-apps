@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { messages } from './messages';
+import messages from './i18n';
 import './error-page-401.css';
 
 export type OwnProps = {};

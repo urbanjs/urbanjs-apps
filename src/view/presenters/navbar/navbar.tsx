@@ -19,7 +19,7 @@ import {
   IAuthorizationService,
   Feature
 } from '../../../modules/authorization/types';
-import { messages } from './messages';
+import messages from './i18n';
 import './navbar.css';
 
 type OwnProps = {
