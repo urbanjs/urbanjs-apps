@@ -14,13 +14,14 @@ export interface IHttpApplication {
 export type HttpServerConfig = {
   port: number;
   corsAllowedOriginPatterns: string[];
-  devMode: boolean;
+  includeInnerError: boolean;
   enableGraphQLEditor: boolean;
   absolutePublicPath: string;
   relativePublicPath: string;
   sessionSecret: string;
   facebookAppId: string;
   facebookAppSecret: string;
+  useSecureCookies: boolean;
 };
 
 export interface IHttpApplicationBuilder {

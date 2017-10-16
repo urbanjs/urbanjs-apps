@@ -14,7 +14,7 @@ import { IErrorService } from '../../../error/types';
 import { SessionTokenPayload } from '../passport';
 
 export type GraphqlRouterConfig = {
-  devMode: boolean;
+  includeInnerError: boolean;
   enableGraphQLEditor: boolean;
   graphqlResolvers: GraphqlResolverMap;
   graphqlTypeDefs: GraphqlTypeDefs;
@@ -23,7 +23,7 @@ export type GraphqlRouterConfig = {
 };
 
 export function createGraphqlRouter({
-                                      devMode,
+                                      includeInnerError,
                                       graphqlTypeDefs,
                                       graphqlResolvers,
                                       enableGraphQLEditor,
@@ -34,7 +34,7 @@ export function createGraphqlRouter({
   const schema = makeExecutableSchema({
     typeDefs: graphqlTypeDefs,
     resolvers: graphqlResolvers,
-    allowUndefinedInResolve: !devMode
+    allowUndefinedInResolve: false
   });
 
   addErrorLoggingToSchema(
@@ -48,12 +48,12 @@ export function createGraphqlRouter({
     context: {
       authenticatedUserId: req.user && req.user.userId || null
     } as GraphqlResolverContext,
-    debug: devMode,
+    debug: false,
     formatError(error: GraphQLError) {
       const {locations, path} = error;
       const httpError = errorService.createHttpError(error.originalError || error);
       return {
-        ...httpError.toResponse(devMode),
+        ...httpError.toResponse(includeInnerError),
         statusCode: httpError.statusCode,
         locations,
         path

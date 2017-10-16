@@ -12,6 +12,7 @@ export type ServerConfiguration = {
   facebookAppId: string;
   facebookAppSecret: string;
   sessionSecret: string;
+  useSecureCookies: boolean;
 };
 
 export const defaults = {
@@ -21,7 +22,8 @@ export const defaults = {
   absolutePublicPath: join(__dirname, '../../../build'),
   facebookAppId: 'facebook-app-id',
   facebookAppSecret: 'facebook-app-secret',
-  sessionSecret: 'awesome_secret'
+  sessionSecret: 'awesome_secret',
+  useSecureCookies: false
 };
 
 export const config =

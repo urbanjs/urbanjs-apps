@@ -6,7 +6,7 @@ import { PATH_API_HEALTH } from '../../../constants';
 import { TYPE_HTTP_SERVER, IHttpServer } from '../../../modules/http-server/types';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../../../modules/log/types';
 
-describe('server test', () => {
+describe('server', () => {
   let server: IHttpServer;
   let serverOrigin: string;
 
@@ -21,7 +21,6 @@ describe('server test', () => {
     });
 
     server = container.get<IHttpServer>(TYPE_HTTP_SERVER);
-
     serverOrigin = (await server.start()).origin;
   });
 
@@ -33,9 +32,7 @@ describe('server test', () => {
     it('health endpoint returns {success: true}', async () => {
       const response = await fetch(
         `${serverOrigin}${PATH_API_HEALTH}`,
-        {
-          method: 'GET'
-        }
+        {method: 'GET'}
       );
 
       expect.equal(response.status, 200);

@@ -2,14 +2,19 @@ import 'dotenv/config';
 import fetch from 'node-fetch';
 import * as expect from 'assert';
 import { createContainer } from '../container';
-import { SESSION_KEY, CSRF_TOKEN_KEY, PATH_GRAPHQL } from '../../../constants';
+import {
+  SESSION_KEY,
+  CSRF_TOKEN_KEY,
+  PATH_GRAPHQL,
+  PATH_GRAPHQL_PLAYGROUND
+} from '../../../constants';
 import { TYPE_HTTP_SERVICE, IHttpService, HttpRequestOptions } from '../../../modules/http/types';
 import {
   TYPE_HTTP_SERVER, IHttpServer
 } from '../../../modules/http-server/types';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../../../modules/log/types';
 
-describe('server test', () => {
+describe('server', () => {
   let server: IHttpServer;
   let httpService: IHttpService;
   let serverOrigin: string;
@@ -90,11 +95,11 @@ describe('server test', () => {
             expect.equal(response.status, 401);
           });
 
-          describe('and the request is sent with the /graphql/playground referer', () => {
+          describe(`and the request is sent with the ${PATH_GRAPHQL_PLAYGROUND} referer`, () => {
             beforeEach(() => {
               requestOptions.headers = {
                 ...requestOptions.headers || {},
-                'referer': 'http://127.0.0.1/graphql/playground'
+                referer: `http://127.0.0.1${PATH_GRAPHQL_PLAYGROUND}`
               };
             });
 

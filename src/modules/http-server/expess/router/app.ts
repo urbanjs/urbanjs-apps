@@ -20,10 +20,12 @@ export function createAppRouter({absolutePublicPath}: AppRouterConfig) {
       }
     });
 
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.send(content.join('\n'));
   });
 
   router.get('*', (req: Request, res: Response) => {
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.sendFile(join(absolutePublicPath, 'index.html'));
   });
 

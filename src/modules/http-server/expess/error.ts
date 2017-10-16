@@ -5,10 +5,10 @@ import { IErrorService } from '../../error/types';
 export type ErrorHandlerConfig = {
   loggerService: ILoggerService;
   errorService: IErrorService;
-  devMode: boolean;
+  includeInnerError: boolean;
 };
 
-export function createErrorHandler({loggerService, devMode, errorService}: ErrorHandlerConfig) {
+export function createErrorHandler({loggerService, includeInnerError, errorService}: ErrorHandlerConfig) {
   return (err: Error, req: Request, res: Response, next: NextFunction) => {
     loggerService.error('unhandled request error', err);
 
@@ -22,7 +22,7 @@ export function createErrorHandler({loggerService, devMode, errorService}: Error
       res.status(httpError.statusCode);
 
       res.json({
-        error: httpError.toResponse(devMode)
+        error: httpError.toResponse(includeInnerError)
       });
     } catch (e) {
       loggerService.error('error handler middleware failed', err);

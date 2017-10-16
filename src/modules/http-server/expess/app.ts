@@ -17,9 +17,10 @@ export type AppConfig = {
   sessionSecret: string;
   corsAllowedOriginPatterns: string[];
   loggerService: ILoggerService;
+  useSecureCookies: boolean;
 };
 
-export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerService}: AppConfig) {
+export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerService, useSecureCookies}: AppConfig) {
   const app = express();
 
   const corsPatterns: RegExp[] = corsAllowedOriginPatterns
@@ -42,14 +43,14 @@ export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerServi
     httpOnly: true,
     sameSite: true,
     overwrite: true,
-    maxAge: 0
+    secure: useSecureCookies
   }));
 
   app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     const currentCsrfTokenSecret = req.session.csrfSecret;
     const csrfOptions = {
       cookie: false,
-      ignoreMethods: ['GET', 'OPTION', 'PATCH'],
+      ignoreMethods: ['OPTION', 'PATCH'],
       value: (req2: express.Request) => Array.prototype.concat(req2.headers[CSRF_TOKEN_KEY])[0]
     };
 
@@ -59,7 +60,8 @@ export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerServi
       // to let the client send it back within the headers (double submit)
       res.cookie(CSRF_TOKEN_KEY, req.csrfToken(), {
         httpOnly: false,
-        sameSite: 'strict'
+        sameSite: 'strict',
+        secure: useSecureCookies
       });
 
       let error;
@@ -68,7 +70,8 @@ export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerServi
         const refererPath = refererUrl && parseUrl(refererUrl).pathname;
         const requestPath = parseUrl(req.originalUrl).pathname;
 
-        if (refererPath !== PATH_GRAPHQL_PLAYGROUND &&
+        if (req.method !== 'GET' &&
+          refererPath !== PATH_GRAPHQL_PLAYGROUND &&
           requestPath !== PATH_API_REPORT_ERROR &&
           typeof currentCsrfTokenSecret !== 'undefined') {
           loggerService.debug('forbidden - csrf token invalid', {

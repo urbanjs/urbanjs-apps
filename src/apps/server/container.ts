@@ -27,7 +27,8 @@ export const createContainer = () => {
   container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
     port: config.port,
     corsAllowedOriginPatterns: config.corsAllowedOriginPatterns.split(','),
-    devMode: config.devMode,
+    useSecureCookies: config.useSecureCookies,
+    includeInnerError: config.devMode,
     enableGraphQLEditor: config.devMode,
     sessionSecret: config.sessionSecret,
     facebookAppId: config.facebookAppId,

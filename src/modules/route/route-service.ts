@@ -12,7 +12,7 @@ export class RouteService implements IRouteService {
   @track()
   format(rawPath: string, options: FormatOptions) {
     const params = options && options.params || {};
-    const resolvedPath = rawPath.replace(/:([^\/]+)/g, (match, key) => {
+    return rawPath.replace(/:([^\/]+)/g, (match, key) => {
       if (!params.hasOwnProperty(key)) {
         this.loggerService.error('Missing route parameter', rawPath, key);
         throw new ImplementationError('missing route parameter');
@@ -20,8 +20,6 @@ export class RouteService implements IRouteService {
 
       return params[key];
     });
-
-    return resolvedPath;
   }
 
   @track()

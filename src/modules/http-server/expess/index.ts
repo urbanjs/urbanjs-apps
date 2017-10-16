@@ -7,6 +7,7 @@ import { GraphqlResolverMap, GraphqlTypeDefs } from '../../graphql/types';
 import { IErrorService } from '../../error/types';
 import { IFacebookApiService } from '../../facebook/types';
 import { HttpServerConfig, IHttpController, IHttpApplication } from '../types';
+import { ICookieService } from '../../http/types';
 import { createApp, AppConfig } from './app';
 import { createPassport, PassportConfig, Passport } from './passport';
 import { createErrorHandler, ErrorHandlerConfig } from './error';
@@ -29,6 +30,7 @@ export type ExpressApplicationConfig = HttpServerConfig & {
   graphqlTypeDefs?: GraphqlTypeDefs;
   apiControllers: IHttpController[];
   loggerService: ILoggerService;
+  cookieService: ICookieService;
   errorService: IErrorService;
   userService: IUserService;
   jwtService: IJWTService;

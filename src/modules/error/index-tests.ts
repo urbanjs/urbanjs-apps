@@ -15,7 +15,7 @@ import {
 } from './errors';
 
 describe('modules/error', () => {
-  describe('Error Service', () => {
+  describe('ErrorService', () => {
     let errorService: IErrorService;
 
     beforeEach(() => {
