@@ -107,6 +107,23 @@ describe('src/config/utils', () => {
         expect.deepEqual(applyEnvironmentVariables(config, 'PREFIX'), {stringValue: 'string2'});
       });
     });
+
+    describe('when environment variable store is given', () => {
+      let envVariableStore: { [key: string]: string };
+
+      beforeEach(() => {
+        process.env.STRING_VALUE = 'string1';
+        envVariableStore = {STRING_VALUE: 'string2'};
+      });
+
+      it('applies the environment variables from the given store', () => {
+        const config = {stringValue: 'string'};
+        expect.deepEqual(
+          applyEnvironmentVariables(config, '', envVariableStore),
+          {stringValue: 'string2'}
+        );
+      });
+    });
   });
 
   describe('.resolveReferences()', () => {

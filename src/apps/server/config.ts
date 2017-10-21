@@ -3,6 +3,7 @@
 import { join } from 'path';
 import es6TemplateResolver = require('es6-template-strings');
 import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
+import { ENV_VARIABLE_PREFIX_FOR_CLIENT } from '../../constants';
 
 export type ServerConfiguration = {
   port: number;
@@ -24,7 +25,7 @@ export const defaults: ServerConfiguration = {
   showDebugLogs: devMode,
   includeInnerError: devMode,
   enableGraphQLEditor: devMode,
-  useSecureCookies: !devMode,
+  useSecureCookies: false,
   cookieDomain: '',
   sessionSecret: 'awesome_secret',
   corsAllowedOriginPatterns: '/.*/',
@@ -38,7 +39,7 @@ export const config =
     applyEnvironmentVariables<ServerConfiguration>(
       applyEnvironmentVariables<ServerConfiguration>(
         defaults,
-        'REACT_APP'
+        ENV_VARIABLE_PREFIX_FOR_CLIENT
       ),
       'REACT_SERVER'
     ),

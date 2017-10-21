@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { Router, Response, Request } from 'express';
+import { ENV_VARIABLE_PREFIX_FOR_CLIENT } from '../../../../constants';
 
 export type AppRouterConfig = {
   absolutePublicPath: string;
@@ -15,7 +16,7 @@ export function createAppRouter({absolutePublicPath}: AppRouterConfig) {
     ];
 
     Object.keys(process.env).forEach((item) => {
-      if (/^REACT_APP__/.test(item)) {
+      if (new RegExp(`^${ENV_VARIABLE_PREFIX_FOR_CLIENT}__`).test(item)) {
         content.push(`window.process.env['${item}'] = '${process.env[item]}'`);
       }
     });

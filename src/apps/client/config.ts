@@ -2,6 +2,7 @@
 
 import es6TemplateResolver = require('es6-template-strings');
 import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
+import { ENV_VARIABLE_PREFIX_FOR_CLIENT } from '../../constants';
 
 export type ClientConfiguration = {
   serverOrigin: string;
@@ -10,7 +11,15 @@ export type ClientConfiguration = {
   registerServiceWorker: boolean;
 };
 
-const devMode = process.env.NODE_ENV !== 'production';
+// `process.env` is replaced by webpack
+// so use a trick to apply all environment variables
+const processKey = 'process';
+const envVariables: { [key: string]: string } = {
+  ...process.env,
+  ...window[processKey] && window[processKey].env
+};
+
+const devMode = envVariables.NODE_ENV !== 'production';
 export const defaults: ClientConfiguration = {
   serverOrigin: window.location.origin,
   connectToDevTools: devMode,
@@ -22,7 +31,8 @@ export const config =
   resolveReferences<ClientConfiguration>(
     applyEnvironmentVariables<ClientConfiguration>(
       defaults,
-      'REACT_APP'
+      ENV_VARIABLE_PREFIX_FOR_CLIENT,
+      envVariables
     ),
     es6TemplateResolver
   );

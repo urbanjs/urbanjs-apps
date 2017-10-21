@@ -5,24 +5,27 @@ export function toConstantCase(value: string) {
     .toUpperCase();
 }
 
-export function applyEnvironmentVariables<T extends object>(config: object, envVariableRootPrefix: string = ''): T {
+export function applyEnvironmentVariables<T extends object>(config: object,
+                                                            envVariableRootPrefix: string = '',
+                                                            envVariableStore: object = process.env): T {
   return (function next(data: object, envVariablePrefix: string) {
     const configuredData = {} as T;
     Object.keys(data).forEach((key) => {
-      const processEnvKey = `${envVariablePrefix ? `${envVariablePrefix}__` : ''}${toConstantCase(key)}`;
+      const processEnvKey = `${envVariablePrefix ? `${envVariablePrefix}__`
+        : ''}${toConstantCase(key)}`;
       const value = data[key];
 
       if (typeof value === 'string') {
-        configuredData[key] = process.env.hasOwnProperty(processEnvKey)
-          ? process.env[processEnvKey]
+        configuredData[key] = envVariableStore.hasOwnProperty(processEnvKey)
+          ? envVariableStore[processEnvKey]
           : value;
       } else if (typeof value === 'number') {
-        configuredData[key] = process.env.hasOwnProperty(processEnvKey)
-          ? parseInt(`${process.env[processEnvKey]}`, 10)
+        configuredData[key] = envVariableStore.hasOwnProperty(processEnvKey)
+          ? parseInt(`${envVariableStore[processEnvKey]}`, 10)
           : value;
       } else if (typeof value === 'boolean') {
-        configuredData[key] = process.env.hasOwnProperty(processEnvKey)
-          ? /true/i.test(`${process.env[processEnvKey]}`)
+        configuredData[key] = envVariableStore.hasOwnProperty(processEnvKey)
+          ? /true/i.test(`${envVariableStore[processEnvKey]}`)
           : value;
       } else if (typeof value === 'object' && !Array.isArray(value)) {
         configuredData[key] = next(value, processEnvKey);
