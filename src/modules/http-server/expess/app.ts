@@ -18,9 +18,16 @@ export type AppConfig = {
   corsAllowedOriginPatterns: string[];
   loggerService: ILoggerService;
   useSecureCookies: boolean;
+  cookieDomain: string;
 };
 
-export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerService, useSecureCookies}: AppConfig) {
+export function createApp({
+                            sessionSecret,
+                            corsAllowedOriginPatterns,
+                            loggerService,
+                            useSecureCookies,
+                            cookieDomain
+                          }: AppConfig) {
   const app = express();
 
   const corsPatterns: RegExp[] = corsAllowedOriginPatterns
@@ -43,6 +50,7 @@ export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerServi
     httpOnly: true,
     sameSite: true,
     overwrite: true,
+    domain: cookieDomain,
     secure: useSecureCookies
   }));
 
@@ -59,6 +67,7 @@ export function createApp({sessionSecret, corsAllowedOriginPatterns, loggerServi
       // and send the actual token within a non-http-only cookie
       // to let the client send it back within the headers (double submit)
       res.cookie(CSRF_TOKEN_KEY, req.csrfToken(), {
+        domain: cookieDomain,
         httpOnly: false,
         sameSite: 'strict',
         secure: useSecureCookies

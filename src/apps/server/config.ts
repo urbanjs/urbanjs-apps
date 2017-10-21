@@ -6,24 +6,31 @@ import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
 
 export type ServerConfiguration = {
   port: number;
+  showDebugLogs: boolean;
+  includeInnerError: boolean;
+  enableGraphQLEditor: boolean;
+  useSecureCookies: boolean;
+  cookieDomain: string;
+  sessionSecret: string;
   corsAllowedOriginPatterns: string;
-  devMode: boolean;
   absolutePublicPath: string;
   facebookAppId: string;
   facebookAppSecret: string;
-  sessionSecret: string;
-  useSecureCookies: boolean;
 };
 
-export const defaults = {
+const devMode = process.env.NODE_ENV !== 'production';
+export const defaults: ServerConfiguration = {
   port: 3001,
+  showDebugLogs: devMode,
+  includeInnerError: devMode,
+  enableGraphQLEditor: devMode,
+  useSecureCookies: !devMode,
+  cookieDomain: '',
+  sessionSecret: 'awesome_secret',
   corsAllowedOriginPatterns: '/.*/',
-  devMode: process.env.NODE_ENV !== 'production',
   absolutePublicPath: join(__dirname, '../../../build'),
   facebookAppId: 'facebook-app-id',
-  facebookAppSecret: 'facebook-app-secret',
-  sessionSecret: 'awesome_secret',
-  useSecureCookies: false
+  facebookAppSecret: 'facebook-app-secret'
 };
 
 export const config =

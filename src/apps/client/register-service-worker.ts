@@ -22,7 +22,7 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
-  if (!config.devMode && 'serviceWorker' in navigator) {
+  if (config.registerServiceWorker && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
       process.env.PUBLIC_URL!,

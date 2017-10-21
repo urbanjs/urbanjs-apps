@@ -1,4 +1,6 @@
+import * as chalk from 'chalk';
 import fetch from 'node-fetch';
+import { Container } from 'inversify';
 import { relative } from 'path';
 import {
   HttpServerConfig,
@@ -12,24 +14,41 @@ import {
   JWTServiceConfig,
   TYPE_JWT_SERVICE_CONFIG
 } from '../../modules/jwt/types';
+import { initalizeContainer } from '../utils/container';
+import { config } from './config';
+import { ILoggerService, TYPE_SERVICE_LOGGER } from '../../modules/log/types';
+import {
+  ConsoleLoggerService,
+  TYPE_DRIVER_CHALK,
+  ConsoleLoggerConfig,
+  TYPE_CONSOLE_LOGGER_CONFIG
+} from '../../modules/log/console-logger-service';
 import {
   FacebookApiServiceConfig,
   TYPE_FACEBOOK_API_SERVICE_CONFIG
 } from '../../modules/facebook/types';
-import { createContainer as createRawContainer } from '../utils/container';
-import { config } from './config';
 
 export const createContainer = () => {
-  const container = createRawContainer({devMode: config.devMode});
+  const container = new Container({defaultScope: 'Singleton'});
+
+  container.bind(TYPE_DRIVER_CHALK).toConstantValue(chalk);
+  container.bind<ILoggerService>(TYPE_SERVICE_LOGGER).to(ConsoleLoggerService);
+  container.bind<ConsoleLoggerConfig>(TYPE_CONSOLE_LOGGER_CONFIG).toConstantValue({
+    debug: config.showDebugLogs,
+    info: true,
+    error: true,
+    warning: true
+  });
 
   container.bind<Fetch>(TYPE_DRIVER_FETCH).toConstantValue(fetch);
 
   container.bind<HttpServerConfig>(TYPE_HTTP_CONFIG).toConstantValue({
     port: config.port,
     corsAllowedOriginPatterns: config.corsAllowedOriginPatterns.split(','),
+    cookieDomain: config.cookieDomain,
     useSecureCookies: config.useSecureCookies,
-    includeInnerError: config.devMode,
-    enableGraphQLEditor: config.devMode,
+    includeInnerError: config.includeInnerError,
+    enableGraphQLEditor: config.enableGraphQLEditor,
     sessionSecret: config.sessionSecret,
     facebookAppId: config.facebookAppId,
     facebookAppSecret: config.facebookAppSecret,
@@ -47,6 +66,7 @@ export const createContainer = () => {
   });
 
   container.load(
+    require('../../modules/log').logModule,
     require('../../modules/authorization').authorizationModule,
     require('../../modules/monitor').monitorModule,
     require('../../modules/http-server').httpServerModule,
@@ -61,6 +81,10 @@ export const createContainer = () => {
     require('../../modules/date').dateModule,
     require('../../modules/jwt').jwtModule
   );
+
+  initalizeContainer(container, {
+    showDebugLogs: config.showDebugLogs
+  });
 
   return container;
 };

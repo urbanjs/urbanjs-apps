@@ -5,12 +5,17 @@ import { applyEnvironmentVariables, resolveReferences } from '../utils/config';
 
 export type ClientConfiguration = {
   serverOrigin: string;
-  devMode: boolean;
+  connectToDevTools: boolean;
+  showDebugLogs: boolean;
+  registerServiceWorker: boolean;
 };
 
-export const defaults = {
+const devMode = process.env.NODE_ENV !== 'production';
+export const defaults: ClientConfiguration = {
   serverOrigin: window.location.origin,
-  devMode: process.env.NODE_ENV !== 'production'
+  connectToDevTools: devMode,
+  showDebugLogs: devMode,
+  registerServiceWorker: false
 };
 
 export const config =

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Router, Response, Request, NextFunction, CookieOptions } from 'express';
 import { METADATA_KEY_HTTP_ROUTE, HttpRouteOptions } from '../../../../decorators/http-route';
 import { ILoggerService } from '../../../log/types';
-import { HttpHeaders, Cookie, ICookieService } from '../../../http/types';
+import { HttpHeaders, ICookieService } from '../../../http/types';
 import {
   IHttpController,
   HttpControllerRequestParams,
@@ -13,10 +13,17 @@ export type ApiRouterConfig = {
   apiControllers: IHttpController[];
   loggerService: ILoggerService;
   cookieService: ICookieService;
+  cookieDomain: string;
   useSecureCookies: boolean;
 };
 
-export function createApiRouter({apiControllers, loggerService, useSecureCookies, cookieService}: ApiRouterConfig) {
+export function createApiRouter({
+                                  apiControllers,
+                                  loggerService,
+                                  useSecureCookies,
+                                  cookieService,
+                                  cookieDomain
+                                }: ApiRouterConfig) {
   const router = Router();
 
   apiControllers.forEach((controller) => {
@@ -71,11 +78,11 @@ export function createApiRouter({apiControllers, loggerService, useSecureCookies
                   const value = headers[headerKey];
 
                   if (/Set-Cookie/i.test(headerKey)) {
-                    cookieService.parseSetCookieHeader(value).forEach((cookie: Cookie) => {
+                    cookieService.parseSetCookieHeader(value).forEach(cookie => {
                       res.cookie(
                         cookie.name,
                         cookie.value,
-                        ['path', 'domain', 'expires', 'httpOnly', 'maxAge', 'sameSite'].reduce(
+                        ['path', 'expires', 'httpOnly', 'maxAge', 'sameSite'].reduce(
                           (acc, cookieOptionKey) => {
                             if (cookie.hasOwnProperty(cookieOptionKey)) {
                               acc[cookieOptionKey] = cookie[cookieOptionKey];
@@ -83,7 +90,7 @@ export function createApiRouter({apiControllers, loggerService, useSecureCookies
 
                             return acc;
                           },
-                          {secure: useSecureCookies} as CookieOptions
+                          {secure: useSecureCookies, domain: cookieDomain} as CookieOptions
                         )
                       );
                     });

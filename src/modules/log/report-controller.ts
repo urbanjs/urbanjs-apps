@@ -5,13 +5,13 @@ import {
   IHttpController
 } from '../http-server/types';
 import {
-  ILogService,
-  TYPE_LOG_SERVICE
+  ILoggerService,
+  TYPE_SERVICE_LOGGER
 } from './types';
 
 @injectable()
 export class ReportController implements IHttpController {
-  constructor(@inject(TYPE_LOG_SERVICE) private logService: ILogService) {
+  constructor(@inject(TYPE_SERVICE_LOGGER) private loggerService: ILoggerService) {
   }
 
   @track()
@@ -20,6 +20,6 @@ export class ReportController implements IHttpController {
     path: PATH_API_REPORT_ERROR
   })
   async handler(params: HttpControllerRequestParams) {
-    await this.logService.createLog(JSON.stringify(params.payload));
+    await this.loggerService.error(JSON.stringify(params.payload));
   }
 }

@@ -28,12 +28,7 @@ networkInterface.use([{
       [CSRF_TOKEN_KEY]: getCookie(CSRF_TOKEN_KEY)
     };
 
-    if (config.devMode) {
-      // imitate network latency
-      setTimeout(next, 300);
-    } else {
-      next();
-    }
+    next();
   }
 }]);
 
@@ -54,5 +49,5 @@ networkInterface.useAfter([{
 export const apolloClient = new ApolloClient({
   networkInterface,
   queryDeduplication: true,
-  connectToDevTools: config.devMode
+  connectToDevTools: config.connectToDevTools
 });

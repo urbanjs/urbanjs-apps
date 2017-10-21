@@ -14,6 +14,7 @@ tools.setGlobalConfiguration({
 
 tools.initialize(gulp, {
   babel: defaults => ({
+    emitOnError: false,
     ...defaults,
     files: defaults.files.concat('!src/**/__snapshots__/**')
   }),
@@ -21,7 +22,7 @@ tools.initialize(gulp, {
   'check-file-names': defaults => Object.assign({}, defaults, {
     paramCase: [
       '!src/view/**/*test.?(ts|tsx)',
-      '!src/apps/utils/config/es6-template-strings.d.ts'
+      '!src/**/*.d.ts'
     ].concat(defaults.paramCase)
   }),
   mocha: defaults => ({

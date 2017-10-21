@@ -1,7 +1,6 @@
 import * as expect from 'assert';
 import { Container } from 'inversify';
 import { ValidationError } from '../error/errors';
-import { TYPE_CONFIG_LOGGER, LoggerConfig } from '../log/types';
 import { logModule } from '../log';
 import { uuidModule } from '../uuid';
 import { jsonModule } from './index';
@@ -13,13 +12,6 @@ describe('modules/json', () => {
 
     beforeEach(() => {
       const container = new Container();
-      container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
-        error: false,
-        warning: false,
-        info: false,
-        debug: false
-      });
-
       container.load(jsonModule, uuidModule, logModule);
       jsonService = container.get<IJSONService>(TYPE_JSON_SERVICE);
     });

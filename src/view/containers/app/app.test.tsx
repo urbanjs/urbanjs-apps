@@ -1,11 +1,18 @@
-import { createContainer } from '../../../apps/utils/container';
+import 'reflect-metadata';
+import { Container } from 'inversify';
+import { initalizeContainer } from '../../../apps/utils/container';
 import { authorizationModule } from '../../../modules/authorization';
 import { routeModule } from '../../../modules/route';
+import { logModule } from '../../../modules/log';
 
-const container = createContainer({lazyInject: true, devMode: false});
+const container = new Container({defaultScope: 'Singleton'});
+initalizeContainer(container, {lazyInject: true});
+
+container.load(logModule);
 container.load(authorizationModule);
 container.load(routeModule);
 
+import 'requestanimationframe';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import * as renderer from 'react-test-renderer';
@@ -17,10 +24,6 @@ import { userQuery } from './graphql';
 import { translations } from '../../../i18n';
 import { createStore, RootState } from '../../../state';
 import { PATH_APP } from '../../../constants';
-
-window.requestAnimationFrame = () => {
-  throw new Error('requestAnimationFrame is not supported in Node');
-};
 
 describe('App', () => {
   let store: Store<RootState>;
@@ -38,10 +41,7 @@ describe('App', () => {
           }
         }
       },
-      {
-        platform: 'browser',
-        devMode: true
-      }
+      {platform: 'browser'}
     );
 
     apolloMocks = [

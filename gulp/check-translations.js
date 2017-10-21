@@ -39,9 +39,12 @@ gulp.task(TASK_NAME, () => {
             missingTranslationsByLocale[locale][key] = true;
           }
 
-          delete unusedTranslationsByLocale[locale][key];
-          if (!Object.keys(unusedTranslationsByLocale[locale]).length) {
-            delete unusedTranslationsByLocale[locale];
+          if (unusedTranslationsByLocale[locale]) {
+            delete unusedTranslationsByLocale[locale][key];
+
+            if (!Object.keys(unusedTranslationsByLocale[locale]).length) {
+              delete unusedTranslationsByLocale[locale];
+            }
           }
         });
       });

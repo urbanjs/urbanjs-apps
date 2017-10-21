@@ -13,7 +13,8 @@ import { createLoggerMiddleware, createEpicMiddleware } from './middlewares';
 
 export type StoreConfig = {
   platform: 'browser' | 'node';
-  devMode: boolean;
+  showDebugLogs?: boolean;
+  connectToDevTools?: boolean;
   apolloClient?: ApolloClient;
 };
 
@@ -26,12 +27,12 @@ export function createStore(initialState: object = {}, config: StoreConfig): Sto
     middlewares.push(config.apolloClient.middleware());
   }
 
-  if (config.devMode) {
+  if (config.showDebugLogs) {
     middlewares.push(createLoggerMiddleware());
   }
 
   let composeEnhancer = compose;
-  if (config.devMode) {
+  if (config.connectToDevTools) {
     // https://github.com/zalmoxisus/redux-devtools-extension#redux-devtools-extension
     const devToolsExtensionKey = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
     if (config.platform === 'browser' && window && window.hasOwnProperty(devToolsExtensionKey)) {

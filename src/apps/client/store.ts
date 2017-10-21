@@ -4,15 +4,11 @@ import { apolloClient } from './apollo';
 import { config } from './config';
 
 export const store = createStore({}, {
-  devMode: config.devMode,
+  connectToDevTools: config.connectToDevTools,
+  showDebugLogs: config.showDebugLogs,
   platform: 'browser',
   apolloClient
 });
-
-store.dispatch(setRuntimeVariable({
-  name: 'devMode',
-  value: config.devMode
-}));
 
 store.dispatch(setRuntimeVariable({
   name: 'appOrigin',

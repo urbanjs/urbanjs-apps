@@ -1,3 +1,4 @@
+import 'requestanimationframe';
 import * as React from 'react';
 import { DocumentNode } from 'graphql';
 import * as renderer from 'react-test-renderer';
@@ -11,10 +12,6 @@ import { createStore, RootState } from '../../../state';
 import { AccountPageWithHOCs as AccountPage, OwnProps } from './account-page';
 import { userQuery } from './graphql';
 
-window.requestAnimationFrame = () => {
-  throw new Error('requestAnimationFrame is not supported in Node');
-};
-
 describe('Account page', () => {
   let store: Store<RootState>;
   let apolloMocks: { request: { query: DocumentNode }, result: object }[];
@@ -22,10 +19,7 @@ describe('Account page', () => {
   let i18nMessages: { [key: string]: string };
 
   beforeEach(() => {
-    store = createStore({}, {
-      platform: 'browser',
-      devMode: false
-    });
+    store = createStore({}, {platform: 'browser'});
 
     apolloMocks = [];
 

@@ -5,6 +5,7 @@ import { createContainer } from '../container';
 import { PATH_API_HEALTH } from '../../../constants';
 import { TYPE_HTTP_SERVER, IHttpServer } from '../../../modules/http-server/types';
 import { TYPE_SERVICE_LOGGER, ILoggerService } from '../../../modules/log/types';
+import { DumbLoggerService } from '../../../modules/log/dumb-logger-service';
 
 describe('server', () => {
   let server: IHttpServer;
@@ -13,12 +14,7 @@ describe('server', () => {
   beforeEach(async () => {
     const container = createContainer();
 
-    container.rebind<ILoggerService>(TYPE_SERVICE_LOGGER).toConstantValue({
-      debug: () => null,
-      info: () => null,
-      warn: () => null,
-      error: () => null
-    });
+    container.rebind<ILoggerService>(TYPE_SERVICE_LOGGER).to(DumbLoggerService);
 
     server = container.get<IHttpServer>(TYPE_HTTP_SERVER);
     serverOrigin = (await server.start()).origin;

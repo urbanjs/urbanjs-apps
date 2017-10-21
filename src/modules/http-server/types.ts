@@ -22,6 +22,7 @@ export type HttpServerConfig = {
   facebookAppId: string;
   facebookAppSecret: string;
   useSecureCookies: boolean;
+  cookieDomain: string;
 };
 
 export interface IHttpApplicationBuilder {

@@ -1,6 +1,5 @@
 import * as expect from 'assert';
 import { Container } from 'inversify';
-import { TYPE_CONFIG_LOGGER, LoggerConfig } from '../log/types';
 import { logModule } from '../log';
 import { errorModule } from './index';
 import { TYPE_ERROR_SERVICE, IErrorService } from './types';
@@ -20,13 +19,6 @@ describe('modules/error', () => {
 
     beforeEach(() => {
       const container = new Container();
-      container.bind<LoggerConfig>(TYPE_CONFIG_LOGGER).toConstantValue({
-        error: false,
-        warning: false,
-        info: false,
-        debug: false
-      });
-
       container.load(logModule, errorModule);
       errorService = container.get<IErrorService>(TYPE_ERROR_SERVICE);
     });

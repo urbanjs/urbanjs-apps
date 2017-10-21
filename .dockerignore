@@ -3,3 +3,5 @@ build
 dist
 node_modules
 src/*.css
+.env
+public/config.js

@@ -91,6 +91,7 @@
     "redux": "^3.7.0",
     "redux-logger": "^3.0.6",
     "redux-observable": "^0.16.0",
+    "requestanimationframe": "^0.0.23",
     "rxjs": "^5.4.3",
     "through2": "^2.0.3",
     "ts-node": "^3.2.0",
