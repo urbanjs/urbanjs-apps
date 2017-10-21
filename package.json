@@ -33,6 +33,7 @@
     "reflect-metadata": "^0.1.10",
     "set-cookie-parser": "^2.0.0",
     "statuses": "^1.4.0",
+    "urbanjs-config": "^0.2.0",
     "urbanjs-tools-core": "^1.1.0",
     "uuid": "^3.1.0",
     "uuid-validate": "^0.0.2"

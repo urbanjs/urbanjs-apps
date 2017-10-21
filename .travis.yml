@@ -3,4 +3,5 @@ services:
   - docker
 
 script:
-- docker build -t urbanjs-apps:$TRAVIS_COMMIT .
+- set -e
+- cd e2e-tests && ./scripts/start-local.sh -c $TRAVIS_BUILD_NUMBER

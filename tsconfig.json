@@ -22,15 +22,7 @@
     "noUnusedLocals": true,
     "experimentalDecorators": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "public",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts"
+  "include": [
+    "src/**/*"
   ]
 }

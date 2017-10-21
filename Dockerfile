@@ -1,4 +1,4 @@
-FROM node:8.6-alpine
+FROM node:8.7-alpine
 
 ENV REACT_SERVER__PORT 3001
 ENV CI true

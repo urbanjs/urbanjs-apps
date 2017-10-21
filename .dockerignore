@@ -5,3 +5,4 @@ node_modules
 src/*.css
 .env
 public/config.js
+e2e-tests
